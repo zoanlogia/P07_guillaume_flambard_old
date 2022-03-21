@@ -1,0 +1,29 @@
+/** @format */
+
+#header {
+  padding: 10px 16px;
+  //   background: #555;
+  color: #f1f1f1;
+  flex-direction: column;
+
+  .content {
+    padding: 16px;
+  }
+
+  .sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
+  }
+
+  .sticky + .content {
+    padding-top: 102px;
+  }
+
+  h2 {
+    font-size: 36px;
+    font-weight: 700;
+    color: $primary;
+  }
+
+}

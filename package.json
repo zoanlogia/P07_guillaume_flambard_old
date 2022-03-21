@@ -1,0 +1,17 @@
+{
+  "dependencies": {
+    "modern-css-reset": "^1.4.0",
+    "node-sass": "^7.0.1"
+  },
+  "name": "P07_guillaume_flambard",
+  "version": "1.0.0",
+  "description": "P07 openclassrooms",
+  "main": "scripts/index.js",
+  "scripts": {
+  "test": "echo \"Error: no test specified\" && exit 1",
+  "scss": "node-sass --watch scss -o css"
+},
+  "repository": "https://github.com/zoanlogia/P07_guillaume_flambard.git",
+  "author": "zoanlogia <g.flambard@gmail.com>",
+  "license": "MIT"
+}

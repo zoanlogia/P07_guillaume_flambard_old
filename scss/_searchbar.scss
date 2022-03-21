@@ -1,0 +1,16 @@
+#search {
+    position: relative;
+
+    input {
+        width: 100%;
+        height: 4rem;
+        border: 1px solid #E7E7E7;
+        border-radius: 5px;
+    }
+
+    & img {
+        position: absolute;
+        right: 0;
+        margin: 1em;
+    }
+}
