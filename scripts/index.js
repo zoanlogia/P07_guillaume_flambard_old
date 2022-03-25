@@ -5,3 +5,5 @@ const DATA = getCleanData()
 displayRecipes(DATA)
 console.log(DATA);
 
+displayRecipes(DATA)
+
