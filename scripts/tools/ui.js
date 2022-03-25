@@ -1,6 +1,5 @@
 export const displayRecipes = (recipes) => {
     const container = document.querySelector('.recipes__container')
-    recipes[0].display = false
     recipes.forEach(recipe => {
         if (recipe.display) {
             container.append(card(recipe))
