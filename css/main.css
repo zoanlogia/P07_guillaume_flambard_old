@@ -53,19 +53,14 @@ table {
   padding: 10px 16px;
   color: #f1f1f1;
   flex-direction: column; }
-  #header .content {
-    padding: 16px; }
-  #header .sticky {
-    position: fixed;
-    top: 0;
-    width: 100%; }
-  #header .sticky + .content {
-    padding-top: 102px; }
   #header h2 {
     font-size: 36px;
     font-weight: 700;
     color: #D04F4F;
+    font-family: DM Sans;
+    font-size: 36px;
     font-style: normal;
+    font-weight: 700;
     line-height: 47px;
     letter-spacing: 0em;
     text-align: center; }
@@ -143,3 +138,36 @@ table {
       transform: translate(-50%, -50%); }
     .filter__dropdown ul li span {
       padding: 0 1em; }
+
+/** @format */
+.recipes__container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+  flex-wrap: wrap; }
+  .recipes__container .card {
+    margin: 1em 0;
+    border: none;
+    border-radius: 0 0 5px 5px;
+    background-color: aliceblue;
+    width: 380px;
+    height: 380px; }
+    .recipes__container .card .img {
+      border-radius: 5px 5px 0 0;
+      width: auto;
+      height: 180px;
+      background-color: #c7bebe; }
+    .recipes__container .card .row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between; }
+      .recipes__container .card .row .icon {
+        display: flex;
+        flex-direction: row;
+        align-items: center; }
+      .recipes__container .card .row .col {
+        margin: 0 1em; }
+        .recipes__container .card .row .col img {
+          margin: 1em; }
