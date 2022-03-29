@@ -59,20 +59,19 @@ const row = (recipe) => {
 };
 
 const colDesc = (recipe) => {
-  const div = document.createElement("div");
-  div.classList.add("desc");
-  div.innerHTML = recipe.description;
-  return div;
+  const p = document.createElement("p");
+  p.classList.add("desc");
+  p.innerHTML = recipe.description;
+  return p;
 };
 
 const colIngredients = (recipe) => {
   const div = document.createElement("div");
-  div.classList.add("ingredients");
- 
-//   for (let i = 0; i < recipe.ingredients.length; i++) {
-//       const ingredient = recipe.ingredients[i];
-//       console.log(ingredient);
-//       div.innerHTML = ingredient
-//   }
+    div.classList.add("ingredients");
+    let ingr = []
+    recipe.ingredients.forEach(ingredient => {
+        ingr.push(ingredient)
+        div.innerHTML = ingr
+    })
     return div
 };

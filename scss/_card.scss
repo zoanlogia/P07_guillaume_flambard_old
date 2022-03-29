@@ -27,21 +27,37 @@
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
-      
 
       & .icon {
-          display: flex;
-          flex-direction: row;
-          align-items: center;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
       }
       & .col {
         margin: 0 1em;
-
 
         & img {
           margin: 1em;
         }
       }
+
+      // & .desc {
+       
+
+      //     white-space: nowrap;
+      //     overflow: hidden;
+      //     text-overflow: ellipsis;
+      //     max-width: 380px;
+      //     display: flex;
+      //     flex-direction: column;
+      //     flex-wrap: wrap;
+      //     justify-content: center;
+      //     align-items: center;
+        
+      //   }
+      //   .desc:hover {
+      //    overflow: visible;
+      //  }
     }
   }
 }
