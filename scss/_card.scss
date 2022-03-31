@@ -48,12 +48,22 @@
       }
     }
 
+    .small {
+      font-weight: 400;
+    }
     .ingredients {
-      font-family: "Lato";
-      font-style: normal;
-      font-weight: 700;
+      
       font-size: 12px;
       line-height: 14px;
+
+      & .ingredient {
+       line-height: 1.3em;
+
+        b {
+          font-weight: 700;
+        }
+
+      }
     }
 
     & .row_ingredients {

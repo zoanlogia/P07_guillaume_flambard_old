@@ -1,3 +1,4 @@
+/** @format */
 
 export const card = (recipe) => {
   const div = document.createElement("div");
@@ -50,7 +51,7 @@ export const row = (recipe) => {
 export const colDesc = (recipe) => {
   const p = document.createElement("p");
   p.classList.add("desc");
-  p.innerHTML = recipe.description;
+  p.innerHTML = "<span class='small'>" + recipe.description + "</span>";
   return p;
 };
 
@@ -59,22 +60,34 @@ export const colIngredients = (recipe) => {
   ul.classList.add("ingredients");
 
   // v2
-  const totoingredients = recipe.ingredients.filter((ing) => ing.ingredient);
-  totoingredients.forEach((ing) => {
+  const ingredients = recipe.ingredients.filter((ing) => ing.ingredient);
+  ingredients.forEach((ing) => {
     const li = document.createElement("li");
-    li.innerHTML = ing.ingredient;
+    li.classList.add("ingredient");
+  
+    if (ing.quantity == undefined) {
+      ing.quantity = "";
+    }
+    if (ing.unit == undefined) {
+      ing.unit = "";
+    }
+    if (ing.quantity == "" && ing.unit == "") {
+      li.innerHTML ="<b>" + ing.ingredient + "</b>";
+    } else {
+      li.innerHTML = "<b>" + ing.ingredient + "</b>" + " : " + "<span class='small'>" + ing.quantity + "</span>" + "<span class='small'>" + ing.unit + "</span>";
+    }
+
     ul.append(li);
   });
-
-  // v1
-  // const div = document.createElement("ul");
-  // div.classList.add("ingredients");
-  // let ingr = []
-  // recipe.ingredients.forEach(ingredient => {
-  //     ingr.push(ingredient.ingredient)
-  //     div.innerHTML = ingr
-  // })
-  // return div
-
   return ul;
 };
+
+// v1
+// const div = document.createElement("ul");
+// div.classList.add("ingredients");
+// let ingr = []
+// recipe.ingredients.forEach(ingredient => {
+//     ingr.push(ingredient.ingredient)
+//     div.innerHTML = ingr
+// })
+// return div

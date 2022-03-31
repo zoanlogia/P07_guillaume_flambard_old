@@ -178,12 +178,15 @@ table {
           margin: 0.5em; }
         .recipes__container .card .row .col .time {
           font-weight: 700; }
+    .recipes__container .card .small {
+      font-weight: 400; }
     .recipes__container .card .ingredients {
-      font-family: "Lato";
-      font-style: normal;
-      font-weight: 700;
       font-size: 12px;
       line-height: 14px; }
+      .recipes__container .card .ingredients .ingredient {
+        line-height: 1.3em; }
+        .recipes__container .card .ingredients .ingredient b {
+          font-weight: 700; }
     .recipes__container .card .row_ingredients {
       display: flex;
       flex-direction: row;
