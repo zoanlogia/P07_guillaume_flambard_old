@@ -1,33 +1,95 @@
-.filter {
-  margin: 1em 0;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+/** @format */
 
-  &__dropdown {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    margin-right: 2em;
-    @include dropdown;
-    background-color: $bleu-btn;
-    position: relative;
+.filter__container {
+display: flex;
+flex-direction: row;
+flex-wrap: wrap;
 
-    & img {
+  .filter {
+    margin: 1em 0;
+
+    &__dropdown {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      margin-right: 2em;
+      @include dropdown;
+      background-color: $bleu-btn;
+      position: relative;
+
+      input {
+        background: none !important;
+        border: none !important;
+        color: white;
+      }
+      ::placeholder {
+        color: white;
+        opacity: 1;
+      }
+      :focus {
+        outline: none;
+      }
+
+      & img {
         position: absolute;
         right: 1em;
         top: 50%;
         bottom: 50%;
         transform: translate(-50%, -50%);
-    }
+      }
 
-    & ul {
-        & li {
-            & span {
-                padding:0 1em;
-            }
+      &__icon {
+        &__up {
+          display: none;
         }
+      }
+
+      & ul {
+        & li {
+          display: none;
+        }
+      }
+
+      &.selected {
+        .filter__dropdown__icon__down {
+          display: none;
+        }
+        .filter__dropdown__icon__up {
+          display: block;
+        }
+
+        & ul {
+          & li {
+            animation: b 0.3s linear forwards;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            border-radius: 0 0 5px 5px;
+            position: absolute;
+            top: 94%;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            // display: none;
+            height: 4rem;
+            color: white;
+            background-color: $bleu-btn;
+            // border: 1px solid white;
+            @keyframes b {
+              0% {
+                background: transparent;
+              }
+              94% {
+                background: $bleu-btn;
+              }
+            }
+            & span {
+              padding: 0 0.8em;
+            }
+          }
+        }
+      }
     }
   }
 }

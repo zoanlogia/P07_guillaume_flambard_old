@@ -115,33 +115,72 @@ table {
       position: absolute;
       right: 0; }
 
-.filter {
-  margin: 1em 0;
+/** @format */
+.filter__container {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap; }
-  .filter__dropdown {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    margin-right: 2em;
-    border-radius: 5px;
-    color: white;
-    border: none;
-    height: 4rem;
-    width: 10rem;
-    cursor: pointer;
-    background-color: #3282f7;
-    position: relative; }
-    .filter__dropdown img {
-      position: absolute;
-      right: 1em;
-      top: 50%;
-      bottom: 50%;
-      transform: translate(-50%, -50%); }
-    .filter__dropdown ul li span {
-      padding: 0 1em; }
+  .filter__container .filter {
+    margin: 1em 0; }
+    .filter__container .filter__dropdown {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      margin-right: 2em;
+      border-radius: 5px;
+      color: white;
+      border: none;
+      height: 4rem;
+      width: 10rem;
+      cursor: pointer;
+      background-color: #3282f7;
+      position: relative; }
+      .filter__container .filter__dropdown input {
+        background: none !important;
+        border: none !important;
+        color: white; }
+      .filter__container .filter__dropdown ::placeholder {
+        color: white;
+        opacity: 1; }
+      .filter__container .filter__dropdown :focus {
+        outline: none; }
+      .filter__container .filter__dropdown img {
+        position: absolute;
+        right: 1em;
+        top: 50%;
+        bottom: 50%;
+        transform: translate(-50%, -50%); }
+      .filter__container .filter__dropdown__icon__up {
+        display: none; }
+      .filter__container .filter__dropdown ul li {
+        display: none; }
+      .filter__container .filter__dropdown.selected .filter__dropdown__icon__down {
+        display: none; }
+      .filter__container .filter__dropdown.selected .filter__dropdown__icon__up {
+        display: block; }
+      .filter__container .filter__dropdown.selected ul li {
+        animation: b 0.3s linear forwards;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        border-radius: 0 0 5px 5px;
+        position: absolute;
+        top: 94%;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 4rem;
+        color: white;
+        background-color: #3282f7; }
+
+@keyframes b {
+  0% {
+    background: transparent; }
+  94% {
+    background: #3282f7; } }
+        .filter__container .filter__dropdown.selected ul li span {
+          padding: 0 0.8em; }
 
 /** @format */
 .recipes__container {

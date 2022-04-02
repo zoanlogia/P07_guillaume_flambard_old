@@ -1,5 +1,3 @@
-/** @format */
-
 export const card = (recipe) => {
   const div = document.createElement("div");
   div.classList.add("card");
