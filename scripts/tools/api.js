@@ -10,3 +10,13 @@ const putAllRecipesDisplayTrue = (data) => {
     });
     return data
 }
+
+export const getAllIngredients = (DATA) => { 
+    const ingredients = [];
+    DATA.forEach(recipe => {
+        recipe.ingredients.forEach(ingredient => {
+            ingredients.push(ingredient.ingredient)
+        })
+    });
+    return ingredients
+}
