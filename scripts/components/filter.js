@@ -1,16 +1,16 @@
 export const filterSelected = () => {
-  const dropdown = document.querySelector(".filter__dropdown");
+  const dropdown = document.querySelector(".filter");
   dropdown.classList.toggle("selected");
   return dropdown;
 };
 
 export const addSelected = () => {
-  const dropdown = document.querySelector(".filter__dropdown");
+  const dropdown = document.querySelector(".filter");
   dropdown.classList.add("selected");
   return dropdown;
 };
 export const removeSelected = () => {
-  const dropdown = document.querySelector(".filter__dropdown");
+  const dropdown = document.querySelector(".filter");
   dropdown.classList.remove("selected");
   return dropdown;
 };
@@ -27,26 +27,17 @@ export const filterDropdown = (DATA) => {
   div.classList.add("filter__dropdown");
   div.append(filterDropdownList(DATA));
   div.append(filterInput(DATA));
+  div.append(filterIconDown());
+  div.append(filterIconUp());
   return div;
 };
 
-export const filterDropdownList = (DATA) => {
+export const filterDropdownList = () => {
   const ul = document.createElement("ul");
   ul.classList.add("filter__dropdown__list");
-  // ul.append(filterDropdownListItem(DATA));
-  ul.append(filterIconDown());
-  ul.append(filterIconUp());
   return ul;
 };
 
-// export const filterDropdownListItem = (DATA) => {
-//   console.log(DATA);
-//   const li = document.createElement("li");
-//   li.classList.add("filter__dropdown__list__item");
-//   li.innerHTML = DATA
-
-//   return li;
-// };
 
 export const filterInput = () => {
   const input = document.createElement("input");
@@ -65,8 +56,7 @@ export const filterIconDown = () => {
   img.setAttribute("alt", "filter");
 
   img.addEventListener("click", () => {
-    const dropdown = document.querySelector(".filter__dropdown");
-    dropdown.classList.toggle("selected");
+    filterSelected();
   });
   return img;
 };

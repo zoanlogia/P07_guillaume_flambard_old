@@ -72,8 +72,8 @@ table {
 #search,
 .search {
   position: relative; }
-  #search input,
-  .search input {
+  #search #search_input,
+  .search #search_input {
     width: 100%;
     height: 2.5rem;
     border: 1px solid #e7e7e7;
@@ -120,6 +120,9 @@ table {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap; }
+  @media screen and (min-width: 768px) {
+    .filter__container {
+      width: 50%; } }
   .filter__container .filter {
     margin: 1em 0; }
     .filter__container .filter__dropdown {
@@ -139,7 +142,8 @@ table {
       .filter__container .filter__dropdown input {
         background: none !important;
         border: none !important;
-        color: white; }
+        color: white;
+        position: relative; }
       .filter__container .filter__dropdown ::placeholder {
         color: white;
         opacity: 1; }
@@ -155,32 +159,37 @@ table {
         display: none; }
       .filter__container .filter__dropdown ul li {
         display: none; }
-      .filter__container .filter__dropdown.selected .filter__dropdown__icon__down {
-        display: none; }
-      .filter__container .filter__dropdown.selected .filter__dropdown__icon__up {
-        display: block; }
-      .filter__container .filter__dropdown.selected ul li {
-        animation: b 0.3s linear forwards;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
+    .filter__container .filter.selected {
+      width: 100%; }
+      .filter__container .filter.selected .filter__dropdown {
+        width: 100%; }
+        .filter__container .filter.selected .filter__dropdown__icon__down {
+          display: none; }
+        .filter__container .filter.selected .filter__dropdown__icon__up {
+          display: block; }
+      .filter__container .filter.selected ul {
+        background-color: #3282f7;
         border-radius: 0 0 5px 5px;
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
         position: absolute;
-        top: 94%;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 4rem;
-        color: white;
-        background-color: #3282f7; }
+        top: 95%; }
+        .filter__container .filter.selected ul li {
+          padding-left: .5em;
+          margin: .4em;
+          display: block;
+          width: 30%;
+          border: none;
+          animation: b 0.3s linear forwards;
+          color: white;
+          background-color: #3282f7; }
 
 @keyframes b {
   0% {
     background: transparent; }
   94% {
     background: #3282f7; } }
-        .filter__container .filter__dropdown.selected ul li span {
-          padding: 0 0.8em; }
 
 /** @format */
 .recipes__container {

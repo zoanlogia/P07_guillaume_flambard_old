@@ -14,7 +14,7 @@ export const getIngredientInput = () => {
   return document.getElementById("filter__dropdown__input");
 };
 
-export const handleInputIngredient = (DATA) => {
+export const handleInputIngredient = () => {
   const input = getIngredientInput();
   const ingredients = getAllIngredients();
   const ul = document.querySelector(".filter__dropdown__list");
@@ -40,8 +40,8 @@ export const handleInputIngredient = (DATA) => {
         ul.innerHTML = ''
         const keywords = ingredients.filter(ingredient => ingredient.includes(input.value));
         keywords.forEach(keyword => {
-          // li.classList.add("filter__dropdown__list__item");
           const li = document.createElement("li");
+          li.classList.add("filter__dropdown__list__item");
           li.innerHTML = keyword
           ul.append(li);
         // ================================
