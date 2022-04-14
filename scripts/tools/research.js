@@ -16,53 +16,69 @@ export const getIngredientInput = () => {
 
 export const handleInputIngredient = (DATA) => {
   const input = getIngredientInput();
+  const ingredients = getAllIngredients();
+  const ul = document.querySelector(".filter__dropdown__list");
 
   let timeout = null;
   const time = 500;
+  
   input.addEventListener("input", () => {
     if (timeout !== null) {
       clearTimeout(timeout);
+      
     }
     timeout = setTimeout(() => {
-      searchIngredient(input.value, DATA);
+      // display
+      addSelected();
 
-      const ingredients = getAllIngredients(DATA);
-      addSelected(DATA);
+      if (input.value.length >= 3) {
 
-      const keywords = ingredients.filter(ingredient => ingredient.toLowerCase().includes(input.value));
-      
-      const li = document.createElement("li");
-      const ul = document.querySelector(".filter__dropdown__list");
-      if (input.value !== "") {
-        
+        // ================================
+        // a mettre dans une fonction
+        // on l'appelera lors du clic sur les li
+        searchIngredient(input.value);
+        ul.innerHTML = ''
+        const keywords = ingredients.filter(ingredient => ingredient.includes(input.value));
         keywords.forEach(keyword => {
-          
-          li.classList.add("filter__dropdown__list__item");
+          // li.classList.add("filter__dropdown__list__item");
+          const li = document.createElement("li");
           li.innerHTML = keyword
           ul.append(li);
-          console.log(keywords);
+        // ================================
+
         })
+
+      } else {
+
+        // ============================================
+        // trouver un moyen de déclancher ça 1 seul fois pour enlever le setimeout
+        ul.innerHTML = ''
+        ingredients.forEach(ingredient => {
+          const li = document.createElement("li");
+          li.classList.add("filter__dropdown__list__item");
+          li.innerHTML = ingredient
+          ul.append(li);
+        })
+        displayRecipes(getCleanData())
+        // ============================================
       }
-      
+
     }, time);
   });
 };
 
-export const searchIngredient = (value, DATA) => {
-  if (value.length >= 3) {
-    DATA.forEach((recipe) => {
-      recipe.display = false;
-      const regex = new RegExp(value.toLowerCase(), "g");
+export const searchIngredient = (value) => {
+  const DATA = getCleanData()
+  DATA.forEach((recipe) => {
+    recipe.display = false;
+    const regex = new RegExp(value.toLowerCase(), "g");
 
-      recipe.ingredients.forEach(ing => {
-        if (ing.ingredient.toLowerCase().search(regex) >= 0) {
-          recipe.display = true
-        }
-      });
+    recipe.ingredients.forEach(ing => {
+      if (ing.ingredient.toLowerCase().search(regex) >= 0) {
+        recipe.display = true
+      }
     });
-  } else {
-    DATA = getCleanData();
-  }
+  });
   displayRecipes(DATA);
 };
 
