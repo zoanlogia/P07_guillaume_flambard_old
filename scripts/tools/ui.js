@@ -4,8 +4,6 @@ import { card } from "../components/card.js";
 export const createFilter = (DATA) => { 
   const container = document.querySelector('.filter__container')
   container.append(filterContainer(DATA))
-  // container.append(filterContainer(DATA))
-  // container.append(filterContainer(DATA))
 }
 
 export const displayRecipes = (recipes) => {
