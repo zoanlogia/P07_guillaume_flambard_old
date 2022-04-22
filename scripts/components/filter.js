@@ -45,6 +45,7 @@ export const filterInput = () => {
   input.setAttribute("id", "filter__dropdown__input");
   input.setAttribute("type", "list");
   input.setAttribute("placeholder", "Ingredients");
+  input.setAttribute('autocomplete', 'off');
   return input;
 };
 

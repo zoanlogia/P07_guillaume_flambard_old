@@ -1,17 +1,17 @@
+/** @format */
+
 @mixin tag {
-    border-radius: 5px;
-      color: white;
-      border: none;
-      height: 2rem;
-      width: 6rem;
-      cursor: pointer;
+  border-radius: 5px;
+  color: white;
+  border: none;
+  height: 2rem;
+  width: 6rem;
+  cursor: pointer;
 }
 
 @mixin dropdown {
-     border-radius: 5px;
-    color: white;
-    border: none;
-    height: 4rem;
-    width: 10rem;
-    cursor: pointer;
+  border-radius: 5px;
+  color: white;
+  border: none;
+  cursor: pointer;
 }

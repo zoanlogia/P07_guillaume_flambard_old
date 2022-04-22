@@ -1,6 +1,11 @@
-/** @format */
-
 export const createTag = (value) => {
-  const div = `<div class="tag">${value}</div>`;
-  return div;
+  const tag = `<div class="tag">
+    <span>${value}</span>
+    <img class="close__tag" src="../../assets/img/close.svg" alt="close" />
+  </div> `;
+  return tag;
 };
+
+
+
+

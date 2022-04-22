@@ -1,6 +1,6 @@
 /** @format */
 
-import { addSelected } from "../components/filter.js";
+import { addSelected, removeSelected } from "../components/filter.js";
 import { displayRecipes } from "./ui.js";
 import { getAllIngredients, getCleanData } from "./api.js";
 import { createTag } from "../components/tag.js";
@@ -41,21 +41,47 @@ export const handleInputIngredient = () => {
         ul.append(li);
       });
       displayRecipes(getCleanData());
+      removeSelected();
     }
   });
 };
 
 const onClickLi = (value) => {
+  const divTags = document.querySelector(".tags__container");
   const tag = createTag(value);
-  const divTags = document.querySelector(".tags");
-  divTags.innerHTML = tag;
-  console.log(value);
+  divTags.innerHTML += tag;
+
+  removeSelected();
+  getIngredientInput().value = value
+  onClickCloseTag();
 
   // 1 - fermer la dropdown
   // 2 - afficher dans la dropdown la value
   // 3 - filtrer les card en fonction de la value ==> searchIngredient(value)
   // 4 - quand on click sur la croix du tag => log tu tag !!
 };
+
+export const onClickCloseTag = () => {
+  const closeTags = document.querySelectorAll(".close__tag");
+  closeTags.forEach((closeTag) => {
+    closeTag.addEventListener("click", () => {
+      const tag = closeTag.parentElement;
+      console.log(tag.textContent);
+      tag.remove();
+      getIngredientInput().value = "";
+      displayRecipes(getCleanData());
+      removeSelected();
+    });
+  });
+
+ }
+
+// export const closeTag = () => { 
+//    const img = document.querySelector(".close__tag");
+//    img.addEventListener("click", () => {
+//      getIngredientInput().value = "";
+//    });
+// }
 
 export const searchIngredient = (value) => {
   const DATA = getCleanData();

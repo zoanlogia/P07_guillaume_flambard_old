@@ -4,24 +4,19 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  @media screen and (min-width: 768px) {
-    width: 50%;
-  }
-
   .filter {
-    margin: 1em 0;
+    width: auto;
+    margin:1em 1em 0 0;
 
     &__dropdown {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-      margin-right: 2em;
       @include dropdown;
       background-color: $bleu-btn;
       position: relative;
 
       input {
+        height: auto;
+        line-height: 4em;
+        width: -webkit-fill-available;
         background: none !important;
         border: none !important;
         color: white;
@@ -38,7 +33,7 @@
 
       & img {
         position: absolute;
-        right: 1em;
+        right: 0;
         top: 50%;
         bottom: 50%;
         transform: translate(-50%, -50%);
@@ -51,15 +46,19 @@
       }
 
       & ul {
+        width: 100%;
         & li {
           display: none;
         }
       }
     }
+
+    #ustencils-filter {
+      background-color: #68D9A4;
+    }
+
     &.selected {
-      width: 100%;
       .filter__dropdown {
-        width: 100%;
         &__icon__down {
           display: none;
         }
@@ -72,18 +71,13 @@
       & ul {
         background-color: $bleu-btn;
         border-radius: 0 0 5px 5px;
-        display: flex;
-        flex-wrap: wrap;
-        width: 100%;
         position: absolute;
         top: 95%;
-        
 
         & li {
-          padding-left: .5em;
-          margin: .4em;
+          padding-left: 0.5em;
+          margin: 0.4em;
           display: block;
-          width: 30%;
           border: none;
           animation: b 0.3s linear forwards;
           color: white;
