@@ -1,0 +1,22 @@
+
+.tags__container{
+    .tag {
+       margin: 1em 1em 0 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: $bleu-btn;
+        border-radius: 5px;
+        color: white;
+        width: fit-content;
+        cursor: pointer;
+
+        span {
+            padding: 10px;
+        }
+
+        img {
+            padding: 10px;
+        }
+   }
+}

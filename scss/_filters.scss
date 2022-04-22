@@ -1,33 +1,98 @@
-.filter {
-  margin: 1em 0;
+/** @format */
+
+.filter__container {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  .filter {
+    width: auto;
+    margin:1em 1em 0 0;
 
-  &__dropdown {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    margin-right: 2em;
-    @include dropdown;
-    background-color: $bleu-btn;
-    position: relative;
+    &__dropdown {
+      @include dropdown;
+      background-color: $bleu-btn;
+      position: relative;
 
-    & img {
+      input {
+        height: auto;
+        line-height: 4em;
+        width: -webkit-fill-available;
+        background: none !important;
+        border: none !important;
+        color: white;
+        position: relative;
+      }
+
+      ::placeholder {
+        color: white;
+        opacity: 1;
+      }
+      :focus {
+        outline: none;
+      }
+
+      & img {
         position: absolute;
-        right: 1em;
+        right: 0;
         top: 50%;
         bottom: 50%;
         transform: translate(-50%, -50%);
+      }
+
+      &__icon {
+        &__up {
+          display: none;
+        }
+      }
+
+      & ul {
+        width: 100%;
+        & li {
+          display: none;
+        }
+      }
     }
 
-    & ul {
-        & li {
-            & span {
-                padding:0 1em;
-            }
+    #ustencils-filter {
+      background-color: #68D9A4;
+    }
+
+    &.selected {
+      .filter__dropdown {
+        &__icon__down {
+          display: none;
         }
+
+        &__icon__up {
+          display: block;
+        }
+      }
+
+      & ul {
+        background-color: $bleu-btn;
+        border-radius: 0 0 5px 5px;
+        position: absolute;
+        top: 95%;
+
+        & li {
+          padding-left: 0.5em;
+          margin: 0.4em;
+          display: block;
+          border: none;
+          animation: b 0.3s linear forwards;
+          color: white;
+          background-color: $bleu-btn;
+
+          @keyframes b {
+            0% {
+              background: transparent;
+            }
+            94% {
+              background: $bleu-btn;
+            }
+          }
+        }
+      }
     }
   }
 }

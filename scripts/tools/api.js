@@ -10,3 +10,14 @@ const putAllRecipesDisplayTrue = (data) => {
     });
     return data
 }
+
+export const getAllIngredients = () => {
+    const ingredients = [];
+    getCleanData().forEach(recipe => {
+        recipe.ingredients.forEach(ingredient => {
+            ingredients.push(ingredient.ingredient.toLowerCase())
+        })
+    });
+
+    return [...new Set(ingredients)] // enlève les doublons (253 -> 123)
+}
