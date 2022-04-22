@@ -1,16 +1,16 @@
 export const filterSelected = () => {
-  const dropdown = document.querySelector(".filter");
+  const dropdown = document.querySelector("#filter__ingredients");
   dropdown.classList.toggle("selected");
   return dropdown;
 };
 
 export const addSelected = () => {
-  const dropdown = document.querySelector(".filter");
+  const dropdown = document.querySelector("#filter__ingredients");
   dropdown.classList.add("selected");
   return dropdown;
 };
 export const removeSelected = () => {
-  const dropdown = document.querySelector(".filter");
+  const dropdown = document.querySelector("#filter__ingredients");
   dropdown.classList.remove("selected");
   return dropdown;
 };
@@ -18,6 +18,7 @@ export const removeSelected = () => {
 export const filterContainer = (DATA) => {
   const div = document.createElement("div");
   div.classList.add("filter");
+  div.setAttribute("id", "filter__ingredients");
   div.append(filterDropdown(DATA));
   return div;
 };
@@ -42,7 +43,7 @@ export const filterDropdownList = () => {
 export const filterInput = () => {
   const input = document.createElement("input");
   input.classList.add("filter__dropdown__input");
-  input.setAttribute("id", "filter__dropdown__input");
+  input.setAttribute("id", "filter__dropdown__input__ingredients");
   input.setAttribute("type", "list");
   input.setAttribute("placeholder", "Ingredients");
   input.setAttribute('autocomplete', 'off');

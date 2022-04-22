@@ -1,18 +1,21 @@
 /** @format */
 
-import { addSelected, removeSelected } from "../components/filter.js";
+import {
+  addSelected,
+  removeSelected,
+} from "../components/filter_ingredients.js";
 import { displayRecipes } from "./ui.js";
 import { getAllIngredients, getCleanData } from "./api.js";
 import { createTag } from "../components/tag.js";
 
 export const getIngredientInput = () => {
-  return document.getElementById("filter__dropdown__input");
+  return document.getElementById("filter__dropdown__input__ingredients");
 };
 
 export const handleInputIngredient = () => {
   const input = getIngredientInput();
   const ingredients = getAllIngredients();
-  const ul = document.querySelector(".filter__dropdown__list");
+  const ul = document.querySelector("#filter__ingredients > div > ul");
 
   input.addEventListener("input", () => {
     addSelected();
@@ -52,7 +55,7 @@ const onClickLi = (value) => {
   divTags.innerHTML += tag;
 
   removeSelected();
-  getIngredientInput().value = value
+  getIngredientInput().value = value;
   onClickCloseTag();
 
   // 1 - fermer la dropdown
@@ -73,15 +76,7 @@ export const onClickCloseTag = () => {
       removeSelected();
     });
   });
-
- }
-
-// export const closeTag = () => { 
-//    const img = document.querySelector(".close__tag");
-//    img.addEventListener("click", () => {
-//      getIngredientInput().value = "";
-//    });
-// }
+};
 
 export const searchIngredient = (value) => {
   const DATA = getCleanData();
@@ -97,3 +92,4 @@ export const searchIngredient = (value) => {
   });
   displayRecipes(DATA);
 };
+
