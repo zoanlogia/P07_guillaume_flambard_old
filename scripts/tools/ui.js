@@ -1,12 +1,11 @@
-/** @format */
-
-import { filterContainer } from "../components/filter.js";
+import { filterContainer } from "../components/filter_ingredients.js";
+import { filterContainerUstensils } from "../components/filter_ustensils.js";
 import { card } from "../components/card.js";
 
 export const createFilter = (DATA) => {
   const container = document.querySelector(".filter__container");
   container.append(filterContainer(DATA));
-  // second filter
+  container.append(filterContainerUstensils(DATA));
 }
 
 export const displayRecipes = (recipes) => {

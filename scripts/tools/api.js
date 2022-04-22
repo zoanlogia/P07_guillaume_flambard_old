@@ -21,3 +21,13 @@ export const getAllIngredients = () => {
 
     return [...new Set(ingredients)] // enlève les doublons (253 -> 123)
 }
+
+export const getAllUstensils = () => {
+    const ustensils = [];
+    getCleanData().forEach(recipe => {
+        recipe.ustensils.forEach(ustensil => {
+            ustensils.push(ustensil.toLowerCase())
+        })
+    });
+    return [...new Set(ustensils)] // enlève les doublons (253 -> 123)
+}
