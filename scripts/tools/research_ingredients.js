@@ -6,7 +6,7 @@ import {
 } from "../components/filter_ingredients.js";
 import { displayRecipes } from "./ui.js";
 import { getAllIngredients, getCleanData } from "./api.js";
-import { createTag } from "../components/tag.js";
+import { createTagIngredients } from "../components/tags.js";
 
 export const getIngredientInput = () => {
   return document.getElementById("filter__dropdown__input__ingredients");
@@ -51,7 +51,7 @@ export const handleInputIngredient = () => {
 
 const onClickLi = (value) => {
   const divTags = document.querySelector(".tags__container");
-  const tag = createTag(value);
+  const tag = createTagIngredients(value);
   divTags.innerHTML += tag;
 
   removeSelected();
@@ -65,11 +65,10 @@ const onClickLi = (value) => {
 };
 
 export const onClickCloseTag = () => {
-  const closeTags = document.querySelectorAll(".close__tag");
+  const closeTags = document.querySelectorAll(".closeIng");
   closeTags.forEach((closeTag) => {
     closeTag.addEventListener("click", () => {
       const tag = closeTag.parentElement;
-      console.log(tag.textContent);
       tag.remove();
       getIngredientInput().value = "";
       displayRecipes(getCleanData());

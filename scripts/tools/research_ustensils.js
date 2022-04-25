@@ -4,7 +4,7 @@ import {
 } from "../components/filter_ustensils.js";
 import { displayRecipes } from "./ui.js";
 import { getAllUstensils, getCleanData } from "./api.js";
-import { createTag } from "../components/tag.js";
+import { createTagUstensils } from "../components/tags.js";
 
 export const getUstensilInput = () => {
   return document.getElementById("filter__dropdown__input__ustensils");
@@ -49,13 +49,28 @@ export const handleInputUstensil = () => {
 
 const onClickLi = (value) => {
   const divTags = document.querySelector(".tags__container");
-  const tag = createTag(value);
+  const tag = createTagUstensils(value);
   divTags.innerHTML += tag;
+  console.log(tag);
 
   removeSelected();
   getUstensilInput().value = value;
   onClickCloseTag();
 
+};
+
+export const onClickCloseTag = () => {
+  const closeTags = document.querySelectorAll(".closeUst");
+  closeTags.forEach((closeTag) => {
+    closeTag.addEventListener("click", () => {
+      const tag = closeTag.parentElement;
+      console.log(tag.textContent);
+      tag.remove();
+      getUstensilInput().value = "";
+      displayRecipes(getCleanData());
+      removeSelected();
+    });
+  });
 };
 
 export const searchUstensil = (value) => {
