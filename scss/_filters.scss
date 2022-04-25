@@ -53,21 +53,6 @@
       }
     }
 
-    #filter__dropdown__input__ustensils {
-      background-color: #68d9a4 !important;
-      border-radius: 5px;
-    }
-
-    .filter__dropdown:nth-child(1) {
-      & ul {
-        background-color: #68d9a4 !important;
-
-        & li {
-          background-color: #68d9a4 !important;
-        }
-      }
-    }
-
     &.selected {
       .filter__dropdown {
         &__icon__down {
@@ -107,3 +92,16 @@
     }
   }
 }
+
+ #filter__dropdown__input__ustensils {
+      background-color: #68d9a4 !important;
+      border-radius: 5px;
+    }
+
+    #filter__ustensils > div > ul {
+      background-color: #68d9a4 !important;
+    }
+    #filter__ustensils > div > ul > li {
+      background-color: #68d9a4 !important;
+    }
+

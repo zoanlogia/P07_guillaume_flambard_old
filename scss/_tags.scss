@@ -1,5 +1,7 @@
 
 .tags__container{
+    display: flex;
+    flex-direction: row;
     .tag {
        margin: 1em 1em 0 0;
         display: flex;
@@ -18,5 +20,9 @@
         img {
             padding: 10px;
         }
+   }
+
+   .green {
+         background-color: #68d9a4 !important
    }
 }
