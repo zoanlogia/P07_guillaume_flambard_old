@@ -1,12 +1,17 @@
-/** @format */
-
 import {
   addSelected,
   removeSelected,
 } from "../components/filter_ingredients.js";
-import { displayRecipes } from "./ui.js";
-import { getAllIngredients, getCleanData } from "./api.js";
-import { createTagIngredients } from "../components/tags.js";
+import {
+  displayRecipes
+} from "./ui.js";
+import {
+  getAllIngredients,
+  getCleanData
+} from "./api.js";
+import {
+  createTagIngredients
+} from "../components/tags.js";
 
 export const getIngredientInput = () => {
   return document.getElementById("filter__dropdown__input__ingredients");
@@ -29,7 +34,14 @@ export const handleInputIngredient = () => {
       const keywords = ingredients.filter((ingredient) =>
         ingredient.includes(input.value),
       );
-      keywords.forEach((keyword) => {
+      const tags = Array.from(document.querySelectorAll(".tag"));
+      const ingAllreadySelected = tags.map((tag) => {
+        return tag.innerText;
+      });
+      const ingToDisplay = keywords.filter((ingTag) => {
+        return !ingAllreadySelected.includes(ingTag);
+      });
+      ingToDisplay.forEach((keyword) => {
         const li = document.createElement("li");
         li.classList.add("filter__dropdown__list__item");
         li.innerHTML = keyword;
@@ -58,10 +70,10 @@ export const onClickLi = (value) => {
   divTags.innerHTML += tag;
 
   removeSelected();
+  razDropdown();
   getIngredientInput().value = value;
   onClickCloseTag();
   getIngredientInput().value = "";
-  razDropdown();
 };
 
 export const razDropdown = () => {
