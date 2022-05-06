@@ -70,33 +70,68 @@ export const onClickLi = (value) => {
   divTags.innerHTML += tag;
 
   removeSelected();
-  razDropdown();
+  searchIngredient(value);
+  updateDropdown();
   getIngredientInput().value = value;
   onClickCloseTag();
   getIngredientInput().value = "";
 };
 
-export const razDropdown = () => {
+export const updateDropdown = () => {
   const ul = getIngredientUl();
   const allIng = getAllIngredients();
   const tags = Array.from(document.querySelectorAll(".tag"));
   const ingAllreadySelected = tags.map((tag) => {
     return tag.innerText;
   });
-  const ingToDisplay = allIng.filter((ingTag) => {
+
+  // const reduced = monarray.reduce((accumulator, current) => {
+  //   if(current === 10) {
+  //     accumulator.push(current)
+  //   }
+  //   return accumulator
+  // }, [])
+
+
+  // const accumulator = []
+  // monarray.forEach(current => {
+  //   if(current === 10) {
+  //     accumulator.push(current)
+  //   }
+  // })
+
+
+
+  // filtrer les ingrédients pour n'afficher que ceux des recettes montrées
+  const filteredIngredients = getIngredientsFromDiplayedRecipes()
+
+  const reduced = filteredIngredients.reduce((accumulator, current) => {
+    if (!accumulator.includes(current)) {
+      accumulator.push(current);
+    }
+    return accumulator
+  }, []);
+
+  const ingToDisplay = reduced.filter((ingTag) => {
     return !ingAllreadySelected.includes(ingTag);
   });
   ul.innerHTML = "";
-  ingToDisplay.forEach((ingredient) => {
+  ingToDisplay.forEach((keyword) => {
     const li = document.createElement("li");
     li.classList.add("filter__dropdown__list__item");
-    li.innerHTML = ingredient;
+    li.innerHTML = keyword;
     li.onclick = () => {
-      onClickLi(ingredient);
+      onClickLi(keyword);
     };
     ul.append(li);
   });
-};
+}
+
+const getIngredientsFromDiplayedRecipes = () => {
+  const recipes = Array.from(document.querySelectorAll('.ingredients .ingredient b'))
+  const ingredients = recipes.map(ing => ing.innerHTML)
+  return ingredients
+}
 
 export const onClickCloseTag = () => {
   const closeTags = document.querySelectorAll(".closeIng");

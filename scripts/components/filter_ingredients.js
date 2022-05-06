@@ -1,5 +1,9 @@
-import { getAllIngredients } from "../tools/api.js";
-import { onClickLi } from "../tools/research_ingredients.js";
+import {
+  getAllIngredients
+} from "../tools/api.js";
+import {
+  onClickLi
+} from "../tools/research_ingredients.js";
 
 export const filterSelected = () => {
   const dropdown = document.querySelector("#filter__ingredients");

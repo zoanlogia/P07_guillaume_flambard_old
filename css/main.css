@@ -177,14 +177,14 @@ table {
     background: #3282f7; } }
 
 #filter__dropdown__input__ustensils {
-  background-color: #68d9a4 !important;
+  background-color: #ED6454 !important;
   border-radius: 5px; }
 
 #filter__ustensils > div > ul {
-  background-color: #68d9a4 !important; }
+  background-color: #ED6454 !important; }
 
 #filter__ustensils > div > ul > li {
-  background-color: #68d9a4 !important; }
+  background-color: #ED6454 !important; }
 
 /** @format */
 .recipes__container {
@@ -269,4 +269,4 @@ table {
     .tags__container .tag img {
       padding: 10px; }
   .tags__container .green {
-    background-color: #68d9a4 !important; }
+    background-color: #ED6454 !important; }
