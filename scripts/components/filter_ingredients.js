@@ -1,3 +1,10 @@
+import {
+  getAllIngredients
+} from "../tools/api.js";
+import {
+  onClickLi
+} from "../tools/research_ingredients.js";
+
 export const filterSelected = () => {
   const dropdown = document.querySelector("#filter__ingredients");
   dropdown.classList.toggle("selected");
@@ -36,9 +43,18 @@ export const filterDropdown = (DATA) => {
 export const filterDropdownList = () => {
   const ul = document.createElement("ul");
   ul.classList.add("filter__dropdown__list");
+
+  getAllIngredients().forEach((ing) => {
+    const li = document.createElement("li");
+    li.classList.add("filter__dropdown__list__item");
+    li.innerHTML = ing;
+    li.onclick = () => {
+      onClickLi(li.innerHTML);
+    };
+    ul.append(li);
+  });
   return ul;
 };
-
 
 export const filterInput = () => {
   const input = document.createElement("input");
@@ -46,7 +62,8 @@ export const filterInput = () => {
   input.setAttribute("id", "filter__dropdown__input__ingredients");
   input.setAttribute("type", "list");
   input.setAttribute("placeholder", "Ingredients");
-  input.setAttribute('autocomplete', 'off');
+  input.setAttribute("autocomplete", "off");
+  input.addEventListener("click", addSelected);
   return input;
 };
 
@@ -59,6 +76,7 @@ export const filterIconDown = () => {
 
   img.addEventListener("click", () => {
     filterSelected();
+    getAllIngredients()
   });
   return img;
 };

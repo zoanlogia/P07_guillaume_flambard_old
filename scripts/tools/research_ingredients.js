@@ -1,21 +1,29 @@
-/** @format */
-
 import {
   addSelected,
   removeSelected,
 } from "../components/filter_ingredients.js";
-import { displayRecipes } from "./ui.js";
-import { getAllIngredients, getCleanData } from "./api.js";
-import { createTag } from "../components/tag.js";
+import {
+  displayRecipes
+} from "./ui.js";
+import {
+  getAllIngredients,
+  getCleanData
+} from "./api.js";
+import {
+  createTagIngredients
+} from "../components/tags.js";
 
 export const getIngredientInput = () => {
   return document.getElementById("filter__dropdown__input__ingredients");
+};
+export const getIngredientUl = () => {
+  return document.querySelector("#filter__ingredients > div > ul");
 };
 
 export const handleInputIngredient = () => {
   const input = getIngredientInput();
   const ingredients = getAllIngredients();
-  const ul = document.querySelector("#filter__ingredients > div > ul");
+  const ul = getIngredientUl();
 
   input.addEventListener("input", () => {
     addSelected();
@@ -26,7 +34,14 @@ export const handleInputIngredient = () => {
       const keywords = ingredients.filter((ingredient) =>
         ingredient.includes(input.value),
       );
-      keywords.forEach((keyword) => {
+      const tags = Array.from(document.querySelectorAll(".tag"));
+      const ingAllreadySelected = tags.map((tag) => {
+        return tag.innerText;
+      });
+      const ingToDisplay = keywords.filter((ingTag) => {
+        return !ingAllreadySelected.includes(ingTag);
+      });
+      ingToDisplay.forEach((keyword) => {
         const li = document.createElement("li");
         li.classList.add("filter__dropdown__list__item");
         li.innerHTML = keyword;
@@ -49,27 +64,80 @@ export const handleInputIngredient = () => {
   });
 };
 
-const onClickLi = (value) => {
+export const onClickLi = (value) => {
   const divTags = document.querySelector(".tags__container");
-  const tag = createTag(value);
+  const tag = createTagIngredients(value);
   divTags.innerHTML += tag;
 
   removeSelected();
+  searchIngredient(value);
+  updateDropdown();
   getIngredientInput().value = value;
   onClickCloseTag();
-
-  // 1 - fermer la dropdown
-  // 2 - afficher dans la dropdown la value
-  // 3 - filtrer les card en fonction de la value ==> searchIngredient(value)
-  // 4 - quand on click sur la croix du tag => log tu tag !!
+  getIngredientInput().value = "";
 };
 
+export const updateDropdown = () => {
+  const ul = getIngredientUl();
+  const allIng = getAllIngredients();
+  const tags = Array.from(document.querySelectorAll(".tag"));
+  const ingAllreadySelected = tags.map((tag) => {
+    return tag.innerText;
+  });
+
+  // const reduced = monarray.reduce((accumulator, current) => {
+  //   if(current === 10) {
+  //     accumulator.push(current)
+  //   }
+  //   return accumulator
+  // }, [])
+
+
+  // const accumulator = []
+  // monarray.forEach(current => {
+  //   if(current === 10) {
+  //     accumulator.push(current)
+  //   }
+  // })
+
+
+
+  // filtrer les ingrédients pour n'afficher que ceux des recettes montrées
+  const filteredIngredients = getIngredientsFromDiplayedRecipes()
+
+  const reduced = filteredIngredients.reduce((accumulator, current) => {
+    if (!accumulator.includes(current)) {
+      accumulator.push(current);
+    }
+    return accumulator
+  }, []);
+
+  const ingToDisplay = reduced.filter((ingTag) => {
+    return !ingAllreadySelected.includes(ingTag);
+  });
+  ul.innerHTML = "";
+  ingToDisplay.forEach((keyword) => {
+    const li = document.createElement("li");
+    li.classList.add("filter__dropdown__list__item");
+    li.innerHTML = keyword;
+    li.onclick = () => {
+      onClickLi(keyword);
+    };
+    ul.append(li);
+  });
+}
+
+const getIngredientsFromDiplayedRecipes = () => {
+  const recipes = Array.from(document.querySelectorAll('.ingredients .ingredient b'))
+  const ingredients = recipes.map(ing => ing.innerHTML)
+  return ingredients
+}
+
 export const onClickCloseTag = () => {
-  const closeTags = document.querySelectorAll(".close__tag");
+  const closeTags = document.querySelectorAll(".closeIng");
   closeTags.forEach((closeTag) => {
     closeTag.addEventListener("click", () => {
       const tag = closeTag.parentElement;
-      console.log(tag.textContent);
       tag.remove();
       getIngredientInput().value = "";
       displayRecipes(getCleanData());
@@ -92,4 +160,3 @@ export const searchIngredient = (value) => {
   });
   displayRecipes(DATA);
 };
-

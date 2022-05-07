@@ -1,4 +1,9 @@
-/** @format */
+import {
+  getAllUstensils
+} from "../tools/api.js";
+import {
+  onClickLi
+} from "../tools/research_ustensils.js";
 
 export const filterSelected = () => {
   const dropdown = document.querySelector("#filter__ustensils");
@@ -38,6 +43,15 @@ export const filterDropdown = (DATA) => {
 export const filterDropdownList = () => {
   const ul = document.createElement("ul");
   ul.classList.add("filter__dropdown__list");
+  getAllUstensils().forEach((ust) => {
+    const li = document.createElement("li");
+    li.classList.add("filter__dropdown__list__item");
+    li.innerHTML = ust;
+    li.onclick = () => {
+      onClickLi(li.innerHTML);
+    };
+    ul.append(li);
+  });
   return ul;
 };
 
@@ -48,6 +62,7 @@ export const filterInput = () => {
   input.setAttribute("type", "list");
   input.setAttribute("placeholder", "Appareils");
   input.setAttribute("autocomplete", "off");
+  input.addEventListener("click", addSelected);
   return input;
 };
 
@@ -60,6 +75,7 @@ export const filterIconDown = () => {
 
   img.addEventListener("click", () => {
     filterSelected();
+    getAllUstensils();
   });
   return img;
 };
