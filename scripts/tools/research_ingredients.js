@@ -1,17 +1,12 @@
+/** @format */
+
 import {
   addSelected,
   removeSelected,
 } from "../components/filter_ingredients.js";
-import {
-  displayRecipes
-} from "./ui.js";
-import {
-  getAllIngredients,
-  getCleanData
-} from "./api.js";
-import {
-  createTagIngredients
-} from "../components/tags.js";
+import { displayRecipes } from "./ui.js";
+import { getAllIngredients, getCleanData } from "./api.js";
+import { createTagIngredients } from "../components/tags.js";
 
 export const getIngredientInput = () => {
   return document.getElementById("filter__dropdown__input__ingredients");
@@ -85,31 +80,14 @@ export const updateDropdown = () => {
     return tag.innerText;
   });
 
-  // const reduced = monarray.reduce((accumulator, current) => {
-  //   if(current === 10) {
-  //     accumulator.push(current)
-  //   }
-  //   return accumulator
-  // }, [])
-
-
-  // const accumulator = []
-  // monarray.forEach(current => {
-  //   if(current === 10) {
-  //     accumulator.push(current)
-  //   }
-  // })
-
-
-
   // filtrer les ingrédients pour n'afficher que ceux des recettes montrées
-  const filteredIngredients = getIngredientsFromDiplayedRecipes()
+  const filteredIngredients = getIngredientsFromDiplayedRecipes();
 
   const reduced = filteredIngredients.reduce((accumulator, current) => {
-    if (!accumulator.includes(current)) {
-      accumulator.push(current);
+    if (!accumulator.includes(current.toLocaleLowerCase())) {
+      accumulator.push(current.toLocaleLowerCase());
     }
-    return accumulator
+    return accumulator;
   }, []);
 
   const ingToDisplay = reduced.filter((ingTag) => {
@@ -125,13 +103,16 @@ export const updateDropdown = () => {
     };
     ul.append(li);
   });
-}
+};
 
 const getIngredientsFromDiplayedRecipes = () => {
-  const recipes = Array.from(document.querySelectorAll('.ingredients .ingredient b'))
-  const ingredients = recipes.map(ing => ing.innerHTML)
-  return ingredients
-}
+  const recipes = Array.from(
+    document.querySelectorAll(".ingredients .ingredient b"),
+  );
+  const ingredients = recipes.map((ing) => ing.innerHTML);
+  console.log(ingredients);
+  return ingredients;
+};
 
 export const onClickCloseTag = () => {
   const closeTags = document.querySelectorAll(".closeIng");
