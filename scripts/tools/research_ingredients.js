@@ -108,7 +108,7 @@ const getIngredientsFromDiplayedRecipes = () => {
     document.querySelectorAll(".ingredients .ingredient b"),
   );
   const ingredients = recipes.map((ing) => ing.innerHTML);
-  console.log(ingredients);
+  // console.log(ingredients);
   return ingredients;
 };
 

@@ -1,4 +1,4 @@
-import { getCleanData } from "./tools/api.js";
+import { getCleanData, getRecipesStocked } from "./tools/api.js";
 import { createFilter, displayRecipes } from "./tools/ui.js";
 import { handleInputIngredient } from "./tools/research_ingredients.js";
 import { handleInputUstensil } from "./tools/research_ustensils.js";
