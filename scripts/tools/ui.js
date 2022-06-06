@@ -1,14 +1,16 @@
-import { filterContainer } from "../components/filter_ingredients.js";
-import { filterContainerUstensils } from "../components/filter_ustensils.js";
+import { dropdownIngredientContainer } from "../components/dropdown_ingredients.js";
 import { card } from "../components/card.js";
+import { getRecipesStocked } from "./storage.js";
 
-export const createFilter = (DATA) => {
+export const createFilter = () => {
   const container = document.querySelector(".filter__container");
-  container.append(filterContainer(DATA));
-  container.append(filterContainerUstensils(DATA));
+  container.append(dropdownIngredientContainer());
+  // container.append(dropdownApplianceContainer());
+  // container.append(dropdownUstencilContainer());
 }
 
-export const displayRecipes = (recipes) => {
+export const displayRecipes = () => {
+  const recipes = getRecipesStocked();
   const container = document.querySelector(".recipes__container");
   container.innerHTML = "";
   recipes.forEach((recipe) => {

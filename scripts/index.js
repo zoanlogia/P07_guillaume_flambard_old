@@ -1,10 +1,13 @@
-import { getCleanData, getRecipesStocked } from "./tools/api.js";
-import { createFilter, displayRecipes } from "./tools/ui.js";
+import recipes from "../data/recipes.js";
 import { handleInputIngredient } from "./tools/research_ingredients.js";
-import { handleInputUstensil } from "./tools/research_ustensils.js";
-const DATA = getCleanData()
+import { createFilter, displayRecipes } from "./tools/ui.js";
 
-createFilter(DATA)
-displayRecipes(DATA)
-handleInputIngredient(DATA)
-handleInputUstensil(DATA)
+recipes.forEach((recipe) => {
+  recipe.display = true;
+});
+
+window.localStorage.setItem("recipes", JSON.stringify(recipes));
+createFilter();
+displayRecipes();
+handleInputIngredient()
+// handleInputUstensil(DATA);

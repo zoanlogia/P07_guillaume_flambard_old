@@ -1,10 +1,10 @@
 import {
   addSelected,
   removeSelected,
-} from "../components/filter_ingredients.js";
+} from "../components/dropdown_ingredients.js";
 import { displayRecipes } from "./ui.js";
-import { getAllIngredients, getCleanData } from "./api.js";
 import { createTagIngredients } from "../components/tags.js";
+import { setRecipesStocked, getRecipesStocked } from "./storage.js";
 
 export const getIngredientInput = () => {
   return document.getElementById("filter__dropdown__input__ingredients");
@@ -15,7 +15,6 @@ export const getIngredientUl = () => {
 
 export const handleInputIngredient = () => {
   const input = getIngredientInput();
-  const ingredients = getAllIngredients();
   const ul = getIngredientUl();
 
   input.addEventListener("input", () => {
@@ -51,7 +50,7 @@ export const handleInputIngredient = () => {
         li.innerHTML = ingredient;
         ul.append(li);
       });
-      displayRecipes(getCleanData());
+      displayRecipes(getRecipesStocked());
       removeSelected();
     }
   });
@@ -71,9 +70,8 @@ export const onClickLi = (value) => {
 };
 
 export const updateDropdown = () => {
-  const ul = getIngredientUl();
-  const allIng = getAllIngredients();
   const tags = Array.from(document.querySelectorAll(".tag"));
+  const ul = getIngredientUl();
   const ingAllreadySelected = tags.map((tag) => {
     return tag.innerText;
   });
@@ -119,14 +117,14 @@ export const onClickCloseTag = () => {
       const tag = closeTag.parentElement;
       tag.remove();
       getIngredientInput().value = "";
-      displayRecipes(getCleanData());
+      displayRecipes(getRecipesStocked());
       removeSelected();
     });
   });
 };
 
 export const searchIngredient = (value) => {
-  const DATA = getCleanData();
+  const DATA = getRecipesStocked()
   DATA.forEach((recipe) => {
     recipe.display = false;
     const regex = new RegExp(value.toLowerCase(), "g");
@@ -137,5 +135,6 @@ export const searchIngredient = (value) => {
       }
     });
   });
-  displayRecipes(DATA);
+  setRecipesStocked(DATA);
+  displayRecipes();
 };
