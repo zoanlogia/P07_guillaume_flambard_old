@@ -5,42 +5,25 @@ import {
   onClickLi
 } from "../tools/research_ingredients.js";
 
-export const filterSelected = () => {
-  const dropdown = document.querySelector("#filter__ingredients");
-  dropdown.classList.toggle("selected");
-  return dropdown;
-};
-
-export const addSelected = () => {
-  const dropdown = document.querySelector("#filter__ingredients");
-  dropdown.classList.add("selected");
-  return dropdown;
-};
-export const removeSelected = () => {
-  const dropdown = document.querySelector("#filter__ingredients");
-  dropdown.classList.remove("selected");
-  return dropdown;
-};
-
-export const filterContainer = (DATA) => {
+export const dropdownIngredientContainer = () => {
   const div = document.createElement("div");
   div.classList.add("filter");
   div.setAttribute("id", "filter__ingredients");
-  div.append(filterDropdown(DATA));
+  div.append(dropdown());
   return div;
 };
 
-export const filterDropdown = (DATA) => {
+export const dropdown = () => {
   const div = document.createElement("div");
   div.classList.add("filter__dropdown");
-  div.append(filterDropdownList(DATA));
-  div.append(filterInput(DATA));
+  div.append(createDropdownList());
+  div.append(createInput());
   div.append(filterIconDown());
   div.append(filterIconUp());
   return div;
 };
 
-export const filterDropdownList = () => {
+export const createDropdownList = () => {
   const ul = document.createElement("ul");
   ul.classList.add("filter__dropdown__list");
 
@@ -56,7 +39,7 @@ export const filterDropdownList = () => {
   return ul;
 };
 
-export const filterInput = () => {
+export const createInput = () => {
   const input = document.createElement("input");
   input.classList.add("filter__dropdown__input");
   input.setAttribute("id", "filter__dropdown__input__ingredients");
@@ -67,6 +50,23 @@ export const filterInput = () => {
   return input;
 };
 
+export const addSelected = () => {
+  const dropdown = document.querySelector("#filter__ingredients");
+  dropdown.classList.add("selected");
+  return dropdown;
+};
+export const removeSelected = () => {
+  const dropdown = document.querySelector("#filter__ingredients");
+  dropdown.classList.remove("selected");
+  return dropdown;
+};
+export const filterSelected = () => {
+  const dropdown = document.querySelector("#filter__ingredients");
+  dropdown.classList.toggle("selected");
+  return dropdown;
+};
+
+
 export const filterIconDown = () => {
   const img = document.createElement("img");
   img.classList.add("filter__dropdown__icon__down");
@@ -76,7 +76,7 @@ export const filterIconDown = () => {
 
   img.addEventListener("click", () => {
     filterSelected();
-    getAllIngredients()
+    
   });
   return img;
 };
