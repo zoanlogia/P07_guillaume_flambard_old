@@ -1,3 +1,5 @@
+/** @format */
+
 import {
   addSelected,
   removeSelected,
@@ -17,43 +19,43 @@ export const handleInputIngredient = () => {
   const input = getIngredientInput();
   const ul = getIngredientUl();
 
-  input.addEventListener("input", () => {
-    addSelected();
+  // input.addEventListener("input", () => {
+  //   addSelected();
 
-    if (input.value.length >= 3) {
-      searchIngredient(input.value);
-      ul.innerHTML = "";
-      const keywords = ingredients.filter((ingredient) =>
-        ingredient.includes(input.value),
-      );
-      const tags = Array.from(document.querySelectorAll(".tag"));
-      const ingAllreadySelected = tags.map((tag) => {
-        return tag.innerText;
-      });
-      const ingToDisplay = keywords.filter((ingTag) => {
-        return !ingAllreadySelected.includes(ingTag);
-      });
-      ingToDisplay.forEach((keyword) => {
-        const li = document.createElement("li");
-        li.classList.add("filter__dropdown__list__item");
-        li.innerHTML = keyword;
-        li.onclick = () => {
-          onClickLi(keyword);
-        };
-        ul.append(li);
-      });
-    } else if (input.value.length == 2) {
-      ul.innerHTML = "";
-      ingredients.forEach((ingredient) => {
-        const li = document.createElement("li");
-        li.classList.add("filter__dropdown__list__item");
-        li.innerHTML = ingredient;
-        ul.append(li);
-      });
-      displayRecipes(getRecipesStocked());
-      removeSelected();
-    }
-  });
+  //   if (input.value.length >= 3) {
+  //     searchIngredient(input.value);
+  //     ul.innerHTML = "";
+  //     const keywords = ingredients.filter((ingredient) =>
+  //       ingredient.includes(input.value),
+  //     );
+  //     const tags = Array.from(document.querySelectorAll(".tag"));
+  //     const ingAllreadySelected = tags.map((tag) => {
+  //       return tag.innerText;
+  //     });
+  //     const ingToDisplay = keywords.filter((ingTag) => {
+  //       return !ingAllreadySelected.includes(ingTag);
+  //     });
+  //     ingToDisplay.forEach((keyword) => {
+  //       const li = document.createElement("li");
+  //       li.classList.add("filter__dropdown__list__item");
+  //       li.innerHTML = keyword;
+  //       li.onclick = () => {
+  //         onClickLi(keyword);
+  //       };
+  //       ul.append(li);
+  //     });
+  //   } else if (input.value.length == 2) {
+  //     ul.innerHTML = "";
+  //     ingredients.forEach((ingredient) => {
+  //       const li = document.createElement("li");
+  //       li.classList.add("filter__dropdown__list__item");
+  //       li.innerHTML = ingredient;
+  //       ul.append(li);
+  //     });
+  //     displayRecipes(getRecipesStocked());
+  //     removeSelected();
+  //   }
+  // });
 };
 
 export const onClickLi = (value) => {
@@ -77,7 +79,7 @@ export const updateDropdown = () => {
   });
 
   // filtrer les ingrédients pour n'afficher que ceux des recettes montrées
-  const filteredIngredients = getIngredientsFromDiplayedRecipes();
+  const filteredIngredients = getAllIngredientsFromDiplayedRecipes();
 
   const reduced = filteredIngredients.reduce((accumulator, current) => {
     if (!accumulator.includes(current.toLocaleLowerCase())) {
@@ -101,13 +103,17 @@ export const updateDropdown = () => {
   });
 };
 
-const getIngredientsFromDiplayedRecipes = () => {
-  const recipes = Array.from(
-    document.querySelectorAll(".ingredients .ingredient b"),
-  );
-  const ingredients = recipes.map((ing) => ing.innerHTML);
-  // console.log(ingredients);
-  return ingredients;
+const getAllIngredientsFromDiplayedRecipes = () => {
+  const DATA = getRecipesStocked();
+  const displayedRecipes = DATA.filter((recipe) => {
+    return recipe.display;
+  });
+  const AllIngredients = displayedRecipes.map((recipe) => {
+    return recipe.ingredients.map((ingredient) =>
+      ingredient.ingredient.toLowerCase(),
+    );
+  });
+  return [...new Set(AllIngredients.flat())];
 };
 
 export const onClickCloseTag = () => {
@@ -124,16 +130,20 @@ export const onClickCloseTag = () => {
 };
 
 export const searchIngredient = (value) => {
-  const DATA = getRecipesStocked()
-  DATA.forEach((recipe) => {
-    recipe.display = false;
-    const regex = new RegExp(value.toLowerCase(), "g");
+  const DATA = getRecipesStocked();
+  const regex = new RegExp(value.toLowerCase(), "g");
 
-    recipe.ingredients.forEach((ing) => {
-      if (ing.ingredient.toLowerCase().search(regex) >= 0) {
-        recipe.display = true;
-      }
-    });
+  // filtrer les recettes (display = true) pour n'afficher que ceux qui contiennent l'ingrédient (value)
+  DATA.forEach((recipe) => {
+    if (recipe.display) {
+      recipe.ingredients.forEach((ingredient) => {
+        if (ingredient.ingredient.toLowerCase().match(regex)) {
+          recipe.display = true;
+        } else {
+          recipe.display = false;
+        }
+      });
+    }
   });
   setRecipesStocked(DATA);
   displayRecipes();
