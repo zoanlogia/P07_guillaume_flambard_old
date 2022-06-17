@@ -14,6 +14,14 @@ export const createTagAppliances = (value) => {
   return tag;
 };
 
+export const createTagUstensils = (value) => {
+  const tag = `<div class="tag orange">
+    <span>${value}</span>
+    <img class="close__tag closeUst" src="../../assets/img/close.svg" alt="close" />
+  </div> `;
+  return tag;
+};
+
 
 
 
