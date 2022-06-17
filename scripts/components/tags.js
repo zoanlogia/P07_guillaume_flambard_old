@@ -6,7 +6,7 @@ export const createTagIngredients = (value) => {
   return tag;
 };
 
-export const createTagUstensils = (value) => {
+export const createTagAppliances = (value) => {
   const tag = `<div class="tag green">
     <span>${value}</span>
     <img class="close__tag closeUst" src="../../assets/img/close.svg" alt="close" />

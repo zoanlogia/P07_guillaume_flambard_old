@@ -1,5 +1,4 @@
 import recipes from "../data/recipes.js";
-import { handleInputIngredient } from "./tools/research_ingredients.js";
 import { createFilter, displayRecipes } from "./tools/ui.js";
 
 recipes.forEach((recipe) => {
@@ -9,5 +8,4 @@ recipes.forEach((recipe) => {
 window.localStorage.setItem("recipes", JSON.stringify(recipes));
 createFilter();
 displayRecipes();
-handleInputIngredient()
 // handleInputUstensil(DATA);
