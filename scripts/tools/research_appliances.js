@@ -43,8 +43,8 @@ export const updateDropdown = () => {
   const filteredAppliances = getAllAppliancesFromDiplayedRecipes();
 
   const reduced = filteredAppliances.reduce((accumulator, current) => {
-    if (!accumulator.includes(current.toLocaleLowerCase())) {
-      accumulator.push(current.toLocaleLowerCase());
+    if (!accumulator.includes(current)) {
+      accumulator.push(current);
     }
     return accumulator;
   }, []);
@@ -93,11 +93,10 @@ export const onClickCloseTag = () => {
 export const searchAppliance = (value) => {
   const DATA = getRecipesStocked();
 
-  // eslint-disable-next-line max-len
   // filtrer les recettes (display = true) pour n'afficher que ceux qui contiennent l'ingrédient (value)
   const newRecipesToDisplay = DATA.map((recipe) => {
     if (recipe.display) {
-      const isAnAppliance = recipe.appliances.find((el) => el.appliance.toLowerCase() == value.toLowerCase());
+      const isAnAppliance = recipe.appliance.includes(value);
       if (!isAnAppliance) {
         recipe.display = false;
       }

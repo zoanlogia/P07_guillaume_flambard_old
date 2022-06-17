@@ -18,7 +18,7 @@ import {
     getUstensilInput();
     getUstensilUl();
   };
-  
+
   export const onClickLi = (value) => {
     const divTags = document.querySelector(".tags__container");
     const tag = createTagUstensils(value);
@@ -43,8 +43,8 @@ import {
     const filteredUstensils = getAllUstensilsFromDiplayedRecipes();
   
     const reduced = filteredUstensils.reduce((accumulator, current) => {
-      if (!accumulator.includes(current.toLocaleLowerCase())) {
-        accumulator.push(current.toLocaleLowerCase());
+      if (!accumulator.includes(current)) {
+        accumulator.push(current);
       }
       return accumulator;
     }, []);
@@ -71,7 +71,7 @@ import {
     });
     const AllUstensils = displayedRecipes.map((recipe) => {
       return recipe.ustensils.map((ustensil) =>
-        ustensil.ustensil.toLowerCase(),
+        ustensil
       );
     });
     return [...new Set(AllUstensils.flat())];
@@ -93,11 +93,10 @@ import {
   export const searchUstensil = (value) => {
     const DATA = getRecipesStocked();
   
-    // eslint-disable-next-line max-len
     // filtrer les recettes (display = true) pour n'afficher que ceux qui contiennent l'ingrédient (value)
     const newRecipesToDisplay = DATA.map((recipe) => {
       if (recipe.display) {
-        const isAnUstensil = recipe.ustensils.find((el) => el.ustensil.toLowerCase() == value.toLowerCase());
+        const isAnUstensil = recipe.ustensils.find(el => el === value);
         if (!isAnUstensil) {
           recipe.display = false;
         }

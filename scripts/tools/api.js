@@ -6,7 +6,7 @@ export const getAllIngredients = () => {
   DATA.forEach((recipe) => {
     if (recipe.display) {
       recipe.ingredients.forEach((ingredient) => {
-        ingredients.push(ingredient.ingredient.toLowerCase());
+        ingredients.push(ingredient.ingredient);
       });
     }
   });
@@ -19,7 +19,7 @@ export const getAllAppliances = () => {
   const DATA = getRecipesStocked()
   DATA.forEach((recipe) => {
     if (recipe.display) {
-      appliances.push(recipe.appliance.toLowerCase());
+      appliances.push(recipe.appliance);
     }
   });
   return [...new Set(appliances)]; // enlève les doublons (253 -> 123)
