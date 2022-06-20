@@ -41,14 +41,13 @@ export const updateDropdown = () => {
 
   // filtrer les ingrédients pour n'afficher que ceux des recettes montrées
   const filteredAppliances = getAllAppliancesFromDiplayedRecipes();
-
   const reduced = filteredAppliances.reduce((accumulator, current) => {
     if (!accumulator.includes(current)) {
       accumulator.push(current);
     }
     return accumulator;
   }, []);
-
+  
   const appToDisplay = reduced.filter((ingTag) => {
     return !appAllreadySelected.includes(ingTag);
   });
@@ -70,12 +69,10 @@ const getAllAppliancesFromDiplayedRecipes = () => {
     return recipe.display;
   });
   const AllAppliances = displayedRecipes.map((recipe) => {
-    return recipe.appliances.map((appliance) =>
-      appliance.appliance.toLowerCase(),
-    );
-  });
-  return [...new Set(AllAppliances.flat())];
-};
+    return recipe.appliance.toLowerCase();
+  })
+  return AllAppliances;
+}
 
 export const onClickCloseTag = () => {
   const closeTags = document.querySelectorAll(".closeApp");

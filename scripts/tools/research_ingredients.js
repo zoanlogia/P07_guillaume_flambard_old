@@ -33,6 +33,8 @@ export const onClickLi = (value) => {
 };
 
 export const updateDropdown = () => {
+
+  // filtrer les appareils et les ustensils 
   const tags = Array.from(document.querySelectorAll(".tag"));
   const ul = getIngredientUl();
   const ingAllreadySelected = tags.map((tag) => {
