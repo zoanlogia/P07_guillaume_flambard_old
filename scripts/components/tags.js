@@ -9,7 +9,7 @@ export const createTagIngredients = (value) => {
 export const createTagAppliances = (value) => {
   const tag = `<div class="tag green">
     <span>${value}</span>
-    <img class="close__tag closeUst" src="../../assets/img/close.svg" alt="close" />
+    <img class="close__tag closeApp" src="../../assets/img/close.svg" alt="close" />
   </div> `;
   return tag;
 };

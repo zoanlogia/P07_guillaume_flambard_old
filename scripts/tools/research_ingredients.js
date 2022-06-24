@@ -33,7 +33,6 @@ export const onClickLi = (value) => {
 };
 
 export const updateDropdown = () => {
-
   // filtrer les appareils et les ustensils 
   const tags = Array.from(document.querySelectorAll(".tag"));
   const ul = getIngredientUl();
@@ -95,8 +94,6 @@ export const onClickCloseTag = () => {
 export const searchIngredient = (value) => {
   const DATA = getRecipesStocked();
 
-  // eslint-disable-next-line max-len
-  // filtrer les recettes (display = true) pour n'afficher que ceux qui contiennent l'ingrédient (value)
   const newRecipesToDisplay = DATA.map((recipe) => {
     if (recipe.display) {
       const isAnIngredient = recipe.ingredients.find((el) => el.ingredient.toLowerCase() == value.toLowerCase());

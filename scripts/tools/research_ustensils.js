@@ -78,7 +78,7 @@ import {
   };
   
   export const onClickCloseTag = () => {
-    const closeTags = document.querySelectorAll(".closeApp");
+    const closeTags = document.querySelectorAll(".closeUst");
     closeTags.forEach((closeTag) => {
       closeTag.addEventListener("click", () => {
         const tag = closeTag.parentElement;
