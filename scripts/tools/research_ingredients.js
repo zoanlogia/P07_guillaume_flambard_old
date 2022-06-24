@@ -1,11 +1,11 @@
 /** @format */
 
-import {
-  removeSelected,
-} from "../components/dropdown_ingredients.js";
+import { removeSelected } from "../components/dropdown_ingredients.js";
 import { displayRecipes } from "./ui.js";
 import { createTagIngredients } from "../components/tags.js";
 import { setRecipesStocked, getRecipesStocked } from "./storage.js";
+import { updateDropdownApp } from "./research_appliances.js";
+import { updateDropdownUst } from "./research_ustensils.js";
 
 export const getIngredientInput = () => {
   return document.getElementById("filter__dropdown__input__ingredients");
@@ -26,14 +26,16 @@ export const onClickLi = (value) => {
 
   removeSelected();
   searchIngredient(value);
-  updateDropdown();
+  updateDropdownIng();
+  updateDropdownApp();
+    updateDropdownUst();
   getIngredientInput().value = value;
   onClickCloseTag();
   getIngredientInput().value = "";
 };
 
-export const updateDropdown = () => {
-  // filtrer les appareils et les ustensils 
+export const updateDropdownIng = () => {
+  // filtrer les appareils et les ustensils
   const tags = Array.from(document.querySelectorAll(".tag"));
   const ul = getIngredientUl();
   const ingAllreadySelected = tags.map((tag) => {
@@ -53,6 +55,7 @@ export const updateDropdown = () => {
   const ingToDisplay = reduced.filter((ingTag) => {
     return !ingAllreadySelected.includes(ingTag);
   });
+
   ul.innerHTML = "";
   ingToDisplay.forEach((keyword) => {
     const li = document.createElement("li");
@@ -62,8 +65,10 @@ export const updateDropdown = () => {
       onClickLi(keyword);
     };
     ul.append(li);
+    
   });
 };
+
 
 const getAllIngredientsFromDiplayedRecipes = () => {
   const DATA = getRecipesStocked();
@@ -96,7 +101,9 @@ export const searchIngredient = (value) => {
 
   const newRecipesToDisplay = DATA.map((recipe) => {
     if (recipe.display) {
-      const isAnIngredient = recipe.ingredients.find((el) => el.ingredient.toLowerCase() == value.toLowerCase());
+      const isAnIngredient = recipe.ingredients.find(
+        (el) => el.ingredient.toLowerCase() == value.toLowerCase(),
+      );
       if (!isAnIngredient) {
         recipe.display = false;
       }
@@ -109,4 +116,4 @@ export const searchIngredient = (value) => {
 
 // même logique pour les autres filtres
 
-// 
+//

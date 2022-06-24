@@ -1,11 +1,11 @@
 /** @format */
 
-import {
-  removeSelected,
-} from "../components/dropdown_appliances.js";
+import { removeSelected } from "../components/dropdown_appliances.js";
 import { displayRecipes } from "./ui.js";
 import { createTagAppliances } from "../components/tags.js";
 import { setRecipesStocked, getRecipesStocked } from "./storage.js";
+import { updateDropdownIng } from "./research_ingredients.js";
+import { updateDropdownUst } from "./research_ustensils.js";
 
 export const getApplianceInput = () => {
   return document.getElementById("filter__dropdown__input__appliances");
@@ -26,41 +26,43 @@ export const onClickLi = (value) => {
 
   removeSelected();
   searchAppliance(value);
-  updateDropdown();
+  updateDropdownApp();
+  updateDropdownIng();
+  updateDropdownUst();
   getApplianceInput().value = value;
   onClickCloseTag();
   getApplianceInput().value = "";
 };
 
-export const updateDropdown = () => {
+export const updateDropdownApp = () => {
   const tags = Array.from(document.querySelectorAll(".tag"));
   const ul = getApplianceUl();
   const appAllreadySelected = tags.map((tag) => {
     return tag.innerText;
   });
 
-  // filtrer les ingrédients pour n'afficher que ceux des recettes montrées
-  const filteredAppliances = getAllAppliancesFromDiplayedRecipes();
-  const reduced = filteredAppliances.reduce((accumulator, current) => {
-    if (!accumulator.includes(current)) {
-      accumulator.push(current);
-    }
-    return accumulator;
-  }, []);
+    const filteredAppliances = getAllAppliancesFromDiplayedRecipes();
+    const reduced = filteredAppliances.reduce((accumulator, current) => {
+      if (!accumulator.includes(current)) {
+        accumulator.push(current);
+      }
+      return accumulator;
+    }, []);
   
-  const appToDisplay = reduced.filter((ingTag) => {
-    return !appAllreadySelected.includes(ingTag);
-  });
-  ul.innerHTML = "";
-  appToDisplay.forEach((keyword) => {
-    const li = document.createElement("li");
-    li.classList.add("filter__dropdown__list__item");
-    li.innerHTML = keyword;
-    li.onclick = () => {
-      onClickLi(keyword);
-    };
-    ul.append(li);
-  });
+    const appToDisplay = reduced.filter((ingTag) => {
+      return !appAllreadySelected.includes(ingTag);
+    });
+    ul.innerHTML = "";
+    appToDisplay.forEach((keyword) => {
+      const li = document.createElement("li");
+      li.classList.add("filter__dropdown__list__item");
+      li.innerHTML = keyword;
+      li.onclick = () => {
+        onClickLi(keyword);
+      };
+      ul.append(li);
+    });
+  // filtrer les ingrédients pour n'afficher que ceux des recettes montrées
 };
 
 const getAllAppliancesFromDiplayedRecipes = () => {
@@ -70,9 +72,9 @@ const getAllAppliancesFromDiplayedRecipes = () => {
   });
   const AllAppliances = displayedRecipes.map((recipe) => {
     return recipe.appliance.toLowerCase();
-  })
+  });
   return AllAppliances;
-}
+};
 
 export const onClickCloseTag = () => {
   const closeTags = document.querySelectorAll(".closeApp");
@@ -104,6 +106,3 @@ export const searchAppliance = (value) => {
   displayRecipes();
 };
 
-// même logique pour les autres filtres
-
-// 

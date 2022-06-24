@@ -7,7 +7,7 @@ export const card = (recipe) => {
   return div;
 };
 
-export const headingCard = (recipe) => {
+export const headingCard = () => {
   const div = document.createElement("div");
   div.classList.add("img");
   return div;
@@ -79,13 +79,3 @@ export const colIngredients = (recipe) => {
   });
   return ul;
 };
-
-// v1
-// const div = document.createElement("ul");
-// div.classList.add("ingredients");
-// let ingr = []
-// recipe.ingredients.forEach(ingredient => {
-//     ingr.push(ingredient.ingredient)
-//     div.innerHTML = ingr
-// })
-// return div

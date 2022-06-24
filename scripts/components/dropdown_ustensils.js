@@ -65,6 +65,12 @@ import {
     dropdown.classList.toggle("selected");
     return dropdown;
   };
+  export const keepOneSelected = () => {
+      const appliances = document.querySelector('#filter__appliances')
+      const ingredients = document.querySelector('#filter__ingredients')
+      appliances.classList.remove('selected')
+      ingredients.classList.remove('selected')
+  }
   
   
   export const filterIconDown = () => {
@@ -76,7 +82,7 @@ import {
   
     img.addEventListener("click", () => {
       filterSelected();
-      
+      keepOneSelected()
     });
     return img;
   };

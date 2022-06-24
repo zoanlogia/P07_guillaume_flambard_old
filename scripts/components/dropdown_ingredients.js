@@ -1,9 +1,7 @@
-import {
-  getAllIngredients
-} from "../tools/api.js";
-import {
-  onClickLi
-} from "../tools/research_ingredients.js";
+/** @format */
+
+import { getAllIngredients } from "../tools/api.js";
+import { onClickLi } from "../tools/research_ingredients.js";
 
 export const dropdownIngredientContainer = () => {
   const div = document.createElement("div");
@@ -65,7 +63,12 @@ export const filterSelected = () => {
   dropdown.classList.toggle("selected");
   return dropdown;
 };
-
+export const keepOneSelected = () => {
+  const appliances = document.querySelector("#filter__appliances");
+  const ustensils = document.querySelector("#filter__ustensils");
+  appliances.classList.remove("selected");
+  ustensils.classList.remove("selected");
+};
 
 export const filterIconDown = () => {
   const img = document.createElement("img");
@@ -76,7 +79,7 @@ export const filterIconDown = () => {
 
   img.addEventListener("click", () => {
     filterSelected();
-    
+    keepOneSelected();
   });
   return img;
 };

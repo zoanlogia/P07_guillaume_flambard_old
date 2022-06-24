@@ -65,7 +65,12 @@ import {
     dropdown.classList.toggle("selected");
     return dropdown;
   };
-  
+  export const keepOneSelected = () => {
+      const ustensils = document.querySelector('#filter__ustensils')
+      const ingredients = document.querySelector('#filter__ingredients')
+      ustensils.classList.remove('selected')
+      ingredients.classList.remove('selected')
+  }
   
   export const filterIconDown = () => {
     const img = document.createElement("img");
@@ -74,9 +79,10 @@ import {
     img.setAttribute("src", "../../assets/img/angle-down.svg");
     img.setAttribute("alt", "filter");
   
-    img.addEventListener("click", () => {
+    img.addEventListener("click", (e) => {
+      e.preventDefault()
       filterSelected();
-      
+      keepOneSelected()
     });
     return img;
   };
@@ -87,7 +93,8 @@ import {
     img.src = "../../assets/img/angle-up.svg";
     img.setAttribute("src", "../../assets/img/angle-up.svg");
     img.setAttribute("alt", "filter");
-    img.addEventListener("click", () => {
+    img.addEventListener("click", (e) => {
+      e.preventDefault()
       filterSelected();
     });
     return img;
