@@ -28,7 +28,7 @@ export const onClickLi = (value) => {
   searchIngredient(value);
   updateDropdownIng();
   updateDropdownApp();
-    updateDropdownUst();
+  updateDropdownUst();
   getIngredientInput().value = value;
   onClickCloseTag();
   getIngredientInput().value = "";
@@ -46,8 +46,8 @@ export const updateDropdownIng = () => {
   const filteredIngredients = getAllIngredientsFromDiplayedRecipes();
 
   const reduced = filteredIngredients.reduce((accumulator, current) => {
-    if (!accumulator.includes(current.toLocaleLowerCase())) {
-      accumulator.push(current.toLocaleLowerCase());
+    if (!accumulator.includes(current)) {
+      accumulator.push(current);
     }
     return accumulator;
   }, []);
@@ -65,10 +65,8 @@ export const updateDropdownIng = () => {
       onClickLi(keyword);
     };
     ul.append(li);
-    
   });
 };
-
 
 const getAllIngredientsFromDiplayedRecipes = () => {
   const DATA = getRecipesStocked();
@@ -77,7 +75,7 @@ const getAllIngredientsFromDiplayedRecipes = () => {
   });
   const AllIngredients = displayedRecipes.map((recipe) => {
     return recipe.ingredients.map((ingredient) =>
-      ingredient.ingredient.toLowerCase(),
+      ingredient.ingredient
     );
   });
   return [...new Set(AllIngredients.flat())];
@@ -90,15 +88,41 @@ export const onClickCloseTag = () => {
       const tag = closeTag.parentElement;
       tag.remove();
       getIngredientInput().value = "";
-      displayRecipes(getRecipesStocked());
+      const ingredientsTags = document.querySelectorAll(".tag_ingredients");
+      ingredientsTags.forEach((tag) => {
+        const value = tag.innerText;
+        console.log(value);
+        searchIngredientOnCloseTag(value);
+        // displayRecipes(getRecipesStocked());
+      });
       removeSelected();
     });
   });
 };
 
+export const searchIngredientOnCloseTag = (value) => {
+  const DATA = getRecipesStocked();
+  
+  const newRecipesToDisplay = DATA.map((recipe) => {
+    // console.log(recipe);
+      const isAnIngredient = recipe.ingredients.find((el) => { 
+        console.log(el.ingredient);
+        console.log(value);
+         return el.ingredient.toLowerCase() == value.toLowerCase()
+      });
+      if (!isAnIngredient) {
+        recipe.display = false;
+      }
+    return recipe;
+  });
+  setRecipesStocked(newRecipesToDisplay);
+  displayRecipes();
+};
+
+
 export const searchIngredient = (value) => {
   const DATA = getRecipesStocked();
-
+  
   const newRecipesToDisplay = DATA.map((recipe) => {
     if (recipe.display) {
       const isAnIngredient = recipe.ingredients.find(
@@ -113,7 +137,3 @@ export const searchIngredient = (value) => {
   setRecipesStocked(newRecipesToDisplay);
   displayRecipes();
 };
-
-// même logique pour les autres filtres
-
-//

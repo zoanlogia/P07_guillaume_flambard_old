@@ -49,8 +49,8 @@ export const updateDropdownApp = () => {
       return accumulator;
     }, []);
   
-    const appToDisplay = reduced.filter((ingTag) => {
-      return !appAllreadySelected.includes(ingTag);
+    const appToDisplay = reduced.filter((appTag) => {
+      return !appAllreadySelected.includes(appTag);
     });
     ul.innerHTML = "";
     appToDisplay.forEach((keyword) => {
@@ -71,9 +71,9 @@ const getAllAppliancesFromDiplayedRecipes = () => {
     return recipe.display;
   });
   const AllAppliances = displayedRecipes.map((recipe) => {
-    return recipe.appliance.toLowerCase();
+    return recipe.appliance
   });
-  return AllAppliances;
+  return [...new Set(AllAppliances.flat())];
 };
 
 export const onClickCloseTag = () => {
@@ -81,9 +81,9 @@ export const onClickCloseTag = () => {
   closeTags.forEach((closeTag) => {
     closeTag.addEventListener("click", () => {
       const tag = closeTag.parentElement;
+      displayRecipes(getRecipesStocked());
       tag.remove();
       getApplianceInput().value = "";
-      displayRecipes(getRecipesStocked());
       removeSelected();
     });
   });

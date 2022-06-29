@@ -239,6 +239,7 @@ table {
 
 .tags__container {
   display: flex;
+  flex-wrap: wrap;
   flex-direction: row; }
   .tags__container .tag {
     margin: 1em 1em 0 0;
@@ -255,6 +256,6 @@ table {
     .tags__container .tag img {
       padding: 10px; }
   .tags__container .green {
-    background-color: #68D9A4; }
+    background-color: #68d9a4; }
   .tags__container .orange {
-    background-color: #ED6454; }
+    background-color: #ed6454; }

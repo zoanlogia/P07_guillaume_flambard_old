@@ -51,8 +51,8 @@ export const updateDropdownUst = () => {
     return accumulator;
   }, []);
 
-  const appToDisplay = reduced.filter((ingTag) => {
-    return !appAllreadySelected.includes(ingTag);
+  const appToDisplay = reduced.filter((ustTag) => {
+    return !appAllreadySelected.includes(ustTag);
   });
   ul.innerHTML = "";
   appToDisplay.forEach((keyword) => {
@@ -96,7 +96,7 @@ export const searchUstensil = (value) => {
   // filtrer les recettes (display = true) pour n'afficher que ceux qui contiennent l'ingrédient (value)
   const newRecipesToDisplay = DATA.map((recipe) => {
     if (recipe.display) {
-      const isAnUstensil = recipe.ustensils.find((el) => el === value);
+      const isAnUstensil = recipe.ustensils.find((el) => el.toLowerCase() === value.toLowerCase());
       if (!isAnUstensil) {
         recipe.display = false;
       }
@@ -106,7 +106,3 @@ export const searchUstensil = (value) => {
   setRecipesStocked(newRecipesToDisplay);
   displayRecipes();
 };
-
-// même logique pour les autres filtres
-
-//

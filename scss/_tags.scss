@@ -1,32 +1,32 @@
-
-.tags__container{
+.tags__container {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  .tag {
+    margin: 1em 1em 0 0;
     display: flex;
-    flex-direction: row;
-    .tag {
-       margin: 1em 1em 0 0;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background-color: $bleu-btn;
-        border-radius: 5px;
-        color: white;
-        width: fit-content;
-        cursor: pointer;
+    justify-content: space-between;
+    align-items: center;
+    background-color: $bleu-btn;
+    border-radius: 5px;
+    color: white;
+    width: fit-content;
+    cursor: pointer;
 
-        span {
-            padding: 10px;
-        }
+    span {
+      padding: 10px;
+    }
 
-        img {
-            padding: 10px;
-        }
-   }
+    img {
+      padding: 10px;
+    }
+  }
 
-   .green {
-         background-color: #68D9A4;
-   }
+  .green {
+    background-color: #68d9a4;
+  }
 
-   .orange {
-    background-color: #ED6454;
-   }
+  .orange {
+    background-color: #ed6454;
+  }
 }
