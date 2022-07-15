@@ -68,6 +68,10 @@ export const updateDropdownIng = () => {
   });
 };
 
+/**
+ * 
+ * @returns retourne les ingrédients stockés dans le locale storage
+ */
 const getAllIngredientsFromDiplayedRecipes = () => {
   const DATA = getRecipesStocked();
   const displayedRecipes = DATA.filter((recipe) => {
@@ -88,41 +92,33 @@ export const onClickCloseTag = () => {
       const tag = closeTag.parentElement;
       tag.remove();
       getIngredientInput().value = "";
-      const ingredientsTags = document.querySelectorAll(".tag_ingredients");
-      ingredientsTags.forEach((tag) => {
-        const value = tag.innerText;
-        console.log(value);
-        searchIngredientOnCloseTag(value);
-        // displayRecipes(getRecipesStocked());
-      });
       removeSelected();
+      updateDropdownIng();
+
+      // -------------------------------------------------------------------
+      const allIngs = document.querySelectorAll(".tag_ingredients > span");
+      const DATA = getRecipesStocked();
+      DATA.forEach((recipe) => {
+        recipe.display = true;
+      })
+      setRecipesStocked(DATA);
+      if (allIngs.length > 0) {
+        allIngs.forEach((ing) => {
+          searchIngredient(ing.innerText) 
+        })
+      } else {
+        displayRecipes();
+      }
     });
   });
 };
 
-export const searchIngredientOnCloseTag = (value) => {
-  const DATA = getRecipesStocked();
-  
-  const newRecipesToDisplay = DATA.map((recipe) => {
-    // console.log(recipe);
-      const isAnIngredient = recipe.ingredients.find((el) => { 
-        console.log(el.ingredient);
-        console.log(value);
-         return el.ingredient.toLowerCase() == value.toLowerCase()
-      });
-      if (!isAnIngredient) {
-        recipe.display = false;
-      }
-    return recipe;
-  });
-  setRecipesStocked(newRecipesToDisplay);
-  displayRecipes();
-};
-
-
+/**
+ * 
+ * @param {string} value Affiche les recettes qui contiennent l'ingrédient
+ */
 export const searchIngredient = (value) => {
   const DATA = getRecipesStocked();
-  
   const newRecipesToDisplay = DATA.map((recipe) => {
     if (recipe.display) {
       const isAnIngredient = recipe.ingredients.find(

@@ -27,4 +27,3 @@ export const displayRecipes = () => {
     }
   });
 };
-// main function
