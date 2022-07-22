@@ -6,6 +6,7 @@ import { createTagAppliances } from "../components/tags.js";
 import { setRecipesStocked, getRecipesStocked } from "./storage.js";
 import { updateDropdownIng } from "./research_ingredients.js";
 import { updateDropdownUst } from "./research_ustensils.js";
+import { closeTags } from "./closeTags.js";
 
 export const getApplianceInput = () => {
   return document.getElementById("filter__dropdown__input__appliances");
@@ -30,7 +31,7 @@ export const onClickLi = (value) => {
   updateDropdownIng();
   updateDropdownUst();
   getApplianceInput().value = value;
-  onClickCloseTag();
+  closeTags()
   getApplianceInput().value = "";
 };
 
@@ -79,41 +80,7 @@ const getAllAppliancesFromDiplayedRecipes = () => {
   return [...new Set(AllAppliances.flat())];
 };
 
-export const onClickCloseTag = () => {
-  const closeTags = document.querySelectorAll(".closeApp");
-  closeTags.forEach((closeTag) => {
-    closeTag.addEventListener("click", () => {
-      const tag = closeTag.parentElement;
-      displayRecipes(getRecipesStocked());
-      tag.remove();
-      getApplianceInput().value = "";
-      removeSelected();
-      updateDropdownApp()
-      
 
-      // -------------------------------------------------------------------
-      const allApps = document.querySelectorAll(".tag_appliances > span");
-      const DATA = getRecipesStocked();
-      DATA.forEach((recipe) => {
-        recipe.display = true;
-      })
-      setRecipesStocked(DATA);
-      if (allApps.length > 0) {
-        allApps.forEach((app) => {
-          searchAppliance(app.innerText) 
-        })
-        updateDropdownIng()
-        updateDropdownApp();
-        updateDropdownUst();
-      } else {
-        displayRecipes();
-        updateDropdownIng()
-        updateDropdownApp();
-        updateDropdownUst();
-      }
-    });
-  });
-};
 /**
  * 
  * @param {string} value Affichage des recettes correspondant à l'appareil

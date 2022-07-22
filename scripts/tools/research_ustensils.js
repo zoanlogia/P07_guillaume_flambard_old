@@ -6,6 +6,7 @@ import { createTagUstensils } from "../components/tags.js";
 import { setRecipesStocked, getRecipesStocked } from "./storage.js";
 import { updateDropdownApp } from "./research_appliances.js";
 import { updateDropdownIng } from "./research_ingredients.js";
+import { closeTags } from "./closeTags.js";
 
 /**
  * 
@@ -43,7 +44,7 @@ export const onClickLi = (value) => {
   updateDropdownApp();
   updateDropdownIng();
   getUstensilInput().value = value;
-  onClickCloseTag();
+  closeTags();
   getUstensilInput().value = "";
 };
 
@@ -99,39 +100,6 @@ const getAllUstensilsFromDiplayedRecipes = () => {
     return recipe.ustensils.map((ustensil) => ustensil);
   });
   return [...new Set(AllUstensils.flat())];
-};
-
-export const onClickCloseTag = () => {
-  const closeTags = document.querySelectorAll(".closeUst");
-  closeTags.forEach((closeTag) => {
-    closeTag.addEventListener("click", () => {
-      const tag = closeTag.parentElement;
-      tag.remove();
-      getUstensilInput().value = "";
-      
-      removeSelected();
-      updateDropdownUst();
-      const allUsts = document.querySelectorAll(".tag_ustensils > span");
-      const DATA = getRecipesStocked();
-      DATA.forEach((recipe) => {
-        recipe.display = true;
-      })
-      setRecipesStocked(DATA);
-      if (allUsts.length > 0) {
-        allUsts.forEach((ing) => {
-          searchUstensil(ing.innerText) 
-        })
-        updateDropdownIng()
-        updateDropdownApp();
-        updateDropdownUst();
-      } else {
-        displayRecipes();
-        updateDropdownIng()
-        updateDropdownApp();
-        updateDropdownUst();
-      }
-    });
-  });
 };
 
 /**

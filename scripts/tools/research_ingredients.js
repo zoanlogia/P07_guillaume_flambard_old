@@ -4,6 +4,7 @@ import { createTagIngredients } from "../components/tags.js";
 import { setRecipesStocked, getRecipesStocked } from "./storage.js";
 import { updateDropdownApp } from "./research_appliances.js";
 import { updateDropdownUst } from "./research_ustensils.js";
+import { closeTags } from "./closeTags.js";
 
 export const getIngredientInput = () => {
   return document.getElementById("filter__dropdown__input__ingredients");
@@ -28,7 +29,7 @@ export const onClickLi = (value) => {
   updateDropdownApp();
   updateDropdownUst();
   getIngredientInput().value = value;
-  onClickCloseTag();
+  closeTags()
   getIngredientInput().value = "";
 };
 
@@ -83,43 +84,12 @@ const getAllIngredientsFromDiplayedRecipes = () => {
   return [...new Set(AllIngredients.flat())];
 };
 
-export const onClickCloseTag = () => {
-  const closeTags = document.querySelectorAll(".closeIng");
-  closeTags.forEach((closeTag) => {
-    closeTag.addEventListener("click", () => {
-      const tag = closeTag.parentElement;
-      tag.remove();
-      getIngredientInput().value = "";
-      removeSelected();
-      updateDropdownIng();
-
-      const allIngs = document.querySelectorAll(".tag_ingredients > span");
-      const DATA = getRecipesStocked();
-      DATA.forEach((recipe) => {
-        recipe.display = true;
-      })
-      setRecipesStocked(DATA);
-      if (allIngs.length > 0) {
-        allIngs.forEach((ing) => {
-          searchIngredient(ing.innerText) 
-        })
-        updateDropdownIng()
-        updateDropdownApp();
-        updateDropdownUst();
-      } else {
-        displayRecipes();
-        updateDropdownIng()
-        updateDropdownApp();
-        updateDropdownUst();
-      }
-    });
-  });
-};
-
 /**
  * 
  * @param {string} value Affiche les recettes qui contiennent l'ingrédient
  */
+
+// Nouvelle fonction a checker sur le benchmark
 export const searchIngredient = (value) => {
   const DATA = getRecipesStocked();
   const newRecipesToDisplay = DATA.map((recipe) => {
