@@ -106,8 +106,14 @@ export const onClickCloseTag = () => {
         allIngs.forEach((ing) => {
           searchIngredient(ing.innerText) 
         })
+        updateDropdownIng()
+        updateDropdownApp();
+        updateDropdownUst();
       } else {
         displayRecipes();
+        updateDropdownIng()
+        updateDropdownApp();
+        updateDropdownUst();
       }
     });
   });

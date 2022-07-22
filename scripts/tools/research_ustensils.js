@@ -51,11 +51,11 @@ export const updateDropdownUst = () => {
     return accumulator;
   }, []);
 
-  const appToDisplay = reduced.filter((ustTag) => {
+  const ustToDisplay = reduced.filter((ustTag) => {
     return !appAllreadySelected.includes(ustTag);
   });
   ul.innerHTML = "";
-  appToDisplay.forEach((keyword) => {
+  ustToDisplay.forEach((keyword) => {
     const li = document.createElement("li");
     li.classList.add("filter__dropdown__list__item");
     li.innerHTML = keyword;
@@ -66,6 +66,10 @@ export const updateDropdownUst = () => {
   });
 };
 
+/**
+ * 
+ * @returns retourne un tableau contenant les ustensils des recettes affichées
+ */
 const getAllUstensilsFromDiplayedRecipes = () => {
   const DATA = getRecipesStocked();
   const displayedRecipes = DATA.filter((recipe) => {
@@ -84,12 +88,36 @@ export const onClickCloseTag = () => {
       const tag = closeTag.parentElement;
       tag.remove();
       getUstensilInput().value = "";
-      displayRecipes(getRecipesStocked());
+      
       removeSelected();
+      updateDropdownUst();
+      const allUsts = document.querySelectorAll(".tag_ustensils > span");
+      const DATA = getRecipesStocked();
+      DATA.forEach((recipe) => {
+        recipe.display = true;
+      })
+      setRecipesStocked(DATA);
+      if (allUsts.length > 0) {
+        allUsts.forEach((ing) => {
+          searchUstensil(ing.innerText) 
+        })
+        updateDropdownIng()
+        updateDropdownApp();
+        updateDropdownUst();
+      } else {
+        displayRecipes();
+        updateDropdownIng()
+        updateDropdownApp();
+        updateDropdownUst();
+      }
     });
   });
 };
 
+/**
+ * 
+ * @param {string} value Affiche les recettes qui contiennent le ustensil passé en paramètre 
+ */
 export const searchUstensil = (value) => {
   const DATA = getRecipesStocked();
 

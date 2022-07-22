@@ -62,9 +62,12 @@ export const updateDropdownApp = () => {
       };
       ul.append(li);
     });
-  // filtrer les ingrédients pour n'afficher que ceux des recettes montrées
 };
 
+/**
+ * 
+ * @returns retourne un tableau contenant les appareils des recettes affichées
+ */
 const getAllAppliancesFromDiplayedRecipes = () => {
   const DATA = getRecipesStocked();
   const displayedRecipes = DATA.filter((recipe) => {
@@ -85,14 +88,39 @@ export const onClickCloseTag = () => {
       tag.remove();
       getApplianceInput().value = "";
       removeSelected();
+      updateDropdownApp()
+      
+
+      // -------------------------------------------------------------------
+      const allApps = document.querySelectorAll(".tag_appliances > span");
+      const DATA = getRecipesStocked();
+      DATA.forEach((recipe) => {
+        recipe.display = true;
+      })
+      setRecipesStocked(DATA);
+      if (allApps.length > 0) {
+        allApps.forEach((app) => {
+          searchAppliance(app.innerText) 
+        })
+        updateDropdownIng()
+        updateDropdownApp();
+        updateDropdownUst();
+      } else {
+        displayRecipes();
+        updateDropdownIng()
+        updateDropdownApp();
+        updateDropdownUst();
+      }
     });
   });
 };
-
+/**
+ * 
+ * @param {string} value Affichage des recettes correspondant à l'appareil
+ */
 export const searchAppliance = (value) => {
   const DATA = getRecipesStocked();
 
-  // filtrer les recettes (display = true) pour n'afficher que ceux qui contiennent l'ingrédient (value)
   const newRecipesToDisplay = DATA.map((recipe) => {
     if (recipe.display) {
       const isAnAppliance = recipe.appliance.includes(value);
@@ -105,4 +133,3 @@ export const searchAppliance = (value) => {
   setRecipesStocked(newRecipesToDisplay);
   displayRecipes();
 };
-
