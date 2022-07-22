@@ -5,11 +5,17 @@ import { dropdownApplianceContainer } from "../components/dropdown_appliances.js
 import { dropdownUstensilContainer } from "../components/dropdown_ustensils.js";
 import { createInput } from "../components/searchbar.js";
 
+/**
+ * @description Creates a dropdown menu for the ingredients
+ */
 export const createSearchBar = () => {
   const container = document.querySelector(".search__container");
   container.append(createInput())
 }
 
+/**
+ * @description Creates a dropdown with all the ingredients
+ */
 export const createFilter = () => {
   const container = document.querySelector(".filter__container");
   container.append(dropdownIngredientContainer());
@@ -17,6 +23,9 @@ export const createFilter = () => {
   container.append(dropdownUstensilContainer());
 };
 
+/**
+ * @param {Array} recipes - Array of recipes
+ */
 export const displayRecipes = () => {
   const recipes = getRecipesStocked();
   const container = document.querySelector(".recipes__container");

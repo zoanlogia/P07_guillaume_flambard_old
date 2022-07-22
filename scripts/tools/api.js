@@ -1,5 +1,9 @@
 import { getRecipesStocked } from "./storage.js";
 
+/**
+ * 
+ * @returns retourne un tableau contenant les ingredients des recettes stockées
+ */
 export const getAllIngredients = () => {
   const ingredients = [];
   const DATA = getRecipesStocked()
@@ -14,6 +18,10 @@ export const getAllIngredients = () => {
   return [...new Set(ingredients)]; // enlève les doublons (253 -> 123)
 };
 
+/**
+ * 
+ * @returns retourne un tableau contenant les appareils des recettes stockées
+ */
 export const getAllAppliances = () => {
   const appliances = [];
   const DATA = getRecipesStocked()
@@ -25,6 +33,10 @@ export const getAllAppliances = () => {
   return [...new Set(appliances)]; // enlève les doublons (253 -> 123)
 };
 
+/**
+ * 
+ * @returns retourne un tableau contenant les ustensils des recettes stockées
+ */
 export const getAllUstensils = () => {
   const ustensils = [];
   const DATA = getRecipesStocked()

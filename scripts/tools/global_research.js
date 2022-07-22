@@ -6,6 +6,9 @@ export const globalSearch = () => {
     const recipes = getRecipesStocked();
     const container = document.querySelector('.recipes__container');
 
+    /**
+     * @param {string} value - Valeur entrée dans le champ de recherche
+     */
     searchbar.addEventListener('input', (e) => {
         console.log(e);
         if (e.target.value.length >= 3) {     

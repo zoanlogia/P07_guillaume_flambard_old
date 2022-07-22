@@ -1,5 +1,3 @@
-/** @format */
-
 import { removeSelected } from "../components/dropdown_ingredients.js";
 import { displayRecipes } from "./ui.js";
 import { createTagIngredients } from "../components/tags.js";
@@ -95,7 +93,6 @@ export const onClickCloseTag = () => {
       removeSelected();
       updateDropdownIng();
 
-      // -------------------------------------------------------------------
       const allIngs = document.querySelectorAll(".tag_ingredients > span");
       const DATA = getRecipesStocked();
       DATA.forEach((recipe) => {

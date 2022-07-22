@@ -152,6 +152,9 @@ table {
   94% {
     background: #3282f7; } }
 
+.filter__dropdown__list {
+  z-index: 2; }
+
 #filter__dropdown__input__appliances {
   background-color: #68D9A4 !important;
   border-radius: 5px; }

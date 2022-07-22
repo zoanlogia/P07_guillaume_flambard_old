@@ -7,9 +7,18 @@ import { setRecipesStocked, getRecipesStocked } from "./storage.js";
 import { updateDropdownApp } from "./research_appliances.js";
 import { updateDropdownIng } from "./research_ingredients.js";
 
+/**
+ * 
+ * @returns retourne un tableau contenant les ustensils des recettes stockées
+ */
 export const getUstensilInput = () => {
   return document.getElementById("filter__dropdown__input__ustensils");
 };
+
+/**
+ * 
+ * @returns retourne un tableau contenant les ustensils des recettes stockées
+ */
 export const getUstensilUl = () => {
   return document.querySelector("#filter__ustensils > div > ul");
 };
@@ -19,6 +28,10 @@ export const handleInputUstensil = () => {
   getUstensilUl();
 };
 
+/**
+ * 
+ * @param {string} value - Valeur entrée dans le champ de recherche
+ */
 export const onClickLi = (value) => {
   const divTags = document.querySelector(".tags__container");
   const tag = createTagUstensils(value);
@@ -42,8 +55,15 @@ export const updateDropdownUst = () => {
   });
 
   // filtrer les ingrédients pour n'afficher que ceux des recettes montrées
+
+  /**
+   * @param {string} value - Valeur entrée dans le champ de recherche
+   */
   const filteredUstensils = getAllUstensilsFromDiplayedRecipes();
 
+  /**
+   * 
+   */
   const reduced = filteredUstensils.reduce((accumulator, current) => {
     if (!accumulator.includes(current)) {
       accumulator.push(current);
