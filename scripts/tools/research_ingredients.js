@@ -89,20 +89,42 @@ const getAllIngredientsFromDiplayedRecipes = () => {
  * @param {string} value Affiche les recettes qui contiennent l'ingrédient
  */
 
-// Nouvelle fonction a checker sur le benchmark
+// first function to search the ingredient
+
+// export const searchIngredient = (value) => {
+//   const DATA = getRecipesStocked();
+//   const newRecipesToDisplay = DATA.map((recipe) => {
+//     if (recipe.display) {
+//       const isAnIngredient = recipe.ingredients.find(
+//         (el) => el.ingredient.toLowerCase() == value.toLowerCase()
+//       );
+//       if (!isAnIngredient) {
+//         recipe.display = false;
+//       }
+//     }
+//     return recipe;
+//   });
+//   setRecipesStocked(newRecipesToDisplay);
+//   displayRecipes();
+// };
+
+// second function to search the ingredient
+
 export const searchIngredient = (value) => {
   const DATA = getRecipesStocked();
-  const newRecipesToDisplay = DATA.map((recipe) => {
-    if (recipe.display) {
-      const isAnIngredient = recipe.ingredients.find(
-        (el) => el.ingredient.toLowerCase() == value.toLowerCase(),
+  const newRecipesToDisplay = DATA.reduce((accumulator, current) => {
+    if (current.display) {
+      const isAnIngredient = current.ingredients.find(
+        (el) => el.ingredient.toLowerCase() == value.toLowerCase()
       );
       if (!isAnIngredient) {
-        recipe.display = false;
+        current.display = false;
       }
     }
-    return recipe;
-  });
+    accumulator.push(current);
+    return accumulator;
+  }, []);
+  console.log(newRecipesToDisplay);
   setRecipesStocked(newRecipesToDisplay);
   displayRecipes();
 };
