@@ -70,47 +70,23 @@ table {
     letter-spacing: 0em;
     text-align: center; }
 
-#search,
-.search {
+/** @format */
+#searchbar {
+  width: 100%;
+  height: 2.5rem;
+  border: 1px solid #e7e7e7;
+  border-radius: 5px;
+  background: #E5E5E5; }
+
+.search__container > div {
   position: relative; }
-  #search #search_input,
-  .search #search_input {
-    width: 100%;
-    height: 2.5rem;
-    border: 1px solid #e7e7e7;
-    border-radius: 5px;
-    background: #E5E5E5; }
-  #search_icon,
-  .search_icon {
-    position: absolute;
-    right: 0;
-    margin: 0 1em;
-    width: -5%; }
-  #search_buttons,
-  .search_buttons {
-    margin: 1em 0; }
-    #search_buttons button,
-    .search_buttons button {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-      position: relative;
-      background-color: #3282f7;
-      border-radius: 5px;
-      color: white;
-      border: none;
-      height: 2rem;
-      width: 6rem;
-      cursor: pointer; }
-      #search_buttons button.close,
-      .search_buttons button.close {
-        position: absolute;
-        right: 0; }
-    #search_buttons .center,
-    .search_buttons .center {
-      position: absolute;
-      right: 0; }
+
+.search__icon {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  height: 100%; }
 
 /** @format */
 .filter__container {
@@ -175,6 +151,19 @@ table {
     background: transparent; }
   94% {
     background: #3282f7; } }
+
+.filter__dropdown__list {
+  z-index: 2; }
+
+#filter__dropdown__input__appliances {
+  background-color: #68D9A4 !important;
+  border-radius: 5px; }
+
+#filter__appliances > div > ul {
+  background-color: #68D9A4 !important; }
+
+#filter__appliances > div > ul > li {
+  background-color: #68D9A4 !important; }
 
 #filter__dropdown__input__ustensils {
   background-color: #ED6454 !important;
@@ -253,6 +242,7 @@ table {
 
 .tags__container {
   display: flex;
+  flex-wrap: wrap;
   flex-direction: row; }
   .tags__container .tag {
     margin: 1em 1em 0 0;
@@ -269,4 +259,6 @@ table {
     .tags__container .tag img {
       padding: 10px; }
   .tags__container .green {
-    background-color: #ED6454 !important; }
+    background-color: #68d9a4; }
+  .tags__container .orange {
+    background-color: #ed6454; }

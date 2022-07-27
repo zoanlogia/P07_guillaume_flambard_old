@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "eslint": "^8.18.0",
     "modern-css-reset": "^1.4.0",
     "node-sass": "^7.0.1"
   },
@@ -8,10 +9,14 @@
   "description": "P07 openclassrooms",
   "main": "scripts/index.js",
   "scripts": {
-  "test": "echo \"Error: no test specified\" && exit 1",
-  "scss": "node-sass --watch scss -o css"
-},
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "scss": "node-sass --watch scss -o css"
+  },
   "repository": "https://github.com/zoanlogia/P07_guillaume_flambard.git",
   "author": "zoanlogia <g.flambard@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.25.2"
+  }
 }

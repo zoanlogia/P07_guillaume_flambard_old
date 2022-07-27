@@ -1,3 +1,5 @@
+// template des cards contenant les recettes
+
 export const card = (recipe) => {
   const div = document.createElement("div");
   div.classList.add("card");
@@ -7,7 +9,7 @@ export const card = (recipe) => {
   return div;
 };
 
-export const headingCard = (recipe) => {
+export const headingCard = () => {
   const div = document.createElement("div");
   div.classList.add("img");
   return div;
@@ -46,6 +48,11 @@ export const row = (recipe) => {
   return div;
 };
 
+/**
+ * 
+ * @param {*} recipe 
+ * @returns retourne la description de la recette
+ */
 export const colDesc = (recipe) => {
   const p = document.createElement("p");
   p.classList.add("desc");
@@ -57,7 +64,6 @@ export const colIngredients = (recipe) => {
   const ul = document.createElement("ul");
   ul.classList.add("ingredients");
 
-  // v2
   const ingredients = recipe.ingredients.filter((ing) => ing.ingredient);
   ingredients.forEach((ing) => {
     const li = document.createElement("li");
@@ -79,13 +85,3 @@ export const colIngredients = (recipe) => {
   });
   return ul;
 };
-
-// v1
-// const div = document.createElement("ul");
-// div.classList.add("ingredients");
-// let ingr = []
-// recipe.ingredients.forEach(ingredient => {
-//     ingr.push(ingredient.ingredient)
-//     div.innerHTML = ingr
-// })
-// return div
