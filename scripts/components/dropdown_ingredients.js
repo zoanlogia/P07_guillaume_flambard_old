@@ -1,5 +1,3 @@
-/** @format */
-
 import { getAllIngredients } from "../tools/api.js";
 import { onClickLi } from "../tools/research_ingredients.js";
 

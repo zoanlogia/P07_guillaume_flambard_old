@@ -29,6 +29,20 @@ export const handleInputUstensil = () => {
   getUstensilUl();
 };
 
+export const getUstensilInputValue = () => {
+  const input = getUstensilInput()
+  const DATA = getRecipesStocked()
+  input.addEventListener('input', (e) => {
+    if (e.target.value.length >= 3) {
+      searchUstensil(e.target.value);
+    } else {
+      const ingredients = getAllUstensilsFromDiplayedRecipes();
+      displayRecipes(ingredients);
+    }
+    setRecipesStocked(DATA);
+  })
+}
+
 /**
  * 
  * @param {string} value - Valeur entrée dans le champ de recherche

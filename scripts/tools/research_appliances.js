@@ -20,6 +20,20 @@ export const handleInputAppliance = () => {
   getApplianceUl();
 };
 
+export const getApplianceInputValue = () => {
+  const input = getApplianceInput()
+  const DATA = getRecipesStocked();
+  input.addEventListener('input', (e) => {
+    if (e.target.value.length >= 3) {
+      searchAppliance(e.target.value);
+    } else {
+      const appliances = getAllAppliancesFromDiplayedRecipes();
+      displayRecipes(appliances);
+    }
+    setRecipesStocked(DATA);
+  })
+}
+
 export const onClickLi = (value) => {
   const divTags = document.querySelector(".tags__container");
   const tag = createTagAppliances(value);
@@ -90,7 +104,7 @@ export const searchAppliance = (value) => {
 
   const newRecipesToDisplay = DATA.map((recipe) => {
     if (recipe.display) {
-      const isAnAppliance = recipe.appliance.includes(value);
+      const isAnAppliance = recipe.appliance.toLowerCase().includes(value.toLowerCase());
       if (!isAnAppliance) {
         recipe.display = false;
       }

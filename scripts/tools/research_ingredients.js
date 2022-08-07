@@ -9,13 +9,9 @@ import { closeTags } from "./closeTags.js";
 export const getIngredientInput = () => {
   return document.getElementById("filter__dropdown__input__ingredients");
 };
+
 export const getIngredientUl = () => {
   return document.querySelector("#filter__ingredients > div > ul");
-};
-
-export const handleInputIngredient = () => {
-  getIngredientInput();
-  getIngredientUl();
 };
 
 export const onClickLi = (value) => {
@@ -32,6 +28,20 @@ export const onClickLi = (value) => {
   closeTags()
   getIngredientInput().value = "";
 };
+
+export const getIngredientInputValue = () => {
+  const input = getIngredientInput()
+  const DATA = getRecipesStocked();
+  input.addEventListener('input', (e) => {
+    if (e.target.value.length >= 3) {
+      searchIngredient(e.target.value);
+    } else {
+      const ingredients = getAllIngredientsFromDiplayedRecipes();
+      displayRecipes(ingredients);
+    }
+    setRecipesStocked(DATA);
+  })
+}
 
 export const updateDropdownIng = () => {
   // filtrer les appareils et les ustensils
