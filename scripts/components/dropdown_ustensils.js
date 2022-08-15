@@ -12,6 +12,12 @@ import {
     div.append(dropdown());
     return div;
   };
+
+  export const changePlaceholder = () => {
+    const dropdown = document.querySelector("#filter__ustensils");
+    const input = dropdown.querySelector("input");
+    dropdown.classList.contains('selected') ? input.setAttribute('placeholder', 'Rechercher un ustencil') : input.setAttribute('placeholder', 'ustencils');
+  }
   
   export const dropdown = () => {
     const div = document.createElement("div");
@@ -63,6 +69,7 @@ import {
   export const filterSelected = () => {
     const dropdown = document.querySelector("#filter__ustensils");
     dropdown.classList.toggle("selected");
+    changePlaceholder();
     return dropdown;
   };
   export const keepOneSelected = () => {

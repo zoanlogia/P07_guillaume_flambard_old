@@ -22,6 +22,12 @@ import {
     div.append(filterIconUp());
     return div;
   };
+
+  export const changePlaceholder = () => {
+    const dropdown = document.querySelector("#filter__appliances");
+    const input = dropdown.querySelector("input");
+    dropdown.classList.contains('selected') ? input.setAttribute('placeholder', 'Rechercher un appareil') : input.setAttribute('placeholder', 'Appareils');
+  }
   
   export const createDropdownList = () => {
     const ul = document.createElement("ul");
@@ -63,6 +69,7 @@ import {
   export const filterSelected = () => {
     const dropdown = document.querySelector("#filter__appliances");
     dropdown.classList.toggle("selected");
+    changePlaceholder();
     return dropdown;
   };
   export const keepOneSelected = () => {

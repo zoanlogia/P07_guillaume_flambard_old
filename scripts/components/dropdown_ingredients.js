@@ -9,6 +9,12 @@ export const dropdownIngredientContainer = () => {
   return div;
 };
 
+export const changePlaceholder = () => {
+  const dropdown = document.querySelector("#filter__ingredients");
+  const input = dropdown.querySelector("input");
+  dropdown.classList.contains('selected') ? input.setAttribute('placeholder', 'Rechercher un ingrédient') : input.setAttribute('placeholder', 'Ingredient');
+}
+
 export const dropdown = () => {
   const div = document.createElement("div");
   div.classList.add("filter__dropdown");
@@ -59,6 +65,7 @@ export const removeSelected = () => {
 export const filterSelected = () => {
   const dropdown = document.querySelector("#filter__ingredients");
   dropdown.classList.toggle("selected");
+  changePlaceholder();
   return dropdown;
 };
 export const keepOneSelected = () => {

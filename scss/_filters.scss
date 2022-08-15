@@ -4,6 +4,7 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+
   .filter {
     width: auto;
     margin: 1em 1em 0 0;
@@ -55,6 +56,12 @@
 
     &.selected {
       .filter__dropdown {
+        @media screen and (min-width: 768px) {
+          display: block;
+          width: 25em;
+        }
+        // display: flex;
+        
         &__icon__down {
           display: none;
         }
@@ -69,6 +76,12 @@
         border-radius: 0 0 5px 5px;
         position: absolute;
         top: 95%;
+
+        @media screen and (min-width: 768px) {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+        }
+
 
         & li {
           padding-left: 0.5em;

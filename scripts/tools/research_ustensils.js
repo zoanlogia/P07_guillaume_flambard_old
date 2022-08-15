@@ -116,12 +116,17 @@ const getAllUstensilsFromDiplayedRecipes = () => {
   return [...new Set(AllUstensils.flat())];
 };
 
+export const capitalizeFirstLetter =(string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+
 /**
  * 
  * @param {string} value Affiche les recettes qui contiennent le ustensil passé en paramètre 
  */
 export const searchUstensil = (value) => {
-  const DATA = getRecipesStocked();
+  const DATA = getRecipesStocked()
 
   // filtrer les recettes (display = true) pour n'afficher que ceux qui contiennent l'ingrédient (value)
   const newRecipesToDisplay = DATA.map((recipe) => {
