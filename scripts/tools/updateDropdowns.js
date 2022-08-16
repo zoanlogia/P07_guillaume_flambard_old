@@ -8,7 +8,7 @@ export const updateDropdowns = () => {
   updateDropdownUst();
 }
 
-const updateDropdownApp = () => {
+export const updateDropdownApp = () => {
   const tags = Array.from(document.querySelectorAll(".tag"));
   const ul = getApplianceUl();
   const appAllreadySelected = tags.map((tag) => {
@@ -38,7 +38,7 @@ const updateDropdownApp = () => {
   });
 };
 
-const updateDropdownIng = () => {
+export const updateDropdownIng = () => {
   // filtrer les appareils et les ustensils
   const tags = Array.from(document.querySelectorAll(".tag"));
   const ul = getIngredientUl();
@@ -72,7 +72,7 @@ const updateDropdownIng = () => {
   });
 };
 
-const updateDropdownUst = () => {
+export const updateDropdownUst = () => {
   const tags = Array.from(document.querySelectorAll(".tag"));
   const ul = getUstensilUl();
   const appAllreadySelected = tags.map((tag) => {

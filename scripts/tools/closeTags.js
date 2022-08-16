@@ -37,7 +37,7 @@ const onClickCloseTagIngredient = () => {
           searchIngredient(ing.innerText);
         });
       } else {
-        displayRecipes();
+        displayRecipes(setRecipesStocked(DATA));
       }
       updateDropdowns()
     });
@@ -66,7 +66,7 @@ const onClickCloseTagAppliances = () => {
           searchAppliance(app.innerText);
         });
       } else {
-        displayRecipes();
+        displayRecipes(setRecipesStocked(DATA));
       }
       updateDropdowns()
     });
@@ -93,7 +93,7 @@ const onClickCloseTagUstensils = () => {
           searchUstensil(ing.innerText);
         });
       } else {
-        displayRecipes();
+        displayRecipes(setRecipesStocked(DATA));
       }
       updateDropdowns()
     });
