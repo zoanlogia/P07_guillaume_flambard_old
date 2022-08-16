@@ -4,9 +4,8 @@ import { removeSelected } from "../components/dropdown_appliances.js";
 import { displayRecipes } from "./ui.js";
 import { createTagAppliances } from "../components/tags.js";
 import { setRecipesStocked, getRecipesStocked } from "./storage.js";
-import { updateDropdownIng } from "./research_ingredients.js";
-import { updateDropdownUst } from "./research_ustensils.js";
 import { closeTags } from "./closeTags.js";
+import { updateDropdowns } from "./updateDropdowns.js";
 
 export const getApplianceInput = () => {
   return document.getElementById("filter__dropdown__input__appliances");
@@ -34,56 +33,24 @@ export const getApplianceInputValue = () => {
   })
 }
 
-export const onClickLi = (value) => {
+export const onClickLiApp = (value) => {
   const divTags = document.querySelector(".tags__container");
   const tag = createTagAppliances(value);
   divTags.innerHTML += tag;
 
   removeSelected();
   searchAppliance(value);
-  updateDropdownApp();
-  updateDropdownIng();
-  updateDropdownUst();
+  updateDropdowns()
   getApplianceInput().value = value;
   closeTags()
   getApplianceInput().value = "";
-};
-
-export const updateDropdownApp = () => {
-  const tags = Array.from(document.querySelectorAll(".tag"));
-  const ul = getApplianceUl();
-  const appAllreadySelected = tags.map((tag) => {
-    return tag.innerText;
-  });
-
-    const filteredAppliances = getAllAppliancesFromDiplayedRecipes();
-    const reduced = filteredAppliances.reduce((accumulator, current) => {
-      if (!accumulator.includes(current)) {
-        accumulator.push(current);
-      }
-      return accumulator;
-    }, []);
-  
-    const appToDisplay = reduced.filter((appTag) => {
-      return !appAllreadySelected.includes(appTag);
-    });
-    ul.innerHTML = "";
-    appToDisplay.forEach((keyword) => {
-      const li = document.createElement("li");
-      li.classList.add("filter__dropdown__list__item");
-      li.innerHTML = keyword;
-      li.onclick = () => {
-        onClickLi(keyword);
-      };
-      ul.append(li);
-    });
 };
 
 /**
  * 
  * @returns retourne un tableau contenant les appareils des recettes affichées
  */
-const getAllAppliancesFromDiplayedRecipes = () => {
+export const getAllAppliancesFromDiplayedRecipes = () => {
   const DATA = getRecipesStocked();
   const displayedRecipes = DATA.filter((recipe) => {
     return recipe.display;
@@ -93,7 +60,6 @@ const getAllAppliancesFromDiplayedRecipes = () => {
   });
   return [...new Set(AllAppliances.flat())];
 };
-
 
 /**
  * 

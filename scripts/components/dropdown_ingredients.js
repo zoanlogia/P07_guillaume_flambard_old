@@ -1,5 +1,5 @@
 import { getAllIngredients } from "../tools/api.js";
-import { onClickLi } from "../tools/research_ingredients.js";
+import { onClickLiIng } from "../tools/research_ingredients.js";
 
 export const dropdownIngredientContainer = () => {
   const div = document.createElement("div");
@@ -34,7 +34,7 @@ export const createDropdownList = () => {
     li.classList.add("filter__dropdown__list__item");
     li.innerHTML = ing;
     li.onclick = () => {
-      onClickLi(li.innerHTML);
+      onClickLiIng(li.innerHTML);
     };
     ul.append(li);
   });

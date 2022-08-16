@@ -4,6 +4,7 @@ import { getRecipesStocked } from "./storage.js";
 import { dropdownApplianceContainer } from "../components/dropdown_appliances.js";
 import { dropdownUstensilContainer } from "../components/dropdown_ustensils.js";
 import { createInput } from "../components/searchbar.js";
+import { displayError } from "../components/errorMessage.js";
 
 /**
  * @description Creates a dropdown menu for the ingredients
@@ -35,4 +36,9 @@ export const displayRecipes = () => {
       container.append(card(recipe));
     }
   });
+// display an error message if no recipe is found
+  if (container.innerHTML === "") {
+    container.append(displayError());
+  }
 };
+

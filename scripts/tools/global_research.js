@@ -1,4 +1,5 @@
 import { card } from "../components/card.js";
+import { displayError } from "../components/errorMessage.js";
 import { getRecipesStocked } from "./storage.js";
 
 export const globalSearch = () => {
@@ -11,7 +12,7 @@ export const globalSearch = () => {
      */
     searchbar.addEventListener('input', (e) => {
         console.log(e);
-        if (e.target.value.length >= 3) {     
+        if (e.target.value.length >= 3) {
             container.innerHTML = "";
             recipes.forEach((recipe) => {
                 if (recipe.name.toLowerCase().includes(e.target.value.toLowerCase())) {
@@ -26,10 +27,13 @@ export const globalSearch = () => {
                 else if (recipe.description.toLowerCase().includes(e.target.value.toLowerCase())) {
                     container.append(card(recipe));
                 }
+                if (container.innerHTML == "") {
+                    container.append(displayError());
+                }
             });
         }
         else {
-            container.innerHTML = "";
+            container.innerHTML = ""
             recipes.forEach((recipe) => {
                 container.append(card(recipe));
             });

@@ -2,20 +2,18 @@ import { removeSelected } from "../components/dropdown_ustensils.js";
 import {
   getApplianceInput,
   searchAppliance,
-  updateDropdownApp,
 } from "./research_appliances.js";
 import {
   getIngredientInput,
   searchIngredient,
-  updateDropdownIng,
 } from "./research_ingredients.js";
 import {
   getUstensilInput,
   searchUstensil,
-  updateDropdownUst,
 } from "./research_ustensils.js";
 import { getRecipesStocked, setRecipesStocked } from "./storage.js";
 import { displayRecipes } from "./ui.js";
+import { updateDropdowns } from "./updateDropdowns.js";
 
 const onClickCloseTagIngredient = () => {
   console.log("onClickCloseTag");
@@ -26,7 +24,7 @@ const onClickCloseTagIngredient = () => {
       tag.remove();
       getIngredientInput().value = "";
       removeSelected();
-      updateDropdownIng();
+      updateDropdowns()
 
       const allIngs = document.querySelectorAll(".tag_ingredients > span");
       const DATA = getRecipesStocked();
@@ -38,15 +36,10 @@ const onClickCloseTagIngredient = () => {
         allIngs.forEach((ing) => {
           searchIngredient(ing.innerText);
         });
-        updateDropdownIng();
-        updateDropdownApp();
-        updateDropdownUst();
       } else {
         displayRecipes();
-        updateDropdownIng();
-        updateDropdownApp();
-        updateDropdownUst();
       }
+      updateDropdowns()
     });
   });
 };
@@ -60,7 +53,7 @@ const onClickCloseTagAppliances = () => {
       tag.remove();
       getApplianceInput().value = "";
       removeSelected();
-      updateDropdownApp();
+      updateDropdowns()
 
       const allApps = document.querySelectorAll(".tag_appliances > span");
       const DATA = getRecipesStocked();
@@ -72,15 +65,10 @@ const onClickCloseTagAppliances = () => {
         allApps.forEach((app) => {
           searchAppliance(app.innerText);
         });
-        updateDropdownIng();
-        updateDropdownApp();
-        updateDropdownUst();
       } else {
         displayRecipes();
-        updateDropdownIng();
-        updateDropdownApp();
-        updateDropdownUst();
       }
+      updateDropdowns()
     });
   });
 };
@@ -92,9 +80,8 @@ const onClickCloseTagUstensils = () => {
       const tag = closeTag.parentElement;
       tag.remove();
       getUstensilInput().value = "";
-
       removeSelected();
-      updateDropdownUst();
+      updateDropdowns()
       const allUsts = document.querySelectorAll(".tag_ustensils > span");
       const DATA = getRecipesStocked();
       DATA.forEach((recipe) => {
@@ -105,15 +92,10 @@ const onClickCloseTagUstensils = () => {
         allUsts.forEach((ing) => {
           searchUstensil(ing.innerText);
         });
-        updateDropdownIng();
-        updateDropdownApp();
-        updateDropdownUst();
       } else {
         displayRecipes();
-        updateDropdownIng();
-        updateDropdownApp();
-        updateDropdownUst();
       }
+      updateDropdowns()
     });
   });
 };
