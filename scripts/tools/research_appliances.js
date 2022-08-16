@@ -1,5 +1,3 @@
-/** @format */
-
 import { removeSelected } from "../components/dropdown_appliances.js";
 import { displayRecipes } from "./ui.js";
 import { createTagAppliances } from "../components/tags.js";
@@ -19,6 +17,23 @@ export const handleInputAppliance = () => {
   getApplianceInput();
   getApplianceUl();
 };
+
+export const getApplianceInputValue = () => {
+  const input = getApplianceInput()
+  const DATA = getRecipesStocked();
+  input.addEventListener('input', (e) => {
+    if (e.target.value.length >= 3) {
+      searchAppliance(e.target.value);
+    } else {
+      const appliances = getAllAppliancesFromDiplayedRecipes();
+      displayRecipes(appliances);
+    }
+    updateDropdownApp();
+    updateDropdownUst();
+    updateDropdownIng();
+    setRecipesStocked(DATA);
+  })
+}
 
 export const onClickLi = (value) => {
   const divTags = document.querySelector(".tags__container");
@@ -42,27 +57,27 @@ export const updateDropdownApp = () => {
     return tag.innerText;
   });
 
-    const filteredAppliances = getAllAppliancesFromDiplayedRecipes();
-    const reduced = filteredAppliances.reduce((accumulator, current) => {
-      if (!accumulator.includes(current)) {
-        accumulator.push(current);
-      }
-      return accumulator;
-    }, []);
-  
-    const appToDisplay = reduced.filter((appTag) => {
-      return !appAllreadySelected.includes(appTag);
-    });
-    ul.innerHTML = "";
-    appToDisplay.forEach((keyword) => {
-      const li = document.createElement("li");
-      li.classList.add("filter__dropdown__list__item");
-      li.innerHTML = keyword;
-      li.onclick = () => {
-        onClickLi(keyword);
-      };
-      ul.append(li);
-    });
+  const filteredAppliances = getAllAppliancesFromDiplayedRecipes();
+  const reduced = filteredAppliances.reduce((accumulator, current) => {
+    if (!accumulator.includes(current)) {
+      accumulator.push(current);
+    }
+    return accumulator;
+  }, []);
+
+  const appToDisplay = reduced.filter((appTag) => {
+    return !appAllreadySelected.includes(appTag);
+  });
+  ul.innerHTML = "";
+  appToDisplay.forEach((keyword) => {
+    const li = document.createElement("li");
+    li.classList.add("filter__dropdown__list__item");
+    li.innerHTML = keyword;
+    li.onclick = () => {
+      onClickLi(keyword);
+    };
+    ul.append(li);
+  });
 };
 
 /**

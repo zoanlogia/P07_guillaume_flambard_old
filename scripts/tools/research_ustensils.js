@@ -29,6 +29,23 @@ export const handleInputUstensil = () => {
   getUstensilUl();
 };
 
+export const getUstensilInputValue = () => {
+  const input = getUstensilInput()
+  const DATA = getRecipesStocked()
+  input.addEventListener('input', (e) => {
+    if (e.target.value.length >= 3) {
+      searchUstensil(e.target.value);
+    } else {
+      const ingredients = getAllUstensilsFromDiplayedRecipes();
+      displayRecipes(ingredients);
+    }
+    updateDropdownApp();
+    updateDropdownUst();
+    updateDropdownIng();
+    setRecipesStocked(DATA);
+  })
+}
+
 /**
  * 
  * @param {string} value - Valeur entrée dans le champ de recherche
@@ -101,6 +118,11 @@ const getAllUstensilsFromDiplayedRecipes = () => {
   });
   return [...new Set(AllUstensils.flat())];
 };
+
+export const capitalizeFirstLetter =(string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 
 /**
  * 

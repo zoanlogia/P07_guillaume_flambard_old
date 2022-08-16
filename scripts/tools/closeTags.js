@@ -38,15 +38,12 @@ const onClickCloseTagIngredient = () => {
         allIngs.forEach((ing) => {
           searchIngredient(ing.innerText);
         });
-        updateDropdownIng();
-        updateDropdownApp();
-        updateDropdownUst();
       } else {
         displayRecipes();
-        updateDropdownIng();
-        updateDropdownApp();
-        updateDropdownUst();
       }
+      updateDropdownIng();
+      updateDropdownApp();
+      updateDropdownUst();
     });
   });
 };
@@ -72,15 +69,12 @@ const onClickCloseTagAppliances = () => {
         allApps.forEach((app) => {
           searchAppliance(app.innerText);
         });
-        updateDropdownIng();
-        updateDropdownApp();
-        updateDropdownUst();
       } else {
         displayRecipes();
-        updateDropdownIng();
-        updateDropdownApp();
-        updateDropdownUst();
       }
+      updateDropdownIng();
+      updateDropdownApp();
+      updateDropdownUst();
     });
   });
 };
@@ -105,21 +99,18 @@ const onClickCloseTagUstensils = () => {
         allUsts.forEach((ing) => {
           searchUstensil(ing.innerText);
         });
-        updateDropdownIng();
-        updateDropdownApp();
-        updateDropdownUst();
       } else {
         displayRecipes();
-        updateDropdownIng();
-        updateDropdownApp();
-        updateDropdownUst();
       }
+      updateDropdownIng();
+      updateDropdownApp();
+      updateDropdownUst();
     });
   });
 };
 
 export const closeTags = () => {
-    onClickCloseTagIngredient();
-    onClickCloseTagAppliances();
-    onClickCloseTagUstensils();
+  onClickCloseTagIngredient();
+  onClickCloseTagAppliances();
+  onClickCloseTagUstensils();
 }
