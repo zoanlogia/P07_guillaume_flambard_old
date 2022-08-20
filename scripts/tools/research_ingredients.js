@@ -2,8 +2,9 @@ import { removeSelected } from "../components/dropdown_ingredients.js";
 import { displayRecipes } from "./ui.js";
 import { createTagIngredients } from "../components/tags.js";
 import { setRecipesStocked, getRecipesStocked } from "./storage.js";
-import { closeTags } from "./closeTags.js";
 import { updateDropdowns } from "./updateDropdowns.js";
+import { onClickCloseTagAppliances } from "./research_appliances.js";
+import { onClickCloseTagUstensils } from "./research_ustensils.js";
 
 export const getIngredientInput = () => {
   return document.getElementById("filter__dropdown__input__ingredients");
@@ -22,8 +23,46 @@ export const onClickLiIng = (value) => {
   searchIngredient(value);
   updateDropdowns()
   getIngredientInput().value = value;
-  closeTags()
+  onClickCloseTagIngredient()
+  onClickCloseTagAppliances()
+  onClickCloseTagUstensils()
   getIngredientInput().value = "";
+};
+
+export const onClickCloseTagIngredient = () => {
+  const closeTags = document.querySelectorAll(".closeIng");
+  closeTags.forEach((closeTag) => {
+    closeTag.addEventListener("click", () => {
+      const tag = closeTag.parentElement;
+      tag.remove();
+      getIngredientInput().value = "";
+      removeSelected();
+      updateDropdowns()
+
+      const allIngs = document.querySelectorAll(".tag_ingredients > span");
+      const allUsts = document.querySelectorAll(".tag_ustensils > span");
+      const allApps = document.querySelectorAll(".tag_appliances > span");
+
+      const DATA = getRecipesStocked();
+
+      DATA.forEach((recipe) => {
+        if (allUsts.length === 0 || allApps.length === 0) {
+          recipe.display = true;
+        }
+        setRecipesStocked(DATA);
+        displayRecipes(DATA);
+      });
+      
+      if (allIngs.length > 0) {
+        allIngs.forEach((ing) => {
+          searchIngredient(ing.innerText);
+        });
+      } else {
+        displayRecipes(DATA);
+      }
+      updateDropdowns()
+    });
+  });
 };
 
 export const getIngredientInputValue = () => {
@@ -97,7 +136,6 @@ export const searchIngredient = (value) => {
     accumulator.push(current);
     return accumulator;
   }, []);
-  console.log(newRecipesToDisplay);
   setRecipesStocked(newRecipesToDisplay);
   displayRecipes();
 };

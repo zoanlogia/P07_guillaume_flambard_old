@@ -1,11 +1,10 @@
-/** @format */
-
 import { removeSelected } from "../components/dropdown_appliances.js";
 import { displayRecipes } from "./ui.js";
 import { createTagAppliances } from "../components/tags.js";
 import { setRecipesStocked, getRecipesStocked } from "./storage.js";
-import { closeTags } from "./closeTags.js";
 import { updateDropdowns } from "./updateDropdowns.js";
+import { onClickCloseTagUstensils } from "./research_ustensils.js";
+import { onClickCloseTagIngredient } from "./research_ingredients.js";
 
 export const getApplianceInput = () => {
   return document.getElementById("filter__dropdown__input__appliances");
@@ -42,8 +41,47 @@ export const onClickLiApp = (value) => {
   searchAppliance(value);
   updateDropdowns()
   getApplianceInput().value = value;
-  closeTags()
+  onClickCloseTagAppliances()
+  onClickCloseTagUstensils()
+  onClickCloseTagIngredient()
   getApplianceInput().value = "";
+};
+
+export const onClickCloseTagAppliances = () => {
+  const closeTags = document.querySelectorAll(".closeApp");
+  closeTags.forEach((closeTag) => {
+    closeTag.addEventListener("click", () => {
+      const tag = closeTag.parentElement;
+      displayRecipes(getRecipesStocked());
+      tag.remove();
+      getApplianceInput().value = "";
+      removeSelected();
+      updateDropdowns()
+
+      const allApps = document.querySelectorAll(".tag_appliances > span");
+      const tag_ustensils = document.querySelectorAll(".tag_ustensils > span");
+      const tag_ingredients = document.querySelectorAll(".tag_ingredients > span");
+
+      const DATA = getRecipesStocked();
+
+      DATA.forEach((recipe) => {
+        if (tag_ustensils.length == 0 || tag_ingredients.length == 0) {
+          recipe.display = true;
+        }
+        setRecipesStocked(DATA);
+        displayRecipes(DATA);
+        searchAppliance(getApplianceInput().value);
+      });
+      if (allApps.length > 0) {
+        allApps.forEach((app) => {
+          searchAppliance(app.innerText);
+        });
+      } else {
+        displayRecipes(DATA);
+      }
+      updateDropdowns()
+    });
+  });
 };
 
 /**

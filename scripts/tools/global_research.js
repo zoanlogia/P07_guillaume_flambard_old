@@ -1,7 +1,6 @@
 import { card } from "../components/card.js";
 import { displayError } from "../components/errorMessage.js";
 import { getRecipesStocked } from "./storage.js";
-import { updateDropdowns } from "./updateDropdowns.js";
 
 export const globalSearch = () => {
     const searchbar = document.getElementById('searchbar');
@@ -13,7 +12,6 @@ export const globalSearch = () => {
      */
     searchbar.addEventListener('input', (e) => {
         if (e.target.value.length >= 3) {
-            updateDropdowns()
             container.innerHTML = "";
             recipes.forEach((recipe) => {
                 if (recipe.name.toLowerCase().includes(e.target.value.toLowerCase())) {

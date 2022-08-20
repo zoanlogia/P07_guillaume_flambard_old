@@ -4,8 +4,9 @@ import { removeSelected } from "../components/dropdown_ustensils.js";
 import { displayRecipes } from "./ui.js";
 import { createTagUstensils } from "../components/tags.js";
 import { setRecipesStocked, getRecipesStocked } from "./storage.js";
-import { closeTags } from "./closeTags.js";
 import { updateDropdowns } from "./updateDropdowns.js";
+import { onClickCloseTagIngredient } from "./research_ingredients.js";
+import { onClickCloseTagAppliances } from "./research_appliances.js";
 
 /**
  * 
@@ -55,8 +56,50 @@ export const onClickLiUst = (value) => {
   searchUstensil(value);
   updateDropdowns()
   getUstensilInput().value = value;
-  closeTags();
+  onClickCloseTagUstensils()
+  onClickCloseTagAppliances()
+  onClickCloseTagIngredient()
   getUstensilInput().value = "";
+};
+
+export const onClickCloseTagUstensils = () => {
+  const closeTags = document.querySelectorAll(".closeUst");
+  closeTags.forEach((closeTag) => {
+    closeTag.addEventListener("click", () => {
+      const tag = closeTag.parentElement;
+      tag.remove();
+      getUstensilInput().value = "";
+      removeSelected();
+      updateDropdowns()
+
+      const allUsts = document.querySelectorAll(".tag_ustensils > span");
+      const allApps = document.querySelectorAll(".tag_appliances > span");
+      const allIngs = document.querySelectorAll(".tag_ingredients > span");
+
+      const DATA = getRecipesStocked();
+
+      DATA.forEach((recipe) => {
+        if (allIngs.length === 0 || allApps.length === 0) {
+          recipe.display = true;
+        }
+        setRecipesStocked(DATA);
+        displayRecipes(DATA);
+      });
+
+      allUsts.forEach((ust) => {
+        searchUstensil(ust.innerText);
+      })
+
+      if (allUsts.length > 0) {
+        allUsts.forEach((ust) => {
+          searchUstensil(ust.innerText);
+        });
+      } else {
+        displayRecipes(DATA);
+      }
+      updateDropdowns()
+    });
+  });
 };
 
 /**
