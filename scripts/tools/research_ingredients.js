@@ -2,7 +2,7 @@ import { removeSelected } from "../components/dropdown_ingredients.js";
 import { displayRecipes } from "./ui.js";
 import { createTagIngredients } from "../components/tags.js";
 import { setRecipesStocked, getRecipesStocked } from "./storage.js";
-import { updateDropdowns } from "./updateDropdowns.js";
+import { updateDropdownApp, updateDropdownIng, updateDropdowns, updateDropdownUst } from "./updateDropdowns.js";
 import { onClickCloseTagAppliances } from "./research_appliances.js";
 import { onClickCloseTagUstensils } from "./research_ustensils.js";
 
@@ -20,13 +20,31 @@ export const onClickLiIng = (value) => {
   divTags.innerHTML += tag;
 
   removeSelected();
-  searchIngredient(value);
   updateDropdowns()
-  getIngredientInput().value = value;
   onClickCloseTagIngredient()
   onClickCloseTagAppliances()
   onClickCloseTagUstensils()
   getIngredientInput().value = "";
+  
+  const recipesStocked = getRecipesStocked();
+  const newRecipesToDisplay = recipesStocked.reduce((accumulator, current) => {
+    if (current.display) {
+      const isAnIngredient = current.ingredients.find(
+        (el) => el.ingredient.toLowerCase().includes(value.toLowerCase())
+      );
+      if (!isAnIngredient) {
+        current.display = false;
+      }
+    }
+    accumulator.push(current);
+    return accumulator;
+  }, []);
+
+  setRecipesStocked(newRecipesToDisplay);
+  updateDropdownIng()
+  updateDropdownUst()
+  updateDropdownApp()
+  displayRecipes();
 };
 
 export const onClickCloseTagIngredient = () => {
@@ -52,7 +70,7 @@ export const onClickCloseTagIngredient = () => {
         setRecipesStocked(DATA);
         displayRecipes(DATA);
       });
-      
+
       if (allIngs.length > 0) {
         allIngs.forEach((ing) => {
           searchIngredient(ing.innerText);
@@ -69,12 +87,7 @@ export const getIngredientInputValue = () => {
   const input = getIngredientInput()
   const DATA = getRecipesStocked();
   input.addEventListener('input', (e) => {
-    if (e.target.value.length >= 3) {
-      searchIngredient(e.target.value);
-    } else {
-      const ingredients = getAllIngredientsFromDiplayedRecipes();
-      displayRecipes(ingredients);
-    }
+    searchIngredient(e.target.value);
     setRecipesStocked(DATA);
   })
 }
@@ -96,46 +109,21 @@ export const getAllIngredientsFromDiplayedRecipes = () => {
   return [...new Set(AllIngredients.flat())];
 };
 
-/**
- * 
- * @param {string} value Affiche les recettes qui contiennent l'ingrédient
- */
-
-// first function to search the ingredient
-
-// export const searchIngredient = (value) => {
-//   const DATA = getRecipesStocked();
-//   const newRecipesToDisplay = DATA.map((recipe) => {
-//     if (recipe.display) {
-//       const isAnIngredient = recipe.ingredients.find(
-//         (el) => el.ingredient.toLowerCase() == value.toLowerCase()
-//       );
-//       if (!isAnIngredient) {
-//         recipe.display = false;
-//       }
-//     }
-//     return recipe;
-//   });
-//   setRecipesStocked(newRecipesToDisplay);
-//   displayRecipes();
-// };
-
-// second function to search the ingredient
 
 export const searchIngredient = (value) => {
-  const DATA = getRecipesStocked();
-  const newRecipesToDisplay = DATA.reduce((accumulator, current) => {
-    if (current.display) {
-      const isAnIngredient = current.ingredients.find(
-        (el) => el.ingredient.toLowerCase() == value.toLowerCase()
-      );
-      if (!isAnIngredient) {
-        current.display = false;
+  const ul = getIngredientUl();
+  const lis = ul.querySelectorAll("li");
+  if (value.length > 2) {
+    lis.forEach(li => {
+      if (li.innerHTML.toLowerCase().includes(value.toLowerCase())) {
+        li.style.display = "block";
+      } else {
+        li.style.display = "none";
       }
-    }
-    accumulator.push(current);
-    return accumulator;
-  }, []);
-  setRecipesStocked(newRecipesToDisplay);
-  displayRecipes();
+    })
+  } else {
+    lis.forEach(li => {
+      li.style.display = "block";
+    })
+  }
 };
