@@ -2,13 +2,12 @@ import { removeSelected } from "../components/dropdown_ingredients.js";
 import { displayRecipes } from "./ui.js";
 import { createTagIngredients } from "../components/tags.js";
 import { setRecipesStocked, getRecipesStocked } from "./storage.js";
-import { updateDropdownApp, updateDropdownIng, updateDropdowns, updateDropdownUst } from "./updateDropdowns.js";
+import { updateDropdowns } from "./updateDropdowns.js";
 import { onClickCloseTagAppliances } from "./research_appliances.js";
 import { onClickCloseTagUstensils } from "./research_ustensils.js";
 
 export const getIngredientInput = () => {
-  return document.getElementById("filter__dropdown__input__ingredients");
-};
+  return document.getElementById("filter__dropdown__input__ingredients");};
 
 export const getIngredientUl = () => {
   return document.querySelector("#filter__ingredients > div > ul");
@@ -25,7 +24,7 @@ export const onClickLiIng = (value) => {
   onClickCloseTagAppliances()
   onClickCloseTagUstensils()
   getIngredientInput().value = "";
-  
+
   const recipesStocked = getRecipesStocked();
   const newRecipesToDisplay = recipesStocked.reduce((accumulator, current) => {
     if (current.display) {
@@ -41,9 +40,7 @@ export const onClickLiIng = (value) => {
   }, []);
 
   setRecipesStocked(newRecipesToDisplay);
-  updateDropdownIng()
-  updateDropdownUst()
-  updateDropdownApp()
+  updateDropdowns()
   displayRecipes();
 };
 
@@ -53,32 +50,36 @@ export const onClickCloseTagIngredient = () => {
     closeTag.addEventListener("click", () => {
       const tag = closeTag.parentElement;
       tag.remove();
-      getIngredientInput().value = "";
-      removeSelected();
-      updateDropdowns()
 
-      const allIngs = document.querySelectorAll(".tag_ingredients > span");
-      const allUsts = document.querySelectorAll(".tag_ustensils > span");
-      const allApps = document.querySelectorAll(".tag_appliances > span");
+      const ingsTags = Array.from(document.querySelectorAll(".tag_ingredients > span")).map(ing => ing.innerText.toLowerCase());
+      const ustsTags = Array.from(document.querySelectorAll(".tag_ustensils > span")).map(ust => ust.innerText.toLowerCase());
+      const appsTags = Array.from(document.querySelectorAll(".tag_appliances > span")).map(app => app.innerText.toLowerCase());
 
       const DATA = getRecipesStocked();
 
       DATA.forEach((recipe) => {
-        if (allUsts.length === 0 || allApps.length === 0) {
-          recipe.display = true;
-        }
-        setRecipesStocked(DATA);
-        displayRecipes(DATA);
-      });
+        // on récupére tous les data de la recette
+        const recipeIngredients = recipe.ingredients.map(ing => ing.ingredient.toLowerCase());
+        const recipeUstensils = recipe.ustensils.map(ustensil => ustensil.toLowerCase());
+        const recipeAppliance = recipe.appliance.toLowerCase();
 
-      if (allIngs.length > 0) {
-        allIngs.forEach((ing) => {
-          searchIngredient(ing.innerText);
-        });
-      } else {
-        displayRecipes(DATA);
-      }
+        // on fait des tableau avec tout dedans
+        const recipeData = [...recipeIngredients, recipeAppliance, ...recipeUstensils];
+        const tagsData = [...ingsTags, ...appsTags, ...ustsTags];
+
+        // on compare les deux tableaux
+        const allFounded = tagsData.every(el => recipeData.includes(el));
+
+        if (allFounded) {
+          recipe.display = true;
+        } else {
+          recipe.display = false;
+        }
+      })
+
+      setRecipesStocked(DATA);
       updateDropdowns()
+      displayRecipes();
     });
   });
 };

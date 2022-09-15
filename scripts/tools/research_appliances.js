@@ -13,38 +13,32 @@ export const getApplianceUl = () => {
   return document.querySelector("#filter__appliances > div > ul");
 };
 
-export const handleInputAppliance = () => {
-  getApplianceInput();
-  getApplianceUl();
-};
-
-export const getApplianceInputValue = () => {
-  const input = getApplianceInput()
-  const DATA = getRecipesStocked();
-  input.addEventListener('input', (e) => {
-    if (e.target.value.length >= 3) {
-      searchAppliance(e.target.value);
-    } else {
-      const appliances = getAllAppliancesFromDiplayedRecipes();
-      displayRecipes(appliances);
-    }
-    setRecipesStocked(DATA);
-  })
-}
-
 export const onClickLiApp = (value) => {
   const divTags = document.querySelector(".tags__container");
   const tag = createTagAppliances(value);
   divTags.innerHTML += tag;
 
   removeSelected();
-  searchAppliance(value);
-  updateDropdowns()
-  getApplianceInput().value = value;
-  onClickCloseTagAppliances()
-  onClickCloseTagUstensils()
-  onClickCloseTagIngredient()
+  updateDropdowns();
+  onClickCloseTagAppliances();
+  onClickCloseTagUstensils();
+  onClickCloseTagIngredient();
   getApplianceInput().value = "";
+
+  const recipesStocked = getRecipesStocked();
+  const newRecipesToDisplay = recipesStocked.reduce((accumulator, current) => {
+    if (current.display) {
+      const isAnAppliance = current.appliance.toLowerCase().includes(value.toLowerCase());
+      if (!isAnAppliance) {
+        current.display = false;
+      }
+    }
+    accumulator.push(current);
+    return accumulator;
+  }, []);
+  setRecipesStocked(newRecipesToDisplay);
+  updateDropdowns();
+  displayRecipes();
 };
 
 export const onClickCloseTagAppliances = () => {
@@ -52,40 +46,52 @@ export const onClickCloseTagAppliances = () => {
   closeTags.forEach((closeTag) => {
     closeTag.addEventListener("click", () => {
       const tag = closeTag.parentElement;
-      displayRecipes(getRecipesStocked());
       tag.remove();
-      getApplianceInput().value = "";
-      removeSelected();
-      updateDropdowns()
 
-      const allApps = document.querySelectorAll(".tag_appliances > span");
-      const tag_ustensils = document.querySelectorAll(".tag_ustensils > span");
-      const tag_ingredients = document.querySelectorAll(".tag_ingredients > span");
+      const ingsTags = Array.from(document.querySelectorAll(".tag_ingredients > span")).map(ing => ing.innerText.toLowerCase());
+      const ustsTags = Array.from(document.querySelectorAll(".tag_ustensils > span")).map(ust => ust.innerText.toLowerCase());
+      const appsTags = Array.from(document.querySelectorAll(".tag_appliances > span")).map(app => app.innerText.toLowerCase());
 
       const DATA = getRecipesStocked();
 
       DATA.forEach((recipe) => {
-        if (tag_ustensils.length == 0 || tag_ingredients.length == 0) {
+        // on récupére tous les data de la recette
+        const recipeIngredients = recipe.ingredients.map(ing => ing.ingredient.toLowerCase());
+        const recipeUstensils = recipe.ustensils.map(ustensil => ustensil.toLowerCase());
+        const recipeAppliance = recipe.appliance.toLowerCase();
+
+        // on fait des tableau avec tout dedans
+        const recipeData = [...recipeIngredients, recipeAppliance, ...recipeUstensils];
+        const tagsData = [...ingsTags, ...appsTags, ...ustsTags];
+
+        // on compare les deux tableaux
+        const allFounded = tagsData.every(el => recipeData.includes(el));
+
+        if (allFounded) {
           recipe.display = true;
+        } else {
+          recipe.display = false;
         }
+      })
+
         setRecipesStocked(DATA);
-        displayRecipes(DATA);
-        searchAppliance(getApplianceInput().value);
+        updateDropdowns()
+        displayRecipes();
       });
-      if (allApps.length > 0) {
-        allApps.forEach((app) => {
-          searchAppliance(app.innerText);
-        });
-      } else {
-        displayRecipes(DATA);
-      }
-      updateDropdowns()
     });
-  });
 };
 
+export const getApplianceInputValue = () => {
+  const input = getApplianceInput();
+  const DATA = getRecipesStocked();
+  input.addEventListener("input", (e) => {
+    searchAppliance(e.target.value);
+    setRecipesStocked(DATA);
+  })
+}
+
 /**
- * 
+ *
  * @returns retourne un tableau contenant les appareils des recettes affichées
  */
 export const getAllAppliancesFromDiplayedRecipes = () => {
@@ -94,27 +100,25 @@ export const getAllAppliancesFromDiplayedRecipes = () => {
     return recipe.display;
   });
   const AllAppliances = displayedRecipes.map((recipe) => {
-    return recipe.appliance
+    return recipe.appliance;
   });
   return [...new Set(AllAppliances.flat())];
 };
 
-/**
- * 
- * @param {string} value Affichage des recettes correspondant à l'appareil
- */
 export const searchAppliance = (value) => {
-  const DATA = getRecipesStocked();
-
-  const newRecipesToDisplay = DATA.map((recipe) => {
-    if (recipe.display) {
-      const isAnAppliance = recipe.appliance.toLowerCase().includes(value.toLowerCase());
-      if (!isAnAppliance) {
-        recipe.display = false;
+  const ul = getApplianceUl();
+  const lis = ul.querySelectorAll("li");
+  if (value.length > 2) {
+    lis.forEach((li) => {
+      if (li.innerHTML.toLowerCase().includes(value.toLowerCase())) {
+        li.style.display = "block";
+      } else {
+        li.style.display = "none";
       }
-    }
-    return recipe;
-  });
-  setRecipesStocked(newRecipesToDisplay);
-  displayRecipes();
-};
+    });
+  } else {
+    lis.forEach((li) => {
+      li.style.display = "block";
+    });
+  }
+}

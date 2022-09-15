@@ -101,14 +101,13 @@ table {
       color: white;
       border: none;
       cursor: pointer;
-      background-color: #3282f7;
       position: relative; }
       .filter__container .filter__dropdown input {
         height: 5em;
         min-height: 4em;
         width: -webkit-fill-available;
-        background: none !important;
-        border: none !important;
+        background: none;
+        border: none;
         color: white;
         position: relative; }
       .filter__container .filter__dropdown ::placeholder {
@@ -137,7 +136,6 @@ table {
     .filter__container .filter.selected .filter__dropdown__icon__up {
       display: block; }
     .filter__container .filter.selected ul {
-      background-color: #3282f7;
       border-radius: 0 0 5px 5px;
       position: absolute;
       top: 95%; }
@@ -151,37 +149,40 @@ table {
         display: block;
         border: none;
         animation: b 0.3s linear forwards;
-        color: white;
-        background-color: #3282f7; }
-
-@keyframes b {
-  0% {
-    background: transparent; }
-  94% {
-    background: #3282f7; } }
+        color: white; }
 
 .filter__dropdown__list {
   z-index: 2; }
 
+#filter__dropdown__input__ingredients {
+  background-color: #3282f7;
+  border-radius: 5px; }
+
+#filter__ingredients > div > ul {
+  background-color: #3282f7; }
+
+#filter__ingredients > div > ul > li {
+  background-color: #3282f7; }
+
 #filter__dropdown__input__appliances {
-  background-color: #68D9A4 !important;
+  background-color: #68D9A4;
   border-radius: 5px; }
 
 #filter__appliances > div > ul {
-  background-color: #68D9A4 !important; }
+  background-color: #68D9A4; }
 
 #filter__appliances > div > ul > li {
-  background-color: #68D9A4 !important; }
+  background-color: #68D9A4; }
 
 #filter__dropdown__input__ustensils {
-  background-color: #ED6454 !important;
+  background-color: #ED6454;
   border-radius: 5px; }
 
 #filter__ustensils > div > ul {
-  background-color: #ED6454 !important; }
+  background-color: #ED6454; }
 
 #filter__ustensils > div > ul > li {
-  background-color: #ED6454 !important; }
+  background-color: #ED6454; }
 
 /** @format */
 .recipes__container {
