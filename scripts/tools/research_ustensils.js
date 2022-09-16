@@ -1,3 +1,5 @@
+/** @format */
+
 import { removeSelected } from "../components/dropdown_ustensils.js";
 import { displayRecipes } from "./ui.js";
 import { createTagUstensils } from "../components/tags.js";
@@ -14,25 +16,22 @@ export const getUstensilUl = () => {
   return document.querySelector("#filter__ustensils > div > ul");
 };
 
-
 export const onClickLiUst = (value) => {
   const divTags = document.querySelector(".tags__container");
   const tag = createTagUstensils(value);
   divTags.innerHTML += tag;
 
   removeSelected();
-  updateDropdowns()
-  onClickCloseTagUstensils()
-  onClickCloseTagAppliances()
-  onClickCloseTagIngredient()
+  updateDropdowns();
+  onClickCloseTagUstensils();
+  onClickCloseTagAppliances();
+  onClickCloseTagIngredient();
   getUstensilInput().value = "";
 
   const recipesStocked = getRecipesStocked();
   const newRecipesToDisplay = recipesStocked.reduce((accumulator, current) => {
     if (current.display) {
-      const isAnUstensil = current.ustensils.find(
-        (el) => el.toLowerCase().includes(value.toLowerCase())
-      );
+      const isAnUstensil = current.ustensils.find((el) => el.includes(value));
       if (!isAnUstensil) {
         current.display = false;
       }
@@ -41,7 +40,7 @@ export const onClickLiUst = (value) => {
     return accumulator;
   }, []);
   setRecipesStocked(newRecipesToDisplay);
-  updateDropdowns()
+  updateDropdowns();
   displayRecipes();
 };
 
@@ -51,37 +50,49 @@ export const onClickCloseTagUstensils = () => {
     closeTag.addEventListener("click", () => {
       const tag = closeTag.parentElement;
       tag.remove();
-      
-        const ingsTags = Array.from(document.querySelectorAll(".tag_ingredients > span")).map(ing => ing.innerText.toLowerCase());
-        const ustsTags = Array.from(document.querySelectorAll(".tag_ustensils > span")).map(ust => ust.innerText.toLowerCase());
-        const appsTags = Array.from(document.querySelectorAll(".tag_appliances > span")).map(app => app.innerText.toLowerCase());
-  
-        const DATA = getRecipesStocked();
-  
-        DATA.forEach((recipe) => {
-          // on récupére tous les data de la recette
-          const recipeIngredients = recipe.ingredients.map(ing => ing.ingredient.toLowerCase());
-          const recipeUstensils = recipe.ustensils.map(ustensil => ustensil.toLowerCase());
-          const recipeAppliance = recipe.appliance.toLowerCase();
-  
-          // on fait des tableau avec tout dedans
-          const recipeData = [...recipeIngredients, recipeAppliance, ...recipeUstensils];
-          const tagsData = [...ingsTags, ...appsTags, ...ustsTags];
-  
-          // on compare les deux tableaux
-          const allFounded = tagsData.every(el => recipeData.includes(el));
-  
-          if (allFounded) {
-            recipe.display = true;
-          } else {
-            recipe.display = false;
-          }
-        })
-  
-        setRecipesStocked(DATA);
-        updateDropdowns()
-        displayRecipes();
+
+      const ingsTags = Array.from(
+        document.querySelectorAll(".tag_ingredients > span"),
+      ).map((ing) => ing.innerText);
+      const ustsTags = Array.from(
+        document.querySelectorAll(".tag_ustensils > span"),
+      ).map((ust) => ust.innerText);
+      const appsTags = Array.from(
+        document.querySelectorAll(".tag_appliances > span"),
+      ).map((app) => app.innerText);
+
+      const DATA = getRecipesStocked();
+
+      DATA.forEach((recipe) => {
+        // on récupére tous les data de la recette
+        const recipeIngredients = recipe.ingredients.map(
+          (ing) => ing.ingredient,
+        );
+        const recipeUstensils = recipe.ustensils.map((ustensil) => ustensil);
+        const recipeAppliance = recipe.appliance;
+
+        // on fait des tableau avec tout dedans
+        const recipeData = [
+          ...recipeIngredients,
+          recipeAppliance,
+          ...recipeUstensils,
+        ];
+        const tagsData = [...ingsTags, ...appsTags, ...ustsTags];
+
+        // on compare les deux tableaux
+        const allFounded = tagsData.every((el) => recipeData.includes(el));
+
+        if (allFounded) {
+          recipe.display = true;
+        } else {
+          recipe.display = false;
+        }
       });
+
+      setRecipesStocked(DATA);
+      updateDropdowns();
+      displayRecipes();
+    });
   });
 };
 
@@ -91,10 +102,10 @@ export const getUstensilInputValue = () => {
   input.addEventListener("input", (e) => {
     searchUstensil(e.target.value);
     setRecipesStocked(DATA);
-  })
-}
+  });
+};
 /**
- * 
+ *
  * @returns retourne un tableau contenant les ustensils des recettes affichées
  */
 export const getAllUstensilsFromDiplayedRecipes = () => {
@@ -111,18 +122,17 @@ export const getAllUstensilsFromDiplayedRecipes = () => {
 export const searchUstensil = (value) => {
   const ul = getUstensilUl();
   const lis = ul.querySelectorAll("li");
-  if (value.length > 2){
+  if (value.length > 2) {
     lis.forEach((li) => {
-      if (li.innerText.toLowerCase().includes(value.toLowerCase())) {
+      if (li.innerText.includes(value)) {
         li.style.display = "block";
       } else {
         li.style.display = "none";
       }
     });
-  }
-  else {
+  } else {
     lis.forEach((li) => {
       li.style.display = "none";
     });
   }
-}
+};

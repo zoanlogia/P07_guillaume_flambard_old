@@ -1,12 +1,51 @@
-import { getApplianceUl, getAllAppliancesFromDiplayedRecipes, onClickLiApp } from "./research_appliances.js";
-import { getIngredientUl, getAllIngredientsFromDiplayedRecipes, onClickLiIng } from "./research_ingredients.js";
-import { getUstensilUl, getAllUstensilsFromDiplayedRecipes, onClickLiUst } from "./research_ustensils.js";
+/** @format */
+
+import {
+  getApplianceUl,
+  getAllAppliancesFromDiplayedRecipes,
+  onClickLiApp,
+} from "./research_appliances.js";
+import {
+  getIngredientUl,
+  getAllIngredientsFromDiplayedRecipes,
+  onClickLiIng,
+} from "./research_ingredients.js";
+import {
+  getUstensilUl,
+  getAllUstensilsFromDiplayedRecipes,
+  onClickLiUst,
+} from "./research_ustensils.js";
 
 export const updateDropdowns = () => {
   updateDropdownIng();
   updateDropdownApp();
   updateDropdownUst();
-}
+
+  // remove li from dropdowns if tags are already created
+  const ingsTags = Array.from(document.querySelectorAll(".tag_ingredients > span")).map((ing) => ing.innerText);
+  const appsTags = Array.from(document.querySelectorAll(".tag_appliances > span")).map((app) => app.innerText);
+  const ustsTags = Array.from(document.querySelectorAll(".tag_ustensils > span")).map((ust) => ust.innerText);
+
+  const ingsLi = Array.from(getIngredientUl().children);
+  const appsLi = Array.from(getApplianceUl().children);
+  const ustsLi = Array.from(getUstensilUl().children);
+
+  ingsLi.forEach((li) => {
+    if (ingsTags.includes(li.innerText)) {
+      li.remove();
+    }
+  });
+  appsLi.forEach((li) => {
+    if (appsTags.includes(li.innerText)) {
+      li.remove();
+    }
+  });
+  ustsLi.forEach((li) => {
+    if (ustsTags.includes(li.innerText)) {
+      li.remove();
+    }
+  });
+};
 
 export const updateDropdownApp = () => {
   const tags = Array.from(document.querySelectorAll(".tag"));
@@ -15,7 +54,7 @@ export const updateDropdownApp = () => {
     return tag.innerText;
   });
 
-  const filteredAppliances = getAllAppliancesFromDiplayedRecipes()
+  const filteredAppliances = getAllAppliancesFromDiplayedRecipes();
   const reduced = filteredAppliances.reduce((accumulator, current) => {
     if (!accumulator.includes(current)) {
       accumulator.push(current);
@@ -87,7 +126,7 @@ export const updateDropdownUst = () => {
   const filteredUstensils = getAllUstensilsFromDiplayedRecipes();
 
   /**
-   * 
+   *
    */
   const reduced = filteredUstensils.reduce((accumulator, current) => {
     if (!accumulator.includes(current)) {

@@ -1,3 +1,5 @@
+/** @format */
+
 import { removeSelected } from "../components/dropdown_appliances.js";
 import { displayRecipes } from "./ui.js";
 import { createTagAppliances } from "../components/tags.js";
@@ -28,7 +30,7 @@ export const onClickLiApp = (value) => {
   const recipesStocked = getRecipesStocked();
   const newRecipesToDisplay = recipesStocked.reduce((accumulator, current) => {
     if (current.display) {
-      const isAnAppliance = current.appliance.toLowerCase().includes(value.toLowerCase());
+      const isAnAppliance = current.appliance.includes(value);
       if (!isAnAppliance) {
         current.display = false;
       }
@@ -48,37 +50,49 @@ export const onClickCloseTagAppliances = () => {
       const tag = closeTag.parentElement;
       tag.remove();
 
-      const ingsTags = Array.from(document.querySelectorAll(".tag_ingredients > span")).map(ing => ing.innerText.toLowerCase());
-      const ustsTags = Array.from(document.querySelectorAll(".tag_ustensils > span")).map(ust => ust.innerText.toLowerCase());
-      const appsTags = Array.from(document.querySelectorAll(".tag_appliances > span")).map(app => app.innerText.toLowerCase());
+      const ingsTags = Array.from(
+        document.querySelectorAll(".tag_ingredients > span"),
+      ).map((ing) => ing.innerText);
+      const ustsTags = Array.from(
+        document.querySelectorAll(".tag_ustensils > span"),
+      ).map((ust) => ust.innerText);
+      const appsTags = Array.from(
+        document.querySelectorAll(".tag_appliances > span"),
+      ).map((app) => app.innerText);
 
       const DATA = getRecipesStocked();
 
       DATA.forEach((recipe) => {
         // on récupére tous les data de la recette
-        const recipeIngredients = recipe.ingredients.map(ing => ing.ingredient.toLowerCase());
-        const recipeUstensils = recipe.ustensils.map(ustensil => ustensil.toLowerCase());
-        const recipeAppliance = recipe.appliance.toLowerCase();
+        const recipeIngredients = recipe.ingredients.map(
+          (ing) => ing.ingredient,
+        );
+        const recipeUstensils = recipe.ustensils.map((ustensil) => ustensil);
+        const recipeAppliance = recipe.appliance;
 
         // on fait des tableau avec tout dedans
-        const recipeData = [...recipeIngredients, recipeAppliance, ...recipeUstensils];
+        const recipeData = [
+          ...recipeIngredients,
+          recipeAppliance,
+          ...recipeUstensils,
+        ];
         const tagsData = [...ingsTags, ...appsTags, ...ustsTags];
 
         // on compare les deux tableaux
-        const allFounded = tagsData.every(el => recipeData.includes(el));
+        const allFounded = tagsData.every((el) => recipeData.includes(el));
 
         if (allFounded) {
           recipe.display = true;
         } else {
           recipe.display = false;
         }
-      })
-
-        setRecipesStocked(DATA);
-        updateDropdowns()
-        displayRecipes();
       });
+
+      setRecipesStocked(DATA);
+      updateDropdowns();
+      displayRecipes();
     });
+  });
 };
 
 export const getApplianceInputValue = () => {
@@ -87,8 +101,8 @@ export const getApplianceInputValue = () => {
   input.addEventListener("input", (e) => {
     searchAppliance(e.target.value);
     setRecipesStocked(DATA);
-  })
-}
+  });
+};
 
 /**
  *
@@ -110,7 +124,7 @@ export const searchAppliance = (value) => {
   const lis = ul.querySelectorAll("li");
   if (value.length > 2) {
     lis.forEach((li) => {
-      if (li.innerHTML.toLowerCase().includes(value.toLowerCase())) {
+      if (li.innerHTML.includes(value)) {
         li.style.display = "block";
       } else {
         li.style.display = "none";
@@ -121,4 +135,4 @@ export const searchAppliance = (value) => {
       li.style.display = "block";
     });
   }
-}
+};
