@@ -2,9 +2,9 @@ import { removeSelected } from "../components/dropdown_appliances.js";
 import { displayRecipes } from "./ui.js";
 import { createTagAppliances } from "../components/tags.js";
 import { setRecipesStocked, getRecipesStocked } from "./storage.js";
-import { updateDropdownIng } from "./research_ingredients.js";
-import { updateDropdownUst } from "./research_ustensils.js";
-import { closeTags } from "./closeTags.js";
+import { updateDropdowns } from "./updateDropdowns.js";
+import { onClickCloseTagUstensils } from "./research_ustensils.js";
+import { onClickCloseTagIngredient } from "./research_ingredients.js";
 
 export const getApplianceInput = () => {
   return document.getElementById("filter__dropdown__input__appliances");
@@ -13,105 +13,124 @@ export const getApplianceUl = () => {
   return document.querySelector("#filter__appliances > div > ul");
 };
 
-export const handleInputAppliance = () => {
-  getApplianceInput();
-  getApplianceUl();
-};
-
-export const getApplianceInputValue = () => {
-  const input = getApplianceInput()
-  const DATA = getRecipesStocked();
-  input.addEventListener('input', (e) => {
-    if (e.target.value.length >= 3) {
-      searchAppliance(e.target.value);
-    } else {
-      const appliances = getAllAppliancesFromDiplayedRecipes();
-      displayRecipes(appliances);
-    }
-    updateDropdownApp();
-    updateDropdownUst();
-    updateDropdownIng();
-    setRecipesStocked(DATA);
-  })
-}
-
-export const onClickLi = (value) => {
+export const onClickLiApp = (value) => {
   const divTags = document.querySelector(".tags__container");
   const tag = createTagAppliances(value);
   divTags.innerHTML += tag;
 
   removeSelected();
-  searchAppliance(value);
-  updateDropdownApp();
-  updateDropdownIng();
-  updateDropdownUst();
-  getApplianceInput().value = value;
-  closeTags()
+  updateDropdowns();
+  onClickCloseTagAppliances();
+  onClickCloseTagUstensils();
+  onClickCloseTagIngredient();
   getApplianceInput().value = "";
-};
 
-export const updateDropdownApp = () => {
-  const tags = Array.from(document.querySelectorAll(".tag"));
-  const ul = getApplianceUl();
-  const appAllreadySelected = tags.map((tag) => {
-    return tag.innerText;
-  });
-
-  const filteredAppliances = getAllAppliancesFromDiplayedRecipes();
-  const reduced = filteredAppliances.reduce((accumulator, current) => {
-    if (!accumulator.includes(current)) {
-      accumulator.push(current);
+  const recipesStocked = getRecipesStocked();
+  const newRecipesToDisplay = recipesStocked.reduce((accumulator, current) => {
+    if (current.display) {
+      const isAnAppliance = current.appliance.toLowerCase() === value.toLowerCase();
+      if (!isAnAppliance) {
+        current.display = false;
+      }
     }
+    accumulator.push(current);
     return accumulator;
   }, []);
+  setRecipesStocked(newRecipesToDisplay);
+  updateDropdowns();
+  displayRecipes();
+};
 
-  const appToDisplay = reduced.filter((appTag) => {
-    return !appAllreadySelected.includes(appTag);
+export const onClickCloseTagAppliances = () => {
+  const closeTags = document.querySelectorAll(".closeApp");
+  closeTags.forEach((closeTag) => {
+    closeTag.addEventListener("click", () => {
+      const tag = closeTag.parentElement;
+      tag.remove();
+
+      const ingsTags = Array.from(
+        document.querySelectorAll(".tag_ingredients > span"),
+      ).map((ing) => ing.innerText);
+      const ustsTags = Array.from(
+        document.querySelectorAll(".tag_ustensils > span"),
+      ).map((ust) => ust.innerText);
+      const appsTags = Array.from(
+        document.querySelectorAll(".tag_appliances > span"),
+      ).map((app) => app.innerText);
+
+      const DATA = getRecipesStocked();
+
+      DATA.forEach((recipe) => {
+        // on récupére tous les data de la recette
+        const recipeIngredients = recipe.ingredients.map(
+          (ing) => ing.ingredient,
+        );
+        const recipeUstensils = recipe.ustensils.map((ustensil) => ustensil);
+        const recipeAppliance = recipe.appliance;
+
+        // on fait des tableau avec tout dedans
+        const recipeData = [
+          ...recipeIngredients,
+          recipeAppliance,
+          ...recipeUstensils,
+        ];
+        const tagsData = [...ingsTags, ...appsTags, ...ustsTags];
+
+        // on compare les deux tableaux
+        const allFounded = tagsData.every((el) => recipeData.includes(el));
+
+        if (allFounded) {
+          recipe.display = true;
+        } else {
+          recipe.display = false;
+        }
+      });
+
+      setRecipesStocked(DATA);
+      updateDropdowns();
+      displayRecipes();
+    });
   });
-  ul.innerHTML = "";
-  appToDisplay.forEach((keyword) => {
-    const li = document.createElement("li");
-    li.classList.add("filter__dropdown__list__item");
-    li.innerHTML = keyword;
-    li.onclick = () => {
-      onClickLi(keyword);
-    };
-    ul.append(li);
+};
+
+export const getApplianceInputValue = () => {
+  const input = getApplianceInput();
+  const DATA = getRecipesStocked();
+  input.addEventListener("input", (e) => {
+    searchAppliance(e.target.value);
+    setRecipesStocked(DATA);
   });
 };
 
 /**
- * 
+ *
  * @returns retourne un tableau contenant les appareils des recettes affichées
  */
-const getAllAppliancesFromDiplayedRecipes = () => {
+export const getAllAppliancesFromDiplayedRecipes = () => {
   const DATA = getRecipesStocked();
   const displayedRecipes = DATA.filter((recipe) => {
     return recipe.display;
   });
   const AllAppliances = displayedRecipes.map((recipe) => {
-    return recipe.appliance
+    return recipe.appliance;
   });
   return [...new Set(AllAppliances.flat())];
 };
 
-
-/**
- * 
- * @param {string} value Affichage des recettes correspondant à l'appareil
- */
 export const searchAppliance = (value) => {
-  const DATA = getRecipesStocked();
-
-  const newRecipesToDisplay = DATA.map((recipe) => {
-    if (recipe.display) {
-      const isAnAppliance = recipe.appliance.includes(value);
-      if (!isAnAppliance) {
-        recipe.display = false;
+  const ul = getApplianceUl();
+  const lis = ul.querySelectorAll("li");
+  if (value.length > 2) {
+    lis.forEach((li) => {
+      if (li.innerHTML.includes(value)) {
+        li.style.display = "block";
+      } else {
+        li.style.display = "none";
       }
-    }
-    return recipe;
-  });
-  setRecipesStocked(newRecipesToDisplay);
-  displayRecipes();
+    });
+  } else {
+    lis.forEach((li) => {
+      li.style.display = "block";
+    });
+  }
 };

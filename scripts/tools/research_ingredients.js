@@ -2,9 +2,9 @@ import { removeSelected } from "../components/dropdown_ingredients.js";
 import { displayRecipes } from "./ui.js";
 import { createTagIngredients } from "../components/tags.js";
 import { setRecipesStocked, getRecipesStocked } from "./storage.js";
-import { updateDropdownApp } from "./research_appliances.js";
-import { updateDropdownUst } from "./research_ustensils.js";
-import { closeTags } from "./closeTags.js";
+import { updateDropdowns } from "./updateDropdowns.js";
+import { onClickCloseTagAppliances } from "./research_appliances.js";
+import { onClickCloseTagUstensils } from "./research_ustensils.js";
 
 export const getIngredientInput = () => {
   return document.getElementById("filter__dropdown__input__ingredients");
@@ -14,130 +14,121 @@ export const getIngredientUl = () => {
   return document.querySelector("#filter__ingredients > div > ul");
 };
 
-export const onClickLi = (value) => {
+export const onClickLiIng = value => {
   const divTags = document.querySelector(".tags__container");
   const tag = createTagIngredients(value);
   divTags.innerHTML += tag;
 
   removeSelected();
-  searchIngredient(value);
-  updateDropdownIng();
-  updateDropdownApp();
-  updateDropdownUst();
-  getIngredientInput().value = value;
-  closeTags()
+  updateDropdowns();
+  onClickCloseTagIngredient();
+  onClickCloseTagAppliances();
+  onClickCloseTagUstensils();
   getIngredientInput().value = "";
-};
 
-export const getIngredientInputValue = () => {
-  const input = getIngredientInput()
-  const DATA = getRecipesStocked();
-  input.addEventListener('input', (e) => {
-    if (e.target.value.length >= 3) {
-      searchIngredient(e.target.value);
-    } else {
-      const ingredients = getAllIngredientsFromDiplayedRecipes();
-      displayRecipes(ingredients);
-    }
-    updateDropdownApp();
-    updateDropdownUst();
-    updateDropdownIng()
-    setRecipesStocked(DATA);
-  })
-}
-
-export const updateDropdownIng = () => {
-  // filtrer les appareils et les ustensils
-  const tags = Array.from(document.querySelectorAll(".tag"));
-  const ul = getIngredientUl();
-  const ingAllreadySelected = tags.map((tag) => {
-    return tag.innerText;
-  });
-
-  // filtrer les ingrédients pour n'afficher que ceux des recettes montrées
-  const filteredIngredients = getAllIngredientsFromDiplayedRecipes();
-
-  const reduced = filteredIngredients.reduce((accumulator, current) => {
-    if (!accumulator.includes(current)) {
-      accumulator.push(current);
-    }
-    return accumulator;
-  }, []);
-
-  const ingToDisplay = reduced.filter((ingTag) => {
-    return !ingAllreadySelected.includes(ingTag);
-  });
-
-  ul.innerHTML = "";
-  ingToDisplay.forEach((keyword) => {
-    const li = document.createElement("li");
-    li.classList.add("filter__dropdown__list__item");
-    li.innerHTML = keyword;
-    li.onclick = () => {
-      onClickLi(keyword);
-    };
-    ul.append(li);
-  });
-};
-
-/**
- * 
- * @returns retourne les ingrédients stockés dans le locale storage
- */
-const getAllIngredientsFromDiplayedRecipes = () => {
-  const DATA = getRecipesStocked();
-  const displayedRecipes = DATA.filter((recipe) => {
-    return recipe.display;
-  });
-  const AllIngredients = displayedRecipes.map((recipe) => {
-    return recipe.ingredients.map((ingredient) =>
-      ingredient.ingredient
-    );
-  });
-  return [...new Set(AllIngredients.flat())];
-};
-
-/**
- * 
- * @param {string} value Affiche les recettes qui contiennent l'ingrédient
- */
-
-// first function to search the ingredient
-
-// export const searchIngredient = (value) => {
-//   const DATA = getRecipesStocked();
-//   const newRecipesToDisplay = DATA.map((recipe) => {
-//     if (recipe.display) {
-//       const isAnIngredient = recipe.ingredients.find(
-//         (el) => el.ingredient.toLowerCase() == value.toLowerCase()
-//       );
-//       if (!isAnIngredient) {
-//         recipe.display = false;
-//       }
-//     }
-//     return recipe;
-//   });
-//   setRecipesStocked(newRecipesToDisplay);
-//   displayRecipes();
-// };
-
-// second function to search the ingredient
-
-export const searchIngredient = (value) => {
-  const DATA = getRecipesStocked();
-  const newRecipesToDisplay = DATA.reduce((accumulator, current) => {
+  const recipesStocked = getRecipesStocked();
+  const newRecipesToDisplay = recipesStocked.reduce((accumulator, current) => {
     if (current.display) {
       const isAnIngredient = current.ingredients.find(
-        (el) => el.ingredient.toLowerCase() == value.toLowerCase()
+        el => el.ingredient.toLowerCase() === value.toLowerCase()
       );
       if (!isAnIngredient) {
         current.display = false;
       }
     }
+
     accumulator.push(current);
     return accumulator;
   }, []);
-  console.log(newRecipesToDisplay);
   setRecipesStocked(newRecipesToDisplay);
+  updateDropdowns();
   displayRecipes();
+};
+
+export const onClickCloseTagIngredient = () => {
+  const closeTags = document.querySelectorAll(".closeIng");
+  closeTags.forEach(closeTag => {
+    closeTag.addEventListener("click", () => {
+      const tag = closeTag.parentElement;
+      tag.remove();
+
+      const ingsTags = Array.from(
+        document.querySelectorAll(".tag_ingredients > span")
+      ).map(ing => ing.innerText);
+      const ustsTags = Array.from(
+        document.querySelectorAll(".tag_ustensils > span")
+      ).map(ust => ust.innerText);
+      const appsTags = Array.from(
+        document.querySelectorAll(".tag_appliances > span")
+      ).map(app => app.innerText);
+
+      const DATA = getRecipesStocked();
+      DATA.forEach(recipe => {
+        // on récupére tous les data de la recette
+        const recipeIngredients = recipe.ingredients.map(ing => ing.ingredient);
+        const recipeUstensils = recipe.ustensils.map(ustensil => ustensil);
+        const recipeAppliance = recipe.appliance;
+
+        // on fait des tableau avec tout dedans
+        const recipeData = [
+          ...recipeIngredients,
+          recipeAppliance,
+          ...recipeUstensils
+        ];
+        const tagsData = [...ingsTags, ...appsTags, ...ustsTags];
+        // on compare les deux tableaux
+        const allFounded = tagsData.every(el => recipeData.includes(el));
+        if (allFounded) {
+          recipe.display = true;
+        } else {
+          recipe.display = false;
+        }
+      });
+      setRecipesStocked(DATA);
+      updateDropdowns();
+      displayRecipes();
+    });
+  });
+};
+
+export const getIngredientInputValue = () => {
+  const input = getIngredientInput();
+  const DATA = getRecipesStocked();
+  input.addEventListener("input", e => {
+    searchIngredient(e.target.value);
+    setRecipesStocked(DATA);
+  });
+};
+
+/**
+ *
+ * @returns retourne les ingrédients stockés dans le locale storage
+ */
+export const getAllIngredientsFromDiplayedRecipes = () => {
+  const DATA = getRecipesStocked();
+  const displayedRecipes = DATA.filter(recipe => {
+    return recipe.display;
+  });
+  const AllIngredients = displayedRecipes.map(recipe => {
+    return recipe.ingredients.map(ingredient => ingredient.ingredient);
+  });
+  return [...new Set(AllIngredients.flat())];
+};
+
+export const searchIngredient = value => {
+  const ul = getIngredientUl();
+  const lis = ul.querySelectorAll("li");
+  if (value.length > 2) {
+    lis.forEach(li => {
+      if (li.innerText.includes(value)) {
+        li.style.display = "block";
+      } else {
+        li.style.display = "none";
+      }
+    });
+  } else {
+    lis.forEach(li => {
+      li.style.display = "block";
+    });
+  }
 };

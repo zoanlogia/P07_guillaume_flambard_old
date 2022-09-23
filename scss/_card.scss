@@ -6,6 +6,20 @@
   @media screen and (max-width: 768px) {
     justify-content: center;
   }
+
+  .error {
+    margin: 5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    font-size: 1.5rem;
+    color: #fff;
+    background-color: #f44336;
+    border-radius: 5px;
+    padding: 1rem;
+  }
     
   justify-content: space-between;
   flex-direction: row;

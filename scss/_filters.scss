@@ -4,21 +4,21 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+
   .filter {
     width: auto;
     margin: 1em 1em 0 0;
 
     &__dropdown {
       @include dropdown;
-      background-color: $bleu-btn;
       position: relative;
 
       input {
         height: 5em;
         min-height: 4em;
         width: -webkit-fill-available;
-        background: none !important;
-        border: none !important;
+        background: none;
+        border: none;
         color: white;
         position: relative;
       }
@@ -55,6 +55,12 @@
 
     &.selected {
       .filter__dropdown {
+        @media screen and (min-width: 768px) {
+          display: block;
+          width: 25em;
+        }
+        // display: flex;
+        
         &__icon__down {
           display: none;
         }
@@ -65,28 +71,24 @@
       }
 
       & ul {
-        background-color: $bleu-btn;
+        // background-color: $bleu-btn;
         border-radius: 0 0 5px 5px;
         position: absolute;
         top: 95%;
+
+        @media screen and (min-width: 768px) {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+        }
+
 
         & li {
           padding-left: 0.5em;
           margin: 0.4em;
           display: block;
           border: none;
-          animation: b 0.3s linear forwards;
           color: white;
-          background-color: $bleu-btn;
-
-          @keyframes b {
-            0% {
-              background: transparent;
-            }
-            94% {
-              background: $bleu-btn;
-            }
-          }
+          text-transform: capitalize;
         }
       }
     }
@@ -97,27 +99,38 @@
   z-index: 2;
 }
 
+
+ #filter__dropdown__input__ingredients {
+      background-color: $bleu-btn;
+      border-radius: 5px;
+    }
+    #filter__ingredients > div > ul {
+      background-color: $bleu-btn;
+    }
+    #filter__ingredients > div > ul > li {
+      background-color: $bleu-btn;
+    }
  #filter__dropdown__input__appliances {
-      background-color: #68D9A4!important;
+      background-color: #68D9A4;
       border-radius: 5px;
     }
 
     #filter__appliances > div > ul {
-      background-color: #68D9A4!important;
+      background-color: #68D9A4;
     }
     #filter__appliances > div > ul > li {
-      background-color: #68D9A4!important;
+      background-color: #68D9A4;
     }
 
  #filter__dropdown__input__ustensils {
-      background-color:#ED6454!important;
+      background-color:#ED6454;
       border-radius: 5px;
     }
 
     #filter__ustensils > div > ul {
-      background-color:#ED6454!important;
+      background-color:#ED6454;
     }
     #filter__ustensils > div > ul > li {
-      background-color:#ED6454!important;
+      background-color:#ED6454;
     }
 

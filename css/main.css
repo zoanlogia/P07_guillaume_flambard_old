@@ -101,14 +101,13 @@ table {
       color: white;
       border: none;
       cursor: pointer;
-      background-color: #3282f7;
       position: relative; }
       .filter__container .filter__dropdown input {
         height: 5em;
         min-height: 4em;
         width: -webkit-fill-available;
-        background: none !important;
-        border: none !important;
+        background: none;
+        border: none;
         color: white;
         position: relative; }
       .filter__container .filter__dropdown ::placeholder {
@@ -128,52 +127,62 @@ table {
         width: 100%; }
         .filter__container .filter__dropdown ul li {
           display: none; }
+    @media screen and (min-width: 768px) {
+      .filter__container .filter.selected .filter__dropdown {
+        display: block;
+        width: 25em; } }
     .filter__container .filter.selected .filter__dropdown__icon__down {
       display: none; }
     .filter__container .filter.selected .filter__dropdown__icon__up {
       display: block; }
     .filter__container .filter.selected ul {
-      background-color: #3282f7;
       border-radius: 0 0 5px 5px;
       position: absolute;
       top: 95%; }
+      @media screen and (min-width: 768px) {
+        .filter__container .filter.selected ul {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr); } }
       .filter__container .filter.selected ul li {
         padding-left: 0.5em;
         margin: 0.4em;
         display: block;
         border: none;
-        animation: b 0.3s linear forwards;
         color: white;
-        background-color: #3282f7; }
-
-@keyframes b {
-  0% {
-    background: transparent; }
-  94% {
-    background: #3282f7; } }
+        text-transform: capitalize; }
 
 .filter__dropdown__list {
   z-index: 2; }
 
+#filter__dropdown__input__ingredients {
+  background-color: #3282f7;
+  border-radius: 5px; }
+
+#filter__ingredients > div > ul {
+  background-color: #3282f7; }
+
+#filter__ingredients > div > ul > li {
+  background-color: #3282f7; }
+
 #filter__dropdown__input__appliances {
-  background-color: #68D9A4 !important;
+  background-color: #68D9A4;
   border-radius: 5px; }
 
 #filter__appliances > div > ul {
-  background-color: #68D9A4 !important; }
+  background-color: #68D9A4; }
 
 #filter__appliances > div > ul > li {
-  background-color: #68D9A4 !important; }
+  background-color: #68D9A4; }
 
 #filter__dropdown__input__ustensils {
-  background-color: #ED6454 !important;
+  background-color: #ED6454;
   border-radius: 5px; }
 
 #filter__ustensils > div > ul {
-  background-color: #ED6454 !important; }
+  background-color: #ED6454; }
 
 #filter__ustensils > div > ul > li {
-  background-color: #ED6454 !important; }
+  background-color: #ED6454; }
 
 /** @format */
 .recipes__container {
@@ -185,6 +194,18 @@ table {
   @media screen and (max-width: 768px) {
     .recipes__container {
       justify-content: center; } }
+  .recipes__container .error {
+    margin: 5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    font-size: 1.5rem;
+    color: #fff;
+    background-color: #f44336;
+    border-radius: 5px;
+    padding: 1rem; }
   .recipes__container .card {
     margin: 1em 0;
     border: none;
