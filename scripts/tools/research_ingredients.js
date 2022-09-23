@@ -1,5 +1,3 @@
-/** @format */
-
 import { removeSelected } from "../components/dropdown_ingredients.js";
 import { displayRecipes } from "./ui.js";
 import { createTagIngredients } from "../components/tags.js";
@@ -16,7 +14,7 @@ export const getIngredientUl = () => {
   return document.querySelector("#filter__ingredients > div > ul");
 };
 
-export const onClickLiIng = (value) => {
+export const onClickLiIng = value => {
   const divTags = document.querySelector(".tags__container");
   const tag = createTagIngredients(value);
   divTags.innerHTML += tag;
@@ -31,8 +29,8 @@ export const onClickLiIng = (value) => {
   const recipesStocked = getRecipesStocked();
   const newRecipesToDisplay = recipesStocked.reduce((accumulator, current) => {
     if (current.display) {
-      const isAnIngredient = current.ingredients.find((el) =>
-        el.ingredient.includes(value),
+      const isAnIngredient = current.ingredients.find(
+        el => el.ingredient.toLowerCase() === value.toLowerCase()
       );
       if (!isAnIngredient) {
         current.display = false;
@@ -49,39 +47,37 @@ export const onClickLiIng = (value) => {
 
 export const onClickCloseTagIngredient = () => {
   const closeTags = document.querySelectorAll(".closeIng");
-  closeTags.forEach((closeTag) => {
+  closeTags.forEach(closeTag => {
     closeTag.addEventListener("click", () => {
       const tag = closeTag.parentElement;
       tag.remove();
 
       const ingsTags = Array.from(
-        document.querySelectorAll(".tag_ingredients > span"),
-      ).map((ing) => ing.innerText);
+        document.querySelectorAll(".tag_ingredients > span")
+      ).map(ing => ing.innerText);
       const ustsTags = Array.from(
-        document.querySelectorAll(".tag_ustensils > span"),
-      ).map((ust) => ust.innerText);
+        document.querySelectorAll(".tag_ustensils > span")
+      ).map(ust => ust.innerText);
       const appsTags = Array.from(
-        document.querySelectorAll(".tag_appliances > span"),
-      ).map((app) => app.innerText);
+        document.querySelectorAll(".tag_appliances > span")
+      ).map(app => app.innerText);
 
       const DATA = getRecipesStocked();
-      DATA.forEach((recipe) => {
+      DATA.forEach(recipe => {
         // on récupére tous les data de la recette
-        const recipeIngredients = recipe.ingredients.map(
-          (ing) => ing.ingredient,
-        );
-        const recipeUstensils = recipe.ustensils.map((ustensil) => ustensil);
+        const recipeIngredients = recipe.ingredients.map(ing => ing.ingredient);
+        const recipeUstensils = recipe.ustensils.map(ustensil => ustensil);
         const recipeAppliance = recipe.appliance;
 
         // on fait des tableau avec tout dedans
         const recipeData = [
           ...recipeIngredients,
           recipeAppliance,
-          ...recipeUstensils,
+          ...recipeUstensils
         ];
         const tagsData = [...ingsTags, ...appsTags, ...ustsTags];
         // on compare les deux tableaux
-        const allFounded = tagsData.every((el) => recipeData.includes(el));
+        const allFounded = tagsData.every(el => recipeData.includes(el));
         if (allFounded) {
           recipe.display = true;
         } else {
@@ -98,7 +94,7 @@ export const onClickCloseTagIngredient = () => {
 export const getIngredientInputValue = () => {
   const input = getIngredientInput();
   const DATA = getRecipesStocked();
-  input.addEventListener("input", (e) => {
+  input.addEventListener("input", e => {
     searchIngredient(e.target.value);
     setRecipesStocked(DATA);
   });
@@ -110,20 +106,20 @@ export const getIngredientInputValue = () => {
  */
 export const getAllIngredientsFromDiplayedRecipes = () => {
   const DATA = getRecipesStocked();
-  const displayedRecipes = DATA.filter((recipe) => {
+  const displayedRecipes = DATA.filter(recipe => {
     return recipe.display;
   });
-  const AllIngredients = displayedRecipes.map((recipe) => {
-    return recipe.ingredients.map((ingredient) => ingredient.ingredient);
+  const AllIngredients = displayedRecipes.map(recipe => {
+    return recipe.ingredients.map(ingredient => ingredient.ingredient);
   });
   return [...new Set(AllIngredients.flat())];
 };
 
-export const searchIngredient = (value) => {
+export const searchIngredient = value => {
   const ul = getIngredientUl();
   const lis = ul.querySelectorAll("li");
   if (value.length > 2) {
-    lis.forEach((li) => {
+    lis.forEach(li => {
       if (li.innerText.includes(value)) {
         li.style.display = "block";
       } else {
@@ -131,7 +127,7 @@ export const searchIngredient = (value) => {
       }
     });
   } else {
-    lis.forEach((li) => {
+    lis.forEach(li => {
       li.style.display = "block";
     });
   }

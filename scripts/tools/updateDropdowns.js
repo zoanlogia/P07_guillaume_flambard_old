@@ -25,23 +25,23 @@ export const updateDropdowns = () => {
   const ingsTags = Array.from(document.querySelectorAll(".tag_ingredients > span")).map((ing) => ing.innerText);
   const appsTags = Array.from(document.querySelectorAll(".tag_appliances > span")).map((app) => app.innerText);
   const ustsTags = Array.from(document.querySelectorAll(".tag_ustensils > span")).map((ust) => ust.innerText);
-
+  console.log(ingsTags);
   const ingsLi = Array.from(getIngredientUl().children);
   const appsLi = Array.from(getApplianceUl().children);
   const ustsLi = Array.from(getUstensilUl().children);
 
   ingsLi.forEach((li) => {
-    if (ingsTags.includes(li.innerText)) {
+    if (ingsTags.includes(li.innerText.toLowerCase())) {
       li.remove();
     }
   });
   appsLi.forEach((li) => {
-    if (appsTags.includes(li.innerText)) {
+    if (appsTags.includes(li.innerText.toLowerCase())) {
       li.remove();
     }
   });
   ustsLi.forEach((li) => {
-    if (ustsTags.includes(li.innerText)) {
+    if (ustsTags.includes(li.innerText.toLowerCase())) {
       li.remove();
     }
   });

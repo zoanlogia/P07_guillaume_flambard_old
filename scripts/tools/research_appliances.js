@@ -30,7 +30,7 @@ export const onClickLiApp = (value) => {
   const recipesStocked = getRecipesStocked();
   const newRecipesToDisplay = recipesStocked.reduce((accumulator, current) => {
     if (current.display) {
-      const isAnAppliance = current.appliance.includes(value);
+      const isAnAppliance = current.appliance.toLowerCase() === value.toLowerCase();
       if (!isAnAppliance) {
         current.display = false;
       }

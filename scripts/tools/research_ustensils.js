@@ -31,7 +31,7 @@ export const onClickLiUst = (value) => {
   const recipesStocked = getRecipesStocked();
   const newRecipesToDisplay = recipesStocked.reduce((accumulator, current) => {
     if (current.display) {
-      const isAnUstensil = current.ustensils.find((el) => el.includes(value));
+      const isAnUstensil = current.ustensils.find((el) => el.ustensils.toLowerCase() === value.toLowerCase());
       if (!isAnUstensil) {
         current.display = false;
       }
