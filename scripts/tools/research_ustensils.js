@@ -55,23 +55,23 @@ export const onClickCloseTagUstensils = () => {
 
       const ingsTags = Array.from(
         document.querySelectorAll(".tag_ingredients > span"),
-      ).map((ing) => ing.innerText);
+      ).map((ing) => ing.innerText.toLowerCase());
       const ustsTags = Array.from(
         document.querySelectorAll(".tag_ustensils > span"),
-      ).map((ust) => ust.innerText);
+      ).map((ust) => ust.innerText.toLowerCase());
       const appsTags = Array.from(
         document.querySelectorAll(".tag_appliances > span"),
-      ).map((app) => app.innerText);
+      ).map((app) => app.innerText.toLowerCase());
 
       const DATA = getRecipesStocked();
 
       DATA.forEach((recipe) => {
         // on récupére tous les data de la recette
         const recipeIngredients = recipe.ingredients.map(
-          (ing) => ing.ingredient,
+          (ing) => ing.ingredient.toLowerCase(),
         );
-        const recipeUstensils = recipe.ustensils.map((ustensil) => ustensil);
-        const recipeAppliance = recipe.appliance;
+        const recipeUstensils = recipe.ustensils.map((ustensil) => ustensil.toLowerCase());
+        const recipeAppliance = recipe.appliance.toLowerCase();
 
         // on fait des tableau avec tout dedans
         const recipeData = [
