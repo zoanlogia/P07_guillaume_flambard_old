@@ -274,8 +274,7 @@ table {
     border-radius: 5px;
     color: white;
     width: fit-content;
-    cursor: pointer;
-    text-transform: capitalize; }
+    cursor: pointer; }
     .tags__container .tag span {
       padding: 10px; }
     .tags__container .tag img {
