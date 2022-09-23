@@ -25,7 +25,6 @@ export const updateDropdowns = () => {
   const ingsTags = Array.from(document.querySelectorAll(".tag_ingredients > span")).map((ing) => ing.innerText);
   const appsTags = Array.from(document.querySelectorAll(".tag_appliances > span")).map((app) => app.innerText);
   const ustsTags = Array.from(document.querySelectorAll(".tag_ustensils > span")).map((ust) => ust.innerText);
-  console.log(ingsTags);
   const ingsLi = Array.from(getIngredientUl().children);
   const appsLi = Array.from(getApplianceUl().children);
   const ustsLi = Array.from(getUstensilUl().children);
