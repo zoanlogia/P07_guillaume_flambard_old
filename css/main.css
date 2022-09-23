@@ -148,8 +148,8 @@ table {
         margin: 0.4em;
         display: block;
         border: none;
-        color: white;
-        text-transform: capitalize; }
+        animation: b 0.3s linear forwards;
+        color: white; }
 
 .filter__dropdown__list {
   z-index: 2; }
