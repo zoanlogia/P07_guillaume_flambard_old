@@ -115,20 +115,47 @@ export const getAllIngredientsFromDiplayedRecipes = () => {
   return [...new Set(AllIngredients.flat())];
 };
 
+// fonction avec foreach
+// export const searchIngredient = value => {
+//   const ul = getIngredientUl();
+//   const lis = ul.querySelectorAll("li");
+//   if (value.length > 2) {
+//     lis.forEach(li => {
+//       if (li.innerText.includes(value)) {
+//         li.style.display = "block";
+//       } else {
+//         li.style.display = "none";
+//       }
+//     });
+//   } else {
+//     lis.forEach(li => {
+//       li.style.display = "block";
+//     });
+//   }
+// };
+
+// fonction avec accumulator
+
 export const searchIngredient = value => {
   const ul = getIngredientUl();
-  const lis = ul.querySelectorAll("li");
-  if (value.length > 2) {
-    lis.forEach(li => {
-      if (li.innerText.includes(value)) {
-        li.style.display = "block";
+  const lis = Array.from(ul.querySelectorAll("li"));
+
+if (value.length > 2) {
+    lis.reduce((accumulator, current) => {
+      if (current.innerText.includes(value)) {
+        current.style.display = "block";
+        accumulator.push(current);
       } else {
-        li.style.display = "none";
+        current.style.display = "none";
       }
-    });
+      return accumulator;
+    }, []);
   } else {
-    lis.forEach(li => {
-      li.style.display = "block";
-    });
+    lis.reduce((accumulator, current) => {
+      current.style.display = "block";
+      accumulator.push(current);
+      return accumulator;
+    }, []);
   }
-};
+} 
+
