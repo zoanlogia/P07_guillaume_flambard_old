@@ -14,10 +14,9 @@ Pour ce projet, nous avons utilisé un langage de programmation **Javascript**, 
 
 ## Benchmark
 voici les résulats du benchmark sur la fonction `searchIngredient`
-
-![Screenshot](assets/screenshots/Capture%20d%E2%80%99%C3%A9cran%202022-07-27%20%C3%A0%2012.33.32.png)
-![Screenshot](assets/screenshots/Capture%20d%E2%80%99%C3%A9cran%202022-07-27%20%C3%A0%2012.33.37.png)
+## fonction accumulator en haut / foreach en bas
+![Screenshot](assets/screenshots/Capture%20d%E2%80%99%C3%A9cran%202022-10-02%20%C3%A0%2013.37.28.png)
 
 ## Schéma
 
-![Schema](assets/screenshots/Capture%20d%E2%80%99%C3%A9cran%202022-07-27%20%C3%A0%2013.27.46.png)
+![Schema](assets/screenshots/Capture%20d%E2%80%99%C3%A9cran%202022-10-02%20%C3%A0%2013.40.29.png)
