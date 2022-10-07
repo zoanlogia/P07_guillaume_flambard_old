@@ -10,6 +10,9 @@ export const globalSearch = () => {
     /**
      * @param {string} value - Valeur entrée dans le champ de recherche
      */
+
+// fonction searchbar utilisant la boucle foreach
+
     // searchbar.addEventListener('input', (e) => {
     //     if (e.target.value.length >= 3) {
     //         container.innerHTML = "";
@@ -18,8 +21,8 @@ export const globalSearch = () => {
     //                 container.append(card(recipe));
     //             }
     //             // Array.some() permet de vérifier si un élément existe dans un tableau
-    //             else if (recipe.ingredients.some((ingredient) => {
-    //                 return ingredient.ingredient.toLowerCase().includes(e.target.value.toLowerCase());
+    //             else if (recipe.ingredients.some((e) => {
+    //                 return e.ingredient.toLowerCase().includes(e.target.value.toLowerCase());
     //             })) {
     //                 container.append(card(recipe));
     //             }
@@ -39,7 +42,7 @@ export const globalSearch = () => {
     //     }
     // });
 
-    // Autre méthode avec boucle for
+    // fonction searchbar utilisant la boucle for
 
     searchbar.addEventListener('input', (e) => {
     
@@ -50,8 +53,8 @@ export const globalSearch = () => {
                     container.append(card(recipes[i]));
                 }
                 // Array.some() permet de vérifier si un élément existe dans un tableau
-                else if (recipes[i].ingredients.some((ingredient) => {
-                    return ingredient.ingredient.toLowerCase().includes(e.target.value.toLowerCase());
+                else if (recipes[i].ingredients.some((e) => {
+                    return e.ingredient.toLowerCase().includes(e.target.value.toLowerCase());
                 })) {
                     container.append(card(recipes[i]));
                 }
