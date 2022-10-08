@@ -121,20 +121,41 @@ export const getAllUstensilsFromDiplayedRecipes = () => {
   return [...new Set(AllUstensils.flat())];
 };
 
+// export const searchUstensil = (value) => {
+//   const ul = getUstensilUl();
+//   const lis = ul.querySelectorAll("li");
+//   if (value.length > 2) {
+//     lis.forEach((li) => {
+//       if (li.innerText.includes(value)) {
+//         li.style.display = "block";
+//       } else {
+//         li.style.display = "none";
+//       }
+//     });
+//   } else {
+//     lis.forEach((li) => {
+//       li.style.display = "none";
+//     });
+//   }
+// };
+
+// function with for loop
+
 export const searchUstensil = (value) => {
   const ul = getUstensilUl();
   const lis = ul.querySelectorAll("li");
   if (value.length > 2) {
-    lis.forEach((li) => {
-      if (li.innerText.includes(value)) {
-        li.style.display = "block";
+    for (let i = 0; i < lis.length; i++) {
+      if (lis[i].innerText.includes(value)) {
+        lis[i].style.display = "block";
       } else {
-        li.style.display = "none";
+        lis[i].style.display = "none";
       }
-    });
+    }
   } else {
-    lis.forEach((li) => {
-      li.style.display = "none";
-    });
+    for (let i = 0; i < lis.length; i++) {
+      lis[i].style.display = "none";
+    }
   }
-};
+}
+

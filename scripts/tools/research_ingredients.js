@@ -136,26 +136,45 @@ export const getAllIngredientsFromDiplayedRecipes = () => {
 
 // fonction avec accumulator
 
+// export const searchIngredient = value => {
+//   const ul = getIngredientUl();
+//   const lis = Array.from(ul.querySelectorAll("li"));
+
+// if (value.length > 2) {
+//     lis.reduce((accumulator, current) => {
+//       if (current.innerText.includes(value)) {
+//         current.style.display = "block";
+//         accumulator.push(current);
+//       } else {
+//         current.style.display = "none";
+//       }
+//       return accumulator;
+//     }, []);
+//   } else {
+//     lis.reduce((accumulator, current) => {
+//       current.style.display = "block";
+//       accumulator.push(current);
+//       return accumulator;
+//     }, []);
+//   }
+// } 
+
+// fonction avec boucle for 
+
 export const searchIngredient = value => {
   const ul = getIngredientUl();
-  const lis = Array.from(ul.querySelectorAll("li"));
-
-if (value.length > 2) {
-    lis.reduce((accumulator, current) => {
-      if (current.innerText.includes(value)) {
-        current.style.display = "block";
-        accumulator.push(current);
+  const lis = ul.querySelectorAll("li");
+  if (value.length > 2) {
+    for (let i = 0; i < lis.length; i++) {
+      if (lis[i].innerText.includes(value)) {
+        lis[i].style.display = "block";
       } else {
-        current.style.display = "none";
+        lis[i].style.display = "none";
       }
-      return accumulator;
-    }, []);
+    }
   } else {
-    lis.reduce((accumulator, current) => {
-      current.style.display = "block";
-      accumulator.push(current);
-      return accumulator;
-    }, []);
+    for (let i = 0; i < lis.length; i++) {
+      lis[i].style.display = "block";
+    }
   }
-} 
-
+}

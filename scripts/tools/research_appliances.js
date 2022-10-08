@@ -117,20 +117,41 @@ export const getAllAppliancesFromDiplayedRecipes = () => {
   return [...new Set(AllAppliances.flat())];
 };
 
+// search appliance with for loop 
+
 export const searchAppliance = (value) => {
+  const DATA = getRecipesStocked();
+  const appliances = getAllAppliancesFromDiplayedRecipes();
   const ul = getApplianceUl();
-  const lis = ul.querySelectorAll("li");
-  if (value.length > 2) {
-    lis.forEach((li) => {
-      if (li.innerHTML.includes(value)) {
-        li.style.display = "block";
-      } else {
-        li.style.display = "none";
-      }
-    });
-  } else {
-    lis.forEach((li) => {
-      li.style.display = "block";
-    });
+  ul.innerHTML = "";
+  for (let i = 0; i < appliances.length; i++) {
+    const appliance = appliances[i];
+    if (appliance.toLowerCase().includes(value.toLowerCase())) {
+      const li = document.createElement("li");
+      li.innerText = appliance;
+      li.addEventListener("click", () => {
+        onClickLiApp(appliance);
+      });
+      ul.appendChild(li);
+    }
   }
 };
+
+
+// export const searchAppliance = (value) => {
+//   const ul = getApplianceUl();
+//   const lis = ul.querySelectorAll("li");
+//   if (value.length > 2) {
+//     lis.forEach((li) => {
+//       if (li.innerHTML.includes(value)) {
+//         li.style.display = "block";
+//       } else {
+//         li.style.display = "none";
+//       }
+//     });
+//   } else {
+//     lis.forEach((li) => {
+//       li.style.display = "block";
+//     });
+//   }
+// };

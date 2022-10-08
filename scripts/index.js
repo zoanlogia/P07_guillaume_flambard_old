@@ -9,9 +9,6 @@ recipes.forEach((recipe) => {
   recipe.display = true;
 });
 
-
-
-
 window.localStorage.setItem("recipes", JSON.stringify(recipes));
 createSearchBar()
 createFilter()
