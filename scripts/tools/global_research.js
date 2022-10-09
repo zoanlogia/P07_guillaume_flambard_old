@@ -1,6 +1,6 @@
 import { card } from "../components/card.js";
 import { displayError } from "../components/errorMessage.js";
-import { getRecipesStocked } from "./storage.js";
+import { getRecipesStocked, setRecipesStocked } from "./storage.js";
 import { normalizeAccents } from "./regex.js";
 import { updateDropdowns } from "./updateDropdowns.js ";
 
@@ -46,13 +46,14 @@ export const globalSearch = () => {
     } else {
       if (document.querySelectorAll(".tags").length > 0) {
         container.innerHTML = "";
-        recipes.forEach((recipe) => {
-          if (recipe.tags.length > 0) {
-            container.append(card(recipe));
+        for (let i = 0; i < recipes.length; i++) {
+          if (recipes[i].display) {
+            container.append(card(recipes[i]));
           }
-        });
+        }
       }
     }
+    setRecipesStocked(recipes);
     updateDropdowns()
   });
 }

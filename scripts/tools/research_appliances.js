@@ -6,6 +6,7 @@ import { updateDropdowns } from "./updateDropdowns.js";
 import { onClickCloseTagUstensils } from "./research_ustensils.js";
 import { onClickCloseTagIngredient } from "./research_ingredients.js";
 import { normalizeAccents } from "./regex.js";
+import {globalSearch} from "./global_research.js";
 
 export const getApplianceInput = () => {
   return document.getElementById("filter__dropdown__input__appliances");
@@ -97,6 +98,7 @@ export const onClickCloseTagAppliances = () => {
       });
 
       setRecipesStocked(DATA);
+      globalSearch();
       updateDropdowns();
       displayRecipes();
     });

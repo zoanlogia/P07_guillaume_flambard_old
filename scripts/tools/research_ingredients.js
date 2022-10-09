@@ -6,6 +6,7 @@ import { updateDropdowns } from "./updateDropdowns.js";
 import { onClickCloseTagAppliances } from "./research_appliances.js";
 import { onClickCloseTagUstensils } from "./research_ustensils.js";
 import { normalizeAccents } from "./regex.js";
+import {globalSearch} from "./global_research.js";
 
 export const getIngredientInput = () => {
   return document.getElementById("filter__dropdown__input__ingredients");
@@ -89,8 +90,9 @@ export const onClickCloseTagIngredient = () => {
           recipe.display = false;
         }
       });
-      updateDropdowns();
       setRecipesStocked(DATA);
+      globalSearch();
+      updateDropdowns();
       displayRecipes();
     });
   });
