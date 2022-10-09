@@ -15,12 +15,6 @@ export const getIngredientUl = () => {
   return document.querySelector("#filter__ingredients > div > ul");
 };
 
-  // window.addEventListener("click", (e) => {
-  //   if (e.target.id !== "filter__dropdown__input__ingredients") {
-  //     removeSelected();
-  //   }
-  // });
-
 export const onClickLiIng = (value) => {
   const divTags = document.querySelector(".tags__container");
   const tag = createTagIngredients(value);
@@ -125,50 +119,6 @@ export const getAllIngredientsFromDiplayedRecipes = () => {
   });
   return [...new Set(AllIngredients.flat())];
 };
-
-// fonction avec foreach
-// export const searchIngredient = value => {
-//   const ul = getIngredientUl();
-//   const lis = ul.querySelectorAll("li");
-//   if (value.length > 2) {
-//     lis.forEach(li => {
-//       if (li.innerText.includes(value)) {
-//         li.style.display = "block";
-//       } else {
-//         li.style.display = "none";
-//       }
-//     });
-//   } else {
-//     lis.forEach(li => {
-//       li.style.display = "block";
-//     });
-//   }
-// };
-
-// fonction avec accumulator
-
-// export const searchIngredient = value => {
-//   const ul = getIngredientUl();
-//   const lis = Array.from(ul.querySelectorAll("li"));
-
-// if (value.length > 2) {
-//     lis.reduce((accumulator, current) => {
-//       if (current.innerText.includes(value)) {
-//         current.style.display = "block";
-//         accumulator.push(current);
-//       } else {
-//         current.style.display = "none";
-//       }
-//       return accumulator;
-//     }, []);
-//   } else {
-//     lis.reduce((accumulator, current) => {
-//       current.style.display = "block";
-//       accumulator.push(current);
-//       return accumulator;
-//     }, []);
-//   }
-// }
 
 // fonction avec boucle for
 

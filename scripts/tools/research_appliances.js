@@ -151,21 +151,3 @@ export const searchAppliance = (value) => {
     }
   }
 };
-
-// export const searchAppliance = (value) => {
-//   const ul = getApplianceUl();
-//   const lis = ul.querySelectorAll("li");
-//   if (value.length > 2) {
-//     lis.forEach((li) => {
-//       if (li.innerHTML.includes(value)) {
-//         li.style.display = "block";
-//       } else {
-//         li.style.display = "none";
-//       }
-//     });
-//   } else {
-//     lis.forEach((li) => {
-//       li.style.display = "block";
-//     });
-//   }
-// };

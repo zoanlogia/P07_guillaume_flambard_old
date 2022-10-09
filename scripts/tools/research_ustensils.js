@@ -15,12 +15,6 @@ export const getUstensilUl = () => {
   return document.querySelector("#filter__ustensils > div > ul");
 };
 
-// window.addEventListener("click", (e) => {
-//   if (e.target.id !== "filter__dropdown__input__ustensils") {
-//     removeSelected();
-//   }
-// });
-
 export const onClickLiUst = (value) => {
   const divTags = document.querySelector(".tags__container");
   const tag = createTagUstensils(value);
@@ -128,24 +122,6 @@ export const getAllUstensilsFromDiplayedRecipes = () => {
   });
   return [...new Set(AllUstensils.flat())];
 };
-
-// export const searchUstensil = (value) => {
-//   const ul = getUstensilUl();
-//   const lis = ul.querySelectorAll("li");
-//   if (value.length > 2) {
-//     lis.forEach((li) => {
-//       if (li.innerText.includes(value)) {
-//         li.style.display = "block";
-//       } else {
-//         li.style.display = "none";
-//       }
-//     });
-//   } else {
-//     lis.forEach((li) => {
-//       li.style.display = "none";
-//     });
-//   }
-// };
 
 // function with for loop
 
