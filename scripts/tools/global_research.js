@@ -4,6 +4,59 @@ import { getRecipesStocked } from "./storage.js";
 import { normalizeAccents } from "./regex.js";
 import { updateDropdowns } from "./updateDropdowns.js ";
 
+// export const globalSearch = () => {
+//   const searchbar = document.getElementById("searchbar");
+//   const recipes = getRecipesStocked();
+//   const container = document.querySelector(".recipes__container");
+
+//   /**
+//    * @param {string} value - Valeur entrée dans le champ de recherche
+//    */
+
+  // Autre méthode avec boucle for
+
+//   searchbar.addEventListener("input", (e) => {
+//     if (e.target.value.length >= 3) {
+//       container.innerHTML = "";
+//       for (let i = 0; i < recipes.length; i++) {
+//         // trouver les accents
+//         if (
+//           recipes[i].name
+//             .toLowerCase()
+//             .includes(normalizeAccents(e.target.value.toLowerCase()))
+//         ) {
+//           container.append(card(recipes[i]));
+//         }
+//         // Array.some() permet de vérifier si un élément existe dans un tableau
+//         else if (
+//           recipes[i].ingredients.some((ingredient) => {
+//             return ingredient.ingredient
+//               .toLowerCase()
+//               .includes(normalizeAccents(e.target.value.toLowerCase()));
+//           })
+//         ) {
+//           container.append(card(recipes[i]));
+//         } else if (
+//           normalizeAccents(recipes[i].description)
+//             .toLowerCase()
+//             .includes(normalizeAccents(e.target.value.toLowerCase()))
+//         ) {
+//           container.append(card(recipes[i]));
+//         }
+//       }
+//       if (container.innerHTML == "") {
+//         container.append(displayError());
+//       }
+//     } else {
+//       container.innerHTML = "";
+//       recipes.forEach((recipe) => {
+//         container.append(card(recipe));
+//       });
+//     }
+//     //  update les dropdowns
+//   });
+// };
+
 export const globalSearch = () => {
   const searchbar = document.getElementById("searchbar");
   const recipes = getRecipesStocked();
@@ -12,6 +65,8 @@ export const globalSearch = () => {
   /**
    * @param {string} value - Valeur entrée dans le champ de recherche
    */
+
+  // Autre méthode avec boucle for
 
   searchbar.addEventListener("input", (e) => {
     if (e.target.value.length >= 3) {
