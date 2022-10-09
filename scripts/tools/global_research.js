@@ -1,6 +1,8 @@
 import { card } from "../components/card.js";
 import { displayError } from "../components/errorMessage.js";
 import { getRecipesStocked } from "./storage.js";
+import { normalizeAccents } from "./regex.js";
+import { updateDropdowns } from "./updateDropdowns.js ";
 
 export const globalSearch = () => {
   const searchbar = document.getElementById("searchbar");
@@ -11,14 +13,14 @@ export const globalSearch = () => {
    * @param {string} value - Valeur entrée dans le champ de recherche
    */
 
-  // Autre méthode avec boucle for
-
   searchbar.addEventListener("input", (e) => {
     if (e.target.value.length >= 3) {
       container.innerHTML = "";
       for (let i = 0; i < recipes.length; i++) {
         if (
-          recipes[i].name.toLowerCase().includes(e.target.value.toLowerCase())
+          recipes[i].name
+            .toLowerCase()
+            .includes(normalizeAccents(e.target.value.toLowerCase()))
         ) {
           container.append(card(recipes[i]));
         }
@@ -27,14 +29,14 @@ export const globalSearch = () => {
           recipes[i].ingredients.some((ingredient) => {
             return ingredient.ingredient
               .toLowerCase()
-              .includes(e.target.value.toLowerCase());
+              .includes(normalizeAccents(e.target.value.toLowerCase()));
           })
         ) {
           container.append(card(recipes[i]));
         } else if (
-          recipes[i].description
+          normalizeAccents(recipes[i].description)
             .toLowerCase()
-            .includes(e.target.value.toLowerCase())
+            .includes(normalizeAccents(e.target.value.toLowerCase()))
         ) {
           container.append(card(recipes[i]));
         }
@@ -43,10 +45,16 @@ export const globalSearch = () => {
         container.append(displayError());
       }
     } else {
-      container.innerHTML = "";
-      recipes.forEach((recipe) => {
-        container.append(card(recipe));
-      });
+      // If tags are already selected, we want to display only the recipes that match the tags
+      if (document.querySelectorAll(".tags").length > 0) {
+        container.innerHTML = "";
+        recipes.forEach((recipe) => {
+          if (recipe.tags.length > 0) {
+            container.append(card(recipe));
+          }
+        });
+      }
     }
+    updateDropdowns()
   });
-};
+}

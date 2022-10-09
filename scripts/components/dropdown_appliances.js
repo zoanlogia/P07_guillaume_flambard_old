@@ -29,6 +29,9 @@ export const changePlaceholder = () => {
   dropdown.classList.contains('selected') ? input.setAttribute('placeholder', 'Rechercher un appareil') : input.setAttribute('placeholder', 'Appareils');
 }
 
+// onclick outside the dropdown to close it
+
+
 export const createDropdownList = () => {
   const ul = document.createElement("ul");
   ul.classList.add("filter__dropdown__list");

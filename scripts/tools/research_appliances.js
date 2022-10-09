@@ -5,6 +5,7 @@ import { setRecipesStocked, getRecipesStocked } from "./storage.js";
 import { updateDropdowns } from "./updateDropdowns.js";
 import { onClickCloseTagUstensils } from "./research_ustensils.js";
 import { onClickCloseTagIngredient } from "./research_ingredients.js";
+import { normalizeAccents } from "./regex.js";
 
 export const getApplianceInput = () => {
   return document.getElementById("filter__dropdown__input__appliances");
@@ -12,6 +13,12 @@ export const getApplianceInput = () => {
 export const getApplianceUl = () => {
   return document.querySelector("#filter__appliances > div > ul");
 };
+
+// window.addEventListener("click", (e) => {
+//   if (e.target.id !== "filter__dropdown__input__appliances") {
+//     removeSelected();
+//   }
+// });
 
 export const onClickLiApp = (value) => {
   const divTags = document.querySelector(".tags__container");
@@ -28,7 +35,8 @@ export const onClickLiApp = (value) => {
   const recipesStocked = getRecipesStocked();
   const newRecipesToDisplay = recipesStocked.reduce((accumulator, current) => {
     if (current.display) {
-      const isAnAppliance = current.appliance.toLowerCase() === value.toLowerCase();
+      const isAnAppliance =
+        current.appliance.toLowerCase() === value.toLowerCase();
       if (!isAnAppliance) {
         current.display = false;
       }
@@ -36,8 +44,8 @@ export const onClickLiApp = (value) => {
     accumulator.push(current);
     return accumulator;
   }, []);
-  setRecipesStocked(newRecipesToDisplay);
   updateDropdowns();
+  setRecipesStocked(newRecipesToDisplay);
   displayRecipes();
 };
 
@@ -49,23 +57,25 @@ export const onClickCloseTagAppliances = () => {
       tag.remove();
 
       const ingsTags = Array.from(
-        document.querySelectorAll(".tag_ingredients > span"),
+        document.querySelectorAll(".tag_ingredients > span")
       ).map((ing) => ing.innerText.toLowerCase());
       const ustsTags = Array.from(
-        document.querySelectorAll(".tag_ustensils > span"),
+        document.querySelectorAll(".tag_ustensils > span")
       ).map((ust) => ust.innerText.toLowerCase());
       const appsTags = Array.from(
-        document.querySelectorAll(".tag_appliances > span"),
+        document.querySelectorAll(".tag_appliances > span")
       ).map((app) => app.innerText.toLowerCase());
 
       const DATA = getRecipesStocked();
 
       DATA.forEach((recipe) => {
         // on récupére tous les data de la recette
-        const recipeIngredients = recipe.ingredients.map(
-          (ing) => ing.ingredient.toLowerCase(),
+        const recipeIngredients = recipe.ingredients.map((ing) =>
+          ing.ingredient.toLowerCase()
         );
-        const recipeUstensils = recipe.ustensils.map((ustensil) => ustensil.toLowerCase());
+        const recipeUstensils = recipe.ustensils.map((ustensil) =>
+          ustensil.toLowerCase()
+        );
         const recipeAppliance = recipe.appliance.toLowerCase();
 
         // on fait des tableau avec tout dedans
@@ -117,26 +127,30 @@ export const getAllAppliancesFromDiplayedRecipes = () => {
   return [...new Set(AllAppliances.flat())];
 };
 
-// search appliance with for loop 
+// search appliance with for loop
 
 export const searchAppliance = (value) => {
-  const DATA = getRecipesStocked();
-  const appliances = getAllAppliancesFromDiplayedRecipes();
   const ul = getApplianceUl();
-  ul.innerHTML = "";
-  for (let i = 0; i < appliances.length; i++) {
-    const appliance = appliances[i];
-    if (appliance.toLowerCase().includes(value.toLowerCase())) {
-      const li = document.createElement("li");
-      li.innerText = appliance;
-      li.addEventListener("click", () => {
-        onClickLiApp(appliance);
-      });
-      ul.appendChild(li);
+  const lis = ul.querySelectorAll("li");
+  if (value.length >= 3) {
+    console.log("value", value);
+    for (let i = 0; i < lis.length; i++) {
+      if (
+        normalizeAccents(lis[i].innerText).includes(normalizeAccents(value))
+      ) {
+        lis[i].style.display = "block";
+      } else {
+        lis[i].style.display = "none";
+      }
+    }
+  } else {
+    if (value.length === 0) {
+      for (let i = 0; i < lis.length; i++) {
+        lis[i].style.display = "block";
+      }
     }
   }
 };
-
 
 // export const searchAppliance = (value) => {
 //   const ul = getApplianceUl();

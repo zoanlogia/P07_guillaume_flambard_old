@@ -4,6 +4,7 @@ import { getRecipesStocked } from "./storage.js";
  * 
  * @returns retourne un tableau contenant les ingredients des recettes stockées
  */
+
 export const getAllIngredients = () => {
   const ingredients = [];
   const DATA = getRecipesStocked()

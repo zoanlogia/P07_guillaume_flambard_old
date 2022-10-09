@@ -14,41 +14,50 @@ import {
   onClickLiUst,
 } from "./research_ustensils.js";
 
+import {normalizeAccents} from "./regex.js";
+
 export const updateDropdowns = () => {
   updateDropdownIng();
   updateDropdownApp();
   updateDropdownUst();
 
   // remove li from dropdowns if tags are already created
-  const ingsTags = Array.from(document.querySelectorAll(".tag_ingredients > span")).map((ing) => ing.innerText);
-  const appsTags = Array.from(document.querySelectorAll(".tag_appliances > span")).map((app) => app.innerText);
-  const ustsTags = Array.from(document.querySelectorAll(".tag_ustensils > span")).map((ust) => ust.innerText);
+  const ingsTags = Array.from(
+    document.querySelectorAll(".tag_ingredients > span")
+  ).map((ing) => ing.innerText);
+  const appsTags = Array.from(
+    document.querySelectorAll(".tag_appliances > span")
+  ).map((app) => app.innerText);
+  const ustsTags = Array.from(
+    document.querySelectorAll(".tag_ustensils > span")
+  ).map((ust) => ust.innerText);
   const ingsLi = Array.from(getIngredientUl().children);
   const appsLi = Array.from(getApplianceUl().children);
   const ustsLi = Array.from(getUstensilUl().children);
 
   ingsLi.forEach((li) => {
-    if (ingsTags.includes(li.innerText.toLowerCase())) {
+    if (ingsTags.includes(normalizeAccents(li.innerText.toLowerCase()))) {
       li.remove();
     }
   });
   appsLi.forEach((li) => {
-    if (appsTags.includes(li.innerText.toLowerCase())) {
+    if (appsTags.includes(normalizeAccents(li.innerText.toLowerCase()))) {
       li.remove();
     }
   });
   ustsLi.forEach((li) => {
-    if (ustsTags.includes(li.innerText.toLowerCase())) {
+    if (ustsTags.includes(normalizeAccents(li.innerText.toLowerCase()))) {
       li.remove();
     }
   });
 };
 
 export const updateDropdownApp = () => {
+  const searchbar = document.querySelector("#searchbar");
   const tags = Array.from(document.querySelectorAll(".tag"));
   const ul = getApplianceUl();
   const appAllreadySelected = tags.map((tag) => {
-    return tag.innerText;
+    return normalizeAccents(tag.innerText);
   });
 
   const filteredAppliances = getAllAppliancesFromDiplayedRecipes();
@@ -72,14 +81,58 @@ export const updateDropdownApp = () => {
     };
     ul.append(li);
   });
+
+  const filterIng = document.getElementById("filter__ingredients");
+  const filterApp = document.getElementById("filter__appliances");
+  const filterUst = document.getElementById("filter__ustensils");
+  const li = Array.from(ul.children);
+  searchbar.addEventListener("keyup", (e) => {
+    const search = normalizeAccents(e.target.value.toLowerCase());
+    li.forEach((li) => {
+      if (normalizeAccents(li.innerText.toLowerCase()).includes(search)) {
+        filterApp.addEventListener("click", () => {
+          if (filterApp.classList.contains("selected")) {
+            li.style.display = "block";
+            filterIng.classList.remove("selected");
+            filterUst.classList.remove("selected");
+            document
+              .querySelectorAll("#filter__ustensils > div > ul > li")
+              .forEach((li) => {
+                li.style.display = "none";
+              });
+            document
+              .querySelectorAll("#filter__ingredients > div > ul > li")
+              .forEach((li) => {
+                li.style.display = "none";
+              });
+          } else {
+            li.style.display = "none";
+            document
+              .querySelectorAll("#filter__ustensils > div > ul > li")
+              .forEach((li) => {
+                li.style.display = "block";
+              });
+            document
+              .querySelectorAll("#filter__ingredients > div > ul > li")
+              .forEach((li) => {
+                li.style.display = "block";
+              });
+          }
+        });
+      } else {
+        li.style.display = "none";
+      }
+    });
+  });
 };
 
 export const updateDropdownIng = () => {
   // filtrer les appareils et les ustensils
+  const searchbar = document.querySelector("#searchbar");
   const tags = Array.from(document.querySelectorAll(".tag"));
   const ul = getIngredientUl();
   const ingAllreadySelected = tags.map((tag) => {
-    return tag.innerText;
+    return normalizeAccents(tag.innerText);
   });
 
   // filtrer les ingrédients pour n'afficher que ceux des recettes montrées
@@ -106,13 +159,57 @@ export const updateDropdownIng = () => {
     };
     ul.append(li);
   });
+
+  const filterIng = document.getElementById("filter__ingredients");
+  const filterApp = document.getElementById("filter__appliances");
+  const filterUst = document.getElementById("filter__ustensils");
+  const li = Array.from(ul.children);
+  searchbar.addEventListener("keyup", (e) => {
+    const search = normalizeAccents(e.target.value.toLowerCase());
+    li.forEach((li) => {
+      if (normalizeAccents(li.innerText.toLowerCase()).includes(search)) {
+        filterIng.addEventListener("click", () => {
+          if (filterIng.classList.contains("selected")) {
+            filterUst.classList.remove("selected");
+            filterApp.classList.remove("selected");
+            document
+              .querySelectorAll("#filter__ustensils > div > ul > li")
+              .forEach((li) => {
+                li.style.display = "none";
+              });
+            document
+              .querySelectorAll("#filter__appliances > div > ul > li")
+              .forEach((li) => {
+                li.style.display = "none";
+              });
+            li.style.display = "block";
+          } else {
+            li.style.display = "none";
+            document
+              .querySelectorAll("#filter__ustensils > div > ul > li")
+              .forEach((li) => {
+                li.style.display = "block";
+              });
+            document
+              .querySelectorAll("#filter__appliances > div > ul > li")
+              .forEach((li) => {
+                li.style.display = "block";
+              });
+          }
+        });
+      } else {
+        li.style.display = "none";
+      }
+    });
+  });
 };
 
 export const updateDropdownUst = () => {
+  const searchbar = document.querySelector("#searchbar");
   const tags = Array.from(document.querySelectorAll(".tag"));
   const ul = getUstensilUl();
   const appAllreadySelected = tags.map((tag) => {
-    return tag.innerText;
+    return normalizeAccents(tag.innerText);
   });
 
   // filtrer les ingrédients pour n'afficher que ceux des recettes montrées
@@ -144,5 +241,54 @@ export const updateDropdownUst = () => {
       onClickLiUst(keyword);
     };
     ul.append(li);
+  });
+
+  const filterIng = document.getElementById("filter__ingredients");
+  const filterApp = document.getElementById("filter__appliances");
+  const filterUst = document.getElementById("filter__ustensils");
+
+  const li = Array.from(ul.children);
+  searchbar.addEventListener("keyup", (e) => {
+    const search = normalizeAccents(e.target.value.toLowerCase());
+    li.forEach((li) => {
+      if (normalizeAccents(li.innerText.toLowerCase()).includes(search)) {
+        filterUst.addEventListener("click", () => {
+          if (filterUst.classList.contains("selected")) {
+            li.style.display = "block";
+            filterIng.classList.remove("selected");
+            filterApp.classList.remove("selected");
+            document
+              .querySelectorAll("#filter__appliances > div > ul > li")
+              .forEach((li) => {
+                li.style.display = "none";
+              });
+            document
+              .querySelectorAll("#filter__ingredients > div > ul > li")
+              .forEach((li) => {
+                li.style.display = "none";
+              });
+          } else {
+            li.style.display = "none";
+            document
+              .querySelectorAll("#filter__appliances > div > ul > li")
+              .forEach((li) => {
+                li.style.display = "block";
+              });
+            document
+              .querySelectorAll("#filter__ingredients > div > ul > li")
+              .forEach((li) => {
+                li.style.display = "block";
+              });
+          }
+        });
+      } else {
+        li.style.display = "none";
+      }
+    });
+    // if (searchbar.value === "") {
+    //   li.forEach((li) => {
+    //     li.style.display = "block";
+    //   });
+    // }
   });
 };
