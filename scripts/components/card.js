@@ -69,13 +69,13 @@ export const colIngredients = (recipe) => {
     const li = document.createElement("li");
     li.classList.add("ingredient");
   
-    if (ing.quantity == undefined) {
+    if (ing.quantity === undefined) {
       ing.quantity = "";
     }
-    if (ing.unit == undefined) {
+    if (ing.unit === undefined) {
       ing.unit = "";
     }
-    if (ing.quantity == "" && ing.unit == "") {
+    if (ing.quantity === "" && ing.unit === "") {
       li.innerHTML ="<b>" + ing.ingredient + "</b>";
     } else {
       li.innerHTML = "<b>" + ing.ingredient + "</b>" + " : " + "<span class='small'>" + ing.quantity + "</span>" + "<span class='small'>" + ing.unit + "</span>";
