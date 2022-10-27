@@ -14,6 +14,7 @@ export const createSearchBar = () => {
   container.append(createInput())
 }
 
+
 /**
  * @description Creates a dropdown with all the ingredients
  */
@@ -36,9 +37,19 @@ export const displayRecipes = () => {
       container.append(card(recipe));
     }
   });
-// display an error message if no recipe is found
+  // display an error message if no recipe is found
   if (container.innerHTML === "") {
     container.append(displayError());
   }
 };
+
+export const removeAllselectedDropdowns = () => {
+  window.addEventListener('click', () => {
+    const dropdowns = document.querySelectorAll('.filter')
+    dropdowns.forEach((dropdown) => {
+      dropdown.classList.remove('selected')
+    }
+    )
+  })
+}
 

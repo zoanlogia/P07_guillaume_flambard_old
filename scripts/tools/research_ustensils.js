@@ -1,4 +1,4 @@
-import { removeSelected } from "../components/dropdown_ustensils.js";
+import { removeSelectedUst } from "../components/dropdown_ustensils.js";
 import { displayRecipes } from "./ui.js";
 import { createTagUstensils } from "../components/tags.js";
 import { setRecipesStocked, getRecipesStocked } from "./storage.js";
@@ -6,7 +6,7 @@ import { updateDropdowns } from "./updateDropdowns.js";
 import { onClickCloseTagIngredient } from "./research_ingredients.js";
 import { onClickCloseTagAppliances } from "./research_appliances.js";
 import { normalizeAccents } from "./regex.js";
-import {globalSearch} from "./global_research.js";
+import { globalSearch } from "./global_research.js";
 
 export const getUstensilInput = () => {
   return document.getElementById("filter__dropdown__input__ustensils");
@@ -18,11 +18,11 @@ export const getUstensilUl = () => {
 
 export const onClickLiUst = (value) => {
   const divTags = document.querySelector(".tags__container");
-  const tag = createTagUstensils(value);
+  const tag = createTagUstensils(value.toLowerCase());
   divTags.innerHTML += tag;
 
 
-  removeSelected();
+  removeSelectedUst();
   updateDropdowns();
   onClickCloseTagUstensils();
   onClickCloseTagAppliances();
@@ -132,7 +132,7 @@ export const searchUstensil = (value) => {
   if (value.length >= 3) {
     for (let i = 0; i < lis.length; i++) {
       if (
-        normalizeAccents(lis[i].innerText).includes(normalizeAccents(value))
+        normalizeAccents(lis[i].innerText.toLowerCase()).includes(normalizeAccents(value).toLowerCase())
       ) {
         lis[i].style.display = "block";
       } else {

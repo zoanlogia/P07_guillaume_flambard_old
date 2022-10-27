@@ -9,21 +9,21 @@ export const dropdownApplianceContainer = () => {
   const div = document.createElement("div");
   div.classList.add("filter");
   div.setAttribute("id", "filter__appliances");
-  div.append(dropdown());
+  div.append(dropdownApp());
   return div;
 };
 
-export const dropdown = () => {
+export const dropdownApp = () => {
   const div = document.createElement("div");
   div.classList.add("filter__dropdown");
-  div.append(createDropdownList());
-  div.append(createInput());
-  div.append(filterIconDown());
-  div.append(filterIconUp());
+  div.append(createDropdownListApp());
+  div.append(createInputApp());
+  div.append(filterIconDownApp());
+  div.append(filterIconUpApp());
   return div;
 };
 
-export const changePlaceholder = () => {
+export const changePlaceholderApp = () => {
   const dropdown = document.querySelector("#filter__appliances");
   const input = dropdown.querySelector("input");
   dropdown.classList.contains('selected') ? input.setAttribute('placeholder', 'Rechercher un appareil') : input.setAttribute('placeholder', 'Appareils');
@@ -32,7 +32,7 @@ export const changePlaceholder = () => {
 // onclick outside the dropdown to close it
 
 
-export const createDropdownList = () => {
+export const createDropdownListApp = () => {
   const ul = document.createElement("ul");
   ul.classList.add("filter__dropdown__list");
 
@@ -48,64 +48,69 @@ export const createDropdownList = () => {
   return ul;
 };
 
-export const createInput = () => {
+export const createInputApp = () => {
   const input = document.createElement("input");
   input.classList.add("filter__dropdown__input");
   input.setAttribute("id", "filter__dropdown__input__appliances");
   input.setAttribute("type", "list");
   input.setAttribute("placeholder", "Appareils");
   input.setAttribute("autocomplete", "off");
-  input.addEventListener("click", addSelected);
+  input.addEventListener("click", (e) => {
+    e.stopPropagation();
+    filterSelectedApp()
+    keepOneSelectedApp()
+  })
   return input;
 };
 
-export const addSelected = () => {
+export const addSelectedApp = () => {
   const dropdown = document.querySelector("#filter__appliances");
   dropdown.classList.add("selected");
   return dropdown;
 };
-export const removeSelected = () => {
+export const removeSelectedApp = () => {
   const dropdown = document.querySelector("#filter__appliances");
   dropdown.classList.remove("selected");
   return dropdown;
 };
-export const filterSelected = () => {
+export const filterSelectedApp = () => {
   const dropdown = document.querySelector("#filter__appliances");
   dropdown.classList.toggle("selected");
-  changePlaceholder();
+  changePlaceholderApp();
   return dropdown;
 };
-export const keepOneSelected = () => {
+export const keepOneSelectedApp = () => {
+  console.log('toto');
   const ustensils = document.querySelector('#filter__ustensils')
   const ingredients = document.querySelector('#filter__ingredients')
   ustensils.classList.remove('selected')
   ingredients.classList.remove('selected')
 }
 
-export const filterIconDown = () => {
+export const filterIconDownApp = () => {
   const img = document.createElement("img");
   img.classList.add("filter__dropdown__icon__down");
   img.src = "../../assets/img/angle-down.svg";
   img.setAttribute("src", "../../assets/img/angle-down.svg");
   img.setAttribute("alt", "filter");
-
   img.addEventListener("click", (e) => {
-    e.preventDefault()
-    filterSelected();
-    keepOneSelected()
-  });
+    e.stopPropagation();
+    keepOneSelectedApp()
+    filterSelectedApp()
+  })
   return img;
 };
 
-export const filterIconUp = () => {
+export const filterIconUpApp = () => {
   const img = document.createElement("img");
   img.classList.add("filter__dropdown__icon__up");
   img.src = "../../assets/img/angle-up.svg";
   img.setAttribute("src", "../../assets/img/angle-up.svg");
   img.setAttribute("alt", "filter");
   img.addEventListener("click", (e) => {
-    e.preventDefault()
-    filterSelected();
+    e.stopPropagation()
+    keepOneSelectedApp()
+    filterSelectedApp();
   });
   return img;
 };

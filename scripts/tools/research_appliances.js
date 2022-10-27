@@ -1,4 +1,4 @@
-import { removeSelected } from "../components/dropdown_appliances.js";
+import { removeSelectedApp } from "../components/dropdown_appliances.js";
 import { displayRecipes } from "./ui.js";
 import { createTagAppliances } from "../components/tags.js";
 import { setRecipesStocked, getRecipesStocked } from "./storage.js";
@@ -23,10 +23,10 @@ export const getApplianceUl = () => {
 
 export const onClickLiApp = (value) => {
   const divTags = document.querySelector(".tags__container");
-  const tag = createTagAppliances(value);
+  const tag = createTagAppliances(value.toLowerCase());
   divTags.innerHTML += tag;
 
-  removeSelected();
+  removeSelectedApp();
   updateDropdowns();
   onClickCloseTagAppliances();
   onClickCloseTagUstensils();
@@ -138,7 +138,7 @@ export const searchAppliance = (value) => {
     console.log("value", value);
     for (let i = 0; i < lis.length; i++) {
       if (
-        normalizeAccents(lis[i].innerText).includes(normalizeAccents(value))
+        normalizeAccents(lis[i].innerText.toLowerCase()).includes(normalizeAccents(value).toLowerCase())
       ) {
         lis[i].style.display = "block";
       } else {

@@ -3,7 +3,7 @@ import { displayError } from "../components/errorMessage.js";
 import { getRecipesStocked, setRecipesStocked } from "./storage.js";
 import { normalizeAccents } from "./regex.js";
 import { updateDropdowns } from "./updateDropdowns.js ";
-import { displayRecipes } from "./ui.js";
+import { displayRecipes, removeAllselectedDropdowns } from "./ui.js";
 
 export const globalSearch = () => {
   const searchbar = document.getElementById("searchbar");
@@ -44,8 +44,9 @@ export const globalSearch = () => {
       }
       if (container.innerHTML == "") {
         container.append(displayError());
-      } 
+      }
     } else {
+      updateDropdowns();
 
       const ingsTags = Array.from(
         document.querySelectorAll(".tag_ingredients > span")
@@ -75,7 +76,7 @@ export const globalSearch = () => {
         ];
         const tagsData = [...ingsTags, ...appsTags, ...ustsTags];
 
-        const allFounded = tagsData.every((el) => recipeData.includes(el));
+        const allFounded = tagsData.every((el) => recipeData.includes(el.toLowerCase()));
 
         if (allFounded) {
           DATA[i].display = true;
@@ -88,5 +89,8 @@ export const globalSearch = () => {
       displayRecipes();
     }
   })
+  removeAllselectedDropdowns();
   updateDropdowns();
 }
+
+

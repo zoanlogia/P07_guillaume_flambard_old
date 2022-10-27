@@ -1,4 +1,4 @@
-import { removeSelected } from "../components/dropdown_ingredients.js";
+import { removeSelectedIng } from "../components/dropdown_ingredients.js";
 import { displayRecipes } from "./ui.js";
 import { createTagIngredients } from "../components/tags.js";
 import { setRecipesStocked, getRecipesStocked } from "./storage.js";
@@ -6,7 +6,7 @@ import { updateDropdowns } from "./updateDropdowns.js";
 import { onClickCloseTagAppliances } from "./research_appliances.js";
 import { onClickCloseTagUstensils } from "./research_ustensils.js";
 import { normalizeAccents } from "./regex.js";
-import {globalSearch} from "./global_research.js";
+import { globalSearch } from "./global_research.js";
 
 export const getIngredientInput = () => {
   return document.getElementById("filter__dropdown__input__ingredients");
@@ -18,10 +18,10 @@ export const getIngredientUl = () => {
 
 export const onClickLiIng = (value) => {
   const divTags = document.querySelector(".tags__container");
-  const tag = createTagIngredients(value);
+  const tag = createTagIngredients(value.toLowerCase());
   divTags.innerHTML += tag;
-  
-  removeSelected();
+
+  removeSelectedIng();
   updateDropdowns();
   onClickCloseTagIngredient();
   onClickCloseTagAppliances();
@@ -91,7 +91,7 @@ export const onClickCloseTagIngredient = () => {
         }
       });
       setRecipesStocked(DATA);
-      globalSearch();
+      globalSearch()
       updateDropdowns();
       displayRecipes();
     });
@@ -127,10 +127,10 @@ export const getAllIngredientsFromDiplayedRecipes = () => {
 export const searchIngredient = (value) => {
   const ul = getIngredientUl();
   const lis = ul.querySelectorAll("li");
-  if (value.length > 2) {
+  if (value.length >= 3) {
     for (let i = 0; i < lis.length; i++) {
       if (
-        normalizeAccents(lis[i].innerText).includes(normalizeAccents(value))
+        normalizeAccents(lis[i].innerText.toLowerCase()).includes(normalizeAccents(value).toLowerCase())
       ) {
         lis[i].style.display = "block";
       } else {

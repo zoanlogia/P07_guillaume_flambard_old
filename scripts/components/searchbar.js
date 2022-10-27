@@ -1,3 +1,4 @@
+
 export const createInput = () => {
     const div = document.createElement("div");
     const label = document.createElement("label");
@@ -9,5 +10,8 @@ export const createInput = () => {
     icon.src = './assets/img/search_icon.svg'
     icon.classList.add('search__icon')
     div.append(label, input, icon);
+    div.addEventListener('click', (e) => {
+        e.stopPropagation()
+    })
     return div
 }

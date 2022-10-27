@@ -1,35 +1,31 @@
-import {
-  getAllUstensils
-} from "../tools/api.js";
-import {
-  onClickLiUst
-} from "../tools/research_ustensils.js";
+import { getAllUstensils } from "../tools/api.js";
+import { onClickLiUst } from "../tools/research_ustensils.js";
 
 export const dropdownUstensilContainer = () => {
   const div = document.createElement("div");
   div.classList.add("filter");
   div.setAttribute("id", "filter__ustensils");
-  div.append(dropdown());
+  div.append(dropdownUst());
   return div;
 };
 
-export const changePlaceholder = () => {
+export const changePlaceholderUst = () => {
   const dropdown = document.querySelector("#filter__ustensils");
   const input = dropdown.querySelector("input");
   dropdown.classList.contains('selected') ? input.setAttribute('placeholder', 'Rechercher un ustencil') : input.setAttribute('placeholder', 'ustencils');
 }
 
-export const dropdown = () => {
+export const dropdownUst = () => {
   const div = document.createElement("div");
   div.classList.add("filter__dropdown");
-  div.append(createDropdownList());
-  div.append(createInput());
-  div.append(filterIconDown());
+  div.append(createDropdownListUst());
+  div.append(createInputUst());
+  div.append(filterIconDownUst());
   div.append(filterIconUp());
   return div;
 };
 
-export const createDropdownList = () => {
+export const createDropdownListUst = () => {
   const ul = document.createElement("ul");
   ul.classList.add("filter__dropdown__list");
 
@@ -45,34 +41,38 @@ export const createDropdownList = () => {
   return ul;
 };
 
-export const createInput = () => {
+export const createInputUst = () => {
   const input = document.createElement("input");
   input.classList.add("filter__dropdown__input");
   input.setAttribute("id", "filter__dropdown__input__ustensils");
   input.setAttribute("type", "list");
   input.setAttribute("placeholder", "Ustensils");
   input.setAttribute("autocomplete", "off");
-  input.addEventListener("click", addSelected);
+  input.addEventListener("click", (e) => {
+    e.stopPropagation();
+    filterSelectedUst()
+    keepOneSelectedUst()
+  });
   return input;
 };
 
-export const addSelected = () => {
+export const addSelectedUst = () => {
   const dropdown = document.querySelector("#filter__ustensils");
   dropdown.classList.add("selected");
   return dropdown;
 };
-export const removeSelected = () => {
+export const removeSelectedUst = () => {
   const dropdown = document.querySelector("#filter__ustensils");
   dropdown.classList.remove("selected");
   return dropdown;
 };
-export const filterSelected = () => {
+export const filterSelectedUst = () => {
   const dropdown = document.querySelector("#filter__ustensils");
   dropdown.classList.toggle("selected");
-  changePlaceholder();
+  changePlaceholderUst();
   return dropdown;
 };
-export const keepOneSelected = () => {
+export const keepOneSelectedUst = () => {
   const appliances = document.querySelector('#filter__appliances')
   const ingredients = document.querySelector('#filter__ingredients')
   appliances.classList.remove('selected')
@@ -80,7 +80,7 @@ export const keepOneSelected = () => {
 }
 
 
-export const filterIconDown = () => {
+export const filterIconDownUst = () => {
   const img = document.createElement("img");
   img.classList.add("filter__dropdown__icon__down");
   img.src = "../../assets/img/angle-down.svg";
@@ -88,8 +88,8 @@ export const filterIconDown = () => {
   img.setAttribute("alt", "filter");
 
   img.addEventListener("click", () => {
-    filterSelected();
-    keepOneSelected()
+    filterSelectedUst();
+    keepOneSelectedUst()
   });
   return img;
 };
@@ -100,8 +100,10 @@ export const filterIconUp = () => {
   img.src = "../../assets/img/angle-up.svg";
   img.setAttribute("src", "../../assets/img/angle-up.svg");
   img.setAttribute("alt", "filter");
-  img.addEventListener("click", () => {
-    filterSelected();
+  img.addEventListener("click", (e) => {
+    e.stopPropagation();
+    filterSelectedUst();
+    keepOneSelectedUst()
   });
   return img;
 };

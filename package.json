@@ -1,8 +1,7 @@
 {
   "dependencies": {
     "eslint": "^8.18.0",
-    "modern-css-reset": "^1.4.0",
-    "node-sass": "^7.0.1"
+    "modern-css-reset": "^1.4.0"
   },
   "name": "P07_guillaume_flambard",
   "version": "1.0.0",
@@ -17,6 +16,7 @@
   "license": "MIT",
   "devDependencies": {
     "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.25.2"
+    "eslint-plugin-import": "^2.25.2",
+    "sass": "^1.55.0"
   }
 }
