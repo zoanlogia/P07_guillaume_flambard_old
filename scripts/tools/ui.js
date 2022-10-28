@@ -1,8 +1,8 @@
-import { dropdownIngredientContainer } from "../components/dropdown_ingredients.js";
+import { changePlaceholderIng, dropdownIngredientContainer } from "../components/dropdown_ingredients.js";
 import { card } from "../components/card.js";
 import { getRecipesStocked } from "./storage.js";
-import { dropdownApplianceContainer } from "../components/dropdown_appliances.js";
-import { dropdownUstensilContainer } from "../components/dropdown_ustensils.js";
+import { changePlaceholderApp, dropdownApplianceContainer } from "../components/dropdown_appliances.js";
+import { changePlaceholderUst, dropdownUstensilContainer } from "../components/dropdown_ustensils.js";
 import { createInput } from "../components/searchbar.js";
 import { displayError } from "../components/errorMessage.js";
 
@@ -48,6 +48,9 @@ export const removeAllselectedDropdowns = () => {
     const dropdowns = document.querySelectorAll('.filter')
     dropdowns.forEach((dropdown) => {
       dropdown.classList.remove('selected')
+      changePlaceholderApp()
+      changePlaceholderIng()
+      changePlaceholderUst()
     }
     )
   })

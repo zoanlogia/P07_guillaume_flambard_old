@@ -15,12 +15,6 @@ export const getApplianceUl = () => {
   return document.querySelector("#filter__appliances > div > ul");
 };
 
-// window.addEventListener("click", (e) => {
-//   if (e.target.id !== "filter__dropdown__input__appliances") {
-//     removeSelected();
-//   }
-// });
-
 export const onClickLiApp = (value) => {
   const divTags = document.querySelector(".tags__container");
   const tag = createTagAppliances(value.toLowerCase());
