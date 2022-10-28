@@ -5,6 +5,8 @@ import { normalizeAccents } from "./regex.js";
 import { updateDropdowns } from "./updateDropdowns.js ";
 import { displayRecipes, removeAllselectedDropdowns } from "./ui.js";
 
+// Algo with a forEach
+
 export const globalSearch = () => {
   const searchbar = document.getElementById("searchbar");
   const container = document.querySelector(".recipes__container");
@@ -16,32 +18,32 @@ export const globalSearch = () => {
     if (e.target.value.length >= 3) {
       const recipes = getRecipesStocked();
       container.innerHTML = "";
-      for (let i = 0; i < recipes.length; i++) {
-        if (recipes[i].display) {
+      recipes.forEach((recipe) => {
+        if (recipe.display) {
           if (
-            recipes[i].name
+            recipe.name
               .toLowerCase()
               .includes(normalizeAccents(e.target.value.toLowerCase()))
           ) {
-            container.append(card(recipes[i]));
+            container.append(card(recipe));
           }
           else if (
-            recipes[i].ingredients.some((ingredient) => {
+            recipe.ingredients.some((ingredient) => {
               return ingredient.ingredient
                 .toLowerCase()
                 .includes(normalizeAccents(e.target.value.toLowerCase()));
             })
           ) {
-            container.append(card(recipes[i]));
+            container.append(card(recipe));
           } else if (
-            normalizeAccents(recipes[i].description)
+            normalizeAccents(recipe.description)
               .toLowerCase()
               .includes(normalizeAccents(e.target.value.toLowerCase()))
           ) {
-            container.append(card(recipes[i]));
+            container.append(card(recipe));
           }
         }
-      }
+      });
       if (container.innerHTML == "") {
         container.append(displayError());
       }
@@ -60,14 +62,14 @@ export const globalSearch = () => {
 
       const DATA = getRecipesStocked();
 
-      for (let i = 0; i < DATA.length; i++) {
-        const recipeIngredients = DATA[i].ingredients.map((ing) =>
+      DATA.forEach((recipe) => {
+        const recipeIngredients = recipe.ingredients.map((ing) =>
           ing.ingredient.toLowerCase()
         );
-        const recipeUstensils = DATA[i].ustensils.map((ustensil) =>
+        const recipeUstensils = recipe.ustensils.map((ustensil) =>
           ustensil.toLowerCase()
         );
-        const recipeAppliance = DATA[i].appliance.toLowerCase();
+        const recipeAppliance = recipe.appliance.toLowerCase();
 
         const recipeData = [
           ...recipeIngredients,
@@ -79,12 +81,12 @@ export const globalSearch = () => {
         const allFounded = tagsData.every((el) => recipeData.includes(el.toLowerCase()));
 
         if (allFounded) {
-          DATA[i].display = true;
+          recipe.display = true;
         } else {
-          DATA[i].display = false;
+          recipe.display = false;
         }
         console.log(DATA);
-      }
+      });
       setRecipesStocked(DATA);
       displayRecipes();
     }
@@ -92,5 +94,6 @@ export const globalSearch = () => {
   removeAllselectedDropdowns();
   updateDropdowns();
 }
+
 
 
