@@ -1,9 +1,5 @@
-import {
-  getAllAppliances
-} from "../tools/api.js";
-import {
-  onClickLiApp
-} from "../tools/research_appliances.js";
+import { getAllAppliances } from "../tools/api.js";
+import { onClickLiApp } from "../tools/research_appliances.js";
 
 export const dropdownApplianceContainer = () => {
   const div = document.createElement("div");
@@ -30,7 +26,6 @@ export const changePlaceholderApp = () => {
 }
 
 // onclick outside the dropdown to close it
-
 
 export const createDropdownListApp = () => {
   const ul = document.createElement("ul");
@@ -71,6 +66,7 @@ export const addSelectedApp = () => {
 export const removeSelectedApp = () => {
   const dropdown = document.querySelector("#filter__appliances");
   dropdown.classList.remove("selected");
+  changePlaceholderApp();
   return dropdown;
 };
 export const filterSelectedApp = () => {
@@ -80,7 +76,6 @@ export const filterSelectedApp = () => {
   return dropdown;
 };
 export const keepOneSelectedApp = () => {
-  console.log('toto');
   const ustensils = document.querySelector('#filter__ustensils')
   const ingredients = document.querySelector('#filter__ingredients')
   ustensils.classList.remove('selected')

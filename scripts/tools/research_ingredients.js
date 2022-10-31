@@ -15,12 +15,11 @@ export const getIngredientInput = () => {
 export const getIngredientUl = () => {
   return document.querySelector("#filter__ingredients > div > ul");
 };
-
 export const onClickLiIng = (value) => {
   const divTags = document.querySelector(".tags__container");
   const tag = createTagIngredients(value.toLowerCase());
   divTags.innerHTML += tag;
-
+  
   removeSelectedIng();
   updateDropdowns();
   onClickCloseTagIngredient();
@@ -29,22 +28,22 @@ export const onClickLiIng = (value) => {
   getIngredientInput().value = "";
 
   const recipesStocked = getRecipesStocked();
-  const newRecipesToDisplay = recipesStocked.reduce((accumulator, current) => {
+  recipesStocked.reduce((accumulator, current) => {
     if (current.display) {
       const isAnIngredient = current.ingredients.find(
         (el) => el.ingredient.toLowerCase() === value.toLowerCase()
-      );
+        );
       if (!isAnIngredient) {
         current.display = false;
-      }
+      } 
     }
 
     accumulator.push(current);
     return accumulator;
   }, []);
-  setRecipesStocked(newRecipesToDisplay);
-  updateDropdowns();
+  setRecipesStocked(recipesStocked);
   displayRecipes();
+  updateDropdowns();
 };
 
 export const onClickCloseTagIngredient = () => {

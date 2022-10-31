@@ -14,7 +14,7 @@ import {
   onClickLiUst,
 } from "./research_ustensils.js";
 
-import {normalizeAccents} from "./regex.js";
+import { normalizeAccents } from "./regex.js";
 
 export const updateDropdowns = () => {
   updateDropdownIng();
@@ -24,13 +24,12 @@ export const updateDropdowns = () => {
   // remove li from dropdowns if tags are already created
   const ingsTags = Array.from(
     document.querySelectorAll(".tag_ingredients > span")
-  ).map((ing) => ing.innerText);
+  ).map((ing) => normalizeAccents(ing.innerText).toLowerCase());
   const appsTags = Array.from(
     document.querySelectorAll(".tag_appliances > span")
-  ).map((app) => app.innerText);
-  const ustsTags = Array.from(
-    document.querySelectorAll(".tag_ustensils > span")
-  ).map((ust) => ust.innerText);
+  ).map((app) => normalizeAccents(app.innerText).toLowerCase());
+  const ustsTags = Array.from(document.querySelectorAll(".tag_ustensils > span")
+  ).map((ust) => normalizeAccents(ust.innerText).toLowerCase());
   const ingsLi = Array.from(getIngredientUl().children);
   const appsLi = Array.from(getApplianceUl().children);
   const ustsLi = Array.from(getUstensilUl().children);
@@ -50,6 +49,8 @@ export const updateDropdowns = () => {
       li.remove();
     }
   });
+
+  // supprimer les doublons dans les dropdowns
 };
 
 export const updateDropdownApp = () => {
@@ -57,7 +58,7 @@ export const updateDropdownApp = () => {
   const tags = Array.from(document.querySelectorAll(".tag"));
   const ul = getApplianceUl();
   const appAllreadySelected = tags.map((tag) => {
-    return normalizeAccents(tag.innerText);
+    return normalizeAccents(tag.innerText).toLowerCase();
   });
 
   const filteredAppliances = getAllAppliancesFromDiplayedRecipes();
@@ -71,11 +72,12 @@ export const updateDropdownApp = () => {
   const appToDisplay = reduced.filter((appTag) => {
     return !appAllreadySelected.includes(appTag);
   });
+
   ul.innerHTML = "";
   appToDisplay.forEach((keyword) => {
     const li = document.createElement("li");
     li.classList.add("filter__dropdown__list__item");
-    li.innerHTML = keyword;
+    li.innerHTML = normalizeAccents(keyword).toLowerCase();
     li.onclick = () => {
       onClickLiApp(keyword);
     };
@@ -153,7 +155,7 @@ export const updateDropdownIng = () => {
   ingToDisplay.forEach((keyword) => {
     const li = document.createElement("li");
     li.classList.add("filter__dropdown__list__item");
-    li.innerHTML = keyword;
+    li.innerHTML = normalizeAccents(keyword).toLowerCase()
     li.onclick = () => {
       onClickLiIng(keyword);
     };
@@ -236,12 +238,12 @@ export const updateDropdownUst = () => {
   ustToDisplay.forEach((keyword) => {
     const li = document.createElement("li");
     li.classList.add("filter__dropdown__list__item");
-    li.innerHTML = keyword;
+    li.innerHTML = normalizeAccents(keyword).toLowerCase()
     li.onclick = () => {
       onClickLiUst(keyword);
     };
     ul.append(li);
-  });
+  })
 
   const filterIng = document.getElementById("filter__ingredients");
   const filterApp = document.getElementById("filter__appliances");

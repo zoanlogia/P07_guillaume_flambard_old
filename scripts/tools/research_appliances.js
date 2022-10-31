@@ -6,11 +6,12 @@ import { updateDropdowns } from "./updateDropdowns.js";
 import { onClickCloseTagUstensils } from "./research_ustensils.js";
 import { onClickCloseTagIngredient } from "./research_ingredients.js";
 import { normalizeAccents } from "./regex.js";
-import {globalSearch} from "./global_research.js";
+import { globalSearch } from "./global_research.js";
 
 export const getApplianceInput = () => {
   return document.getElementById("filter__dropdown__input__appliances");
 };
+
 export const getApplianceUl = () => {
   return document.querySelector("#filter__appliances > div > ul");
 };
@@ -28,10 +29,9 @@ export const onClickLiApp = (value) => {
   getApplianceInput().value = "";
 
   const recipesStocked = getRecipesStocked();
-  const newRecipesToDisplay = recipesStocked.reduce((accumulator, current) => {
+  recipesStocked.reduce((accumulator, current) => {
     if (current.display) {
-      const isAnAppliance =
-        current.appliance.toLowerCase() === value.toLowerCase();
+      const isAnAppliance = current.appliance.toLowerCase() === value.toLowerCase();
       if (!isAnAppliance) {
         current.display = false;
       }
@@ -39,9 +39,9 @@ export const onClickLiApp = (value) => {
     accumulator.push(current);
     return accumulator;
   }, []);
-  updateDropdowns();
-  setRecipesStocked(newRecipesToDisplay);
+  setRecipesStocked(recipesStocked);
   displayRecipes();
+  updateDropdowns();
 };
 
 export const onClickCloseTagAppliances = () => {
@@ -51,34 +51,20 @@ export const onClickCloseTagAppliances = () => {
       const tag = closeTag.parentElement;
       tag.remove();
 
-      const ingsTags = Array.from(
-        document.querySelectorAll(".tag_ingredients > span")
-      ).map((ing) => ing.innerText.toLowerCase());
-      const ustsTags = Array.from(
-        document.querySelectorAll(".tag_ustensils > span")
-      ).map((ust) => ust.innerText.toLowerCase());
-      const appsTags = Array.from(
-        document.querySelectorAll(".tag_appliances > span")
-      ).map((app) => app.innerText.toLowerCase());
+      const ingsTags = Array.from(document.querySelectorAll(".tag_ingredients > span")).map((ing) => ing.innerText.toLowerCase());
+      const ustsTags = Array.from(document.querySelectorAll(".tag_ustensils > span")).map((ust) => ust.innerText.toLowerCase());
+      const appsTags = Array.from(document.querySelectorAll(".tag_appliances > span")).map((app) => app.innerText.toLowerCase());
 
       const DATA = getRecipesStocked();
 
       DATA.forEach((recipe) => {
         // on récupére tous les data de la recette
-        const recipeIngredients = recipe.ingredients.map((ing) =>
-          ing.ingredient.toLowerCase()
-        );
-        const recipeUstensils = recipe.ustensils.map((ustensil) =>
-          ustensil.toLowerCase()
-        );
+        const recipeIngredients = recipe.ingredients.map((ing) => ing.ingredient.toLowerCase());
+        const recipeUstensils = recipe.ustensils.map((ustensil) => ustensil.toLowerCase());
         const recipeAppliance = recipe.appliance.toLowerCase();
 
         // on fait des tableau avec tout dedans
-        const recipeData = [
-          ...recipeIngredients,
-          recipeAppliance,
-          ...recipeUstensils,
-        ];
+        const recipeData = [...recipeIngredients, recipeAppliance, ...recipeUstensils];
         const tagsData = [...ingsTags, ...appsTags, ...ustsTags];
 
         // on compare les deux tableaux
@@ -129,7 +115,6 @@ export const searchAppliance = (value) => {
   const ul = getApplianceUl();
   const lis = ul.querySelectorAll("li");
   if (value.length >= 3) {
-    console.log("value", value);
     for (let i = 0; i < lis.length; i++) {
       if (
         normalizeAccents(lis[i].innerText.toLowerCase()).includes(normalizeAccents(value).toLowerCase())

@@ -64,6 +64,7 @@ export const addSelectedUst = () => {
 export const removeSelectedUst = () => {
   const dropdown = document.querySelector("#filter__ustensils");
   dropdown.classList.remove("selected");
+  changePlaceholderUst();
   return dropdown;
 };
 export const filterSelectedUst = () => {

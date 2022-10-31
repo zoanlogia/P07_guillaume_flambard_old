@@ -48,7 +48,7 @@ export const globalSearch = () => {
         container.append(displayError());
       }
     } else {
-      updateDropdowns();
+      // updateDropdowns();
 
       const ingsTags = Array.from(
         document.querySelectorAll(".tag_ingredients > span")
@@ -85,14 +85,13 @@ export const globalSearch = () => {
         } else {
           recipe.display = false;
         }
-        console.log(DATA);
       });
       setRecipesStocked(DATA);
       displayRecipes();
+      removeAllselectedDropdowns();
+      updateDropdowns();
     }
   })
-  removeAllselectedDropdowns();
-  updateDropdowns();
 }
 
 

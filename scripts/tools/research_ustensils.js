@@ -30,7 +30,7 @@ export const onClickLiUst = (value) => {
   getUstensilInput().value = "";
 
   const recipesStocked = getRecipesStocked();
-  const newRecipesToDisplay = recipesStocked.reduce((accumulator, current) => {
+  recipesStocked.reduce((accumulator, current) => {
     if (current.display) {
       const isAnUstensil = current.ustensils.find(
         (el) => el.toLowerCase() === value.toLowerCase()
@@ -42,9 +42,9 @@ export const onClickLiUst = (value) => {
     accumulator.push(current);
     return accumulator;
   }, []);
-  setRecipesStocked(newRecipesToDisplay);
-  updateDropdowns();
+  setRecipesStocked(recipesStocked);
   displayRecipes();
+  updateDropdowns();
 };
 
 export const onClickCloseTagUstensils = () => {
@@ -54,15 +54,9 @@ export const onClickCloseTagUstensils = () => {
       const tag = closeTag.parentElement;
       tag.remove();
 
-      const ingsTags = Array.from(
-        document.querySelectorAll(".tag_ingredients > span")
-      ).map((ing) => ing.innerText.toLowerCase());
-      const ustsTags = Array.from(
-        document.querySelectorAll(".tag_ustensils > span")
-      ).map((ust) => ust.innerText.toLowerCase());
-      const appsTags = Array.from(
-        document.querySelectorAll(".tag_appliances > span")
-      ).map((app) => app.innerText.toLowerCase());
+      const ingsTags = Array.from(document.querySelectorAll(".tag_ingredients > span")).map((ing) => ing.innerText.toLowerCase());
+      const ustsTags = Array.from(document.querySelectorAll(".tag_ustensils > span")).map((ust) => ust.innerText.toLowerCase());
+      const appsTags = Array.from(document.querySelectorAll(".tag_appliances > span")).map((app) => app.innerText.toLowerCase());
 
       const DATA = getRecipesStocked();
 
@@ -125,6 +119,32 @@ export const getAllUstensilsFromDiplayedRecipes = () => {
 };
 
 // function with for loop
+
+// export const searchUstensil = (value) => {
+//   const ul = getUstensilUl();
+//   const lis = ul.querySelectorAll("li");
+//   if (value.length >= 3) {
+//     for (let i = 0; i < lis.length; i++) {
+//       if (
+//         normalizeAccents(lis[i].innerText.toLowerCase()).includes(normalizeAccents(value).toLowerCase())
+//       ) {
+        
+//         // find Doublons
+//         lis[i].style.display = "block";
+//       } else {
+//         lis[i].style.display = "none";
+//       }
+//     }
+//   } else {
+//     if (value.length === 0) {
+//       for (let i = 0; i < lis.length; i++) {
+//         lis[i].style.display = "block";
+//       }
+//     }
+//   }
+// };
+
+// function with for loop and find and remove doublons
 
 export const searchUstensil = (value) => {
   const ul = getUstensilUl();

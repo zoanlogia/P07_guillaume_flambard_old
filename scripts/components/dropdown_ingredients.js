@@ -64,6 +64,7 @@ export const addSelectedIng = () => {
 export const removeSelectedIng = () => {
   const dropdown = document.querySelector("#filter__ingredients");
   dropdown.classList.remove("selected");
+  changePlaceholderIng()
   return dropdown;
 };
 export const filterSelected = () => {
