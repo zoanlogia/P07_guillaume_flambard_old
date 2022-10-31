@@ -1,5 +1,8 @@
 import { getAllAppliances } from "../tools/api.js";
 import { onClickLiApp } from "../tools/research_appliances.js";
+import { removeAllselectedDropdowns } from "../tools/ui.js";
+import { changePlaceholderIng } from "./dropdown_ingredients.js";
+import { changePlaceholderUst } from "./dropdown_ustensils.js";
 
 export const dropdownApplianceContainer = () => {
   const div = document.createElement("div");
@@ -24,8 +27,6 @@ export const changePlaceholderApp = () => {
   const input = dropdown.querySelector("input");
   dropdown.classList.contains('selected') ? input.setAttribute('placeholder', 'Rechercher un appareil') : input.setAttribute('placeholder', 'Appareils');
 }
-
-// onclick outside the dropdown to close it
 
 export const createDropdownListApp = () => {
   const ul = document.createElement("ul");
@@ -54,6 +55,8 @@ export const createInputApp = () => {
     e.stopPropagation();
     filterSelectedApp()
     keepOneSelectedApp()
+    changePlaceholderIng()
+    changePlaceholderUst()
   })
   return input;
 };
@@ -104,6 +107,7 @@ export const filterIconUpApp = () => {
   img.setAttribute("alt", "filter");
   img.addEventListener("click", (e) => {
     e.stopPropagation()
+    removeAllselectedDropdowns()
     keepOneSelectedApp()
     filterSelectedApp();
   });

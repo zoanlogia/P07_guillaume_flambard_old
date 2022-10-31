@@ -99,10 +99,10 @@ export const onClickCloseTagIngredient = () => {
 
 export const getIngredientInputValue = () => {
   const input = getIngredientInput();
-  const DATA = getRecipesStocked();
+  // const DATA = getRecipesStocked();
   input.addEventListener("input", (e) => {
     searchIngredient(e.target.value);
-    setRecipesStocked(DATA);
+    // setRecipesStocked(DATA);
   });
 };
 

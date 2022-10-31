@@ -1,5 +1,7 @@
 import { getAllIngredients } from "../tools/api.js";
 import { onClickLiIng } from "../tools/research_ingredients.js";
+import { changePlaceholderApp } from "./dropdown_appliances.js";
+import { changePlaceholderUst } from "./dropdown_ustensils.js";
 
 export const dropdownIngredientContainer = () => {
   const div = document.createElement("div");
@@ -52,6 +54,8 @@ export const createInputIng = () => {
     e.stopPropagation();
     filterSelected();
     keepOneSelectedIng();
+    changePlaceholderApp()
+    changePlaceholderUst()
   });
   return input;
 };

@@ -49,8 +49,18 @@ export const updateDropdowns = () => {
       li.remove();
     }
   });
+  // if there's no li in dropdowns add the empty class to the ul parent
 
-  // supprimer les doublons dans les dropdowns
+  if (getIngredientUl().children.length === 0) {
+    getIngredientUl().parentNode.style.width = '11em'
+  }
+  if (getApplianceUl().children.length === 0) {
+    getApplianceUl().parentNode.style.width = '11em'
+  }
+  if (getUstensilUl().children.length === 0) {
+    getUstensilUl().parentNode.style.width = '11em'
+  }
+
 };
 
 export const updateDropdownApp = () => {

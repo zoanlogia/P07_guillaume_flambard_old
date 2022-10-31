@@ -97,10 +97,10 @@ export const onClickCloseTagUstensils = () => {
 
 export const getUstensilInputValue = () => {
   const input = getUstensilInput();
-  const DATA = getRecipesStocked();
+  // const DATA = getRecipesStocked();
   input.addEventListener("input", (e) => {
     searchUstensil(e.target.value);
-    setRecipesStocked(DATA);
+    // setRecipesStocked(DATA);
   });
 };
 /**

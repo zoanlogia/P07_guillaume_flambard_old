@@ -87,10 +87,10 @@ export const onClickCloseTagAppliances = () => {
 
 export const getApplianceInputValue = () => {
   const input = getApplianceInput();
-  const DATA = getRecipesStocked();
+  // const DATA = getRecipesStocked();
   input.addEventListener("input", (e) => {
     searchAppliance(e.target.value);
-    setRecipesStocked(DATA);
+    // setRecipesStocked(DATA);
   });
 };
 
@@ -116,9 +116,7 @@ export const searchAppliance = (value) => {
   const lis = ul.querySelectorAll("li");
   if (value.length >= 3) {
     for (let i = 0; i < lis.length; i++) {
-      if (
-        normalizeAccents(lis[i].innerText.toLowerCase()).includes(normalizeAccents(value).toLowerCase())
-      ) {
+      if (normalizeAccents(lis[i].innerText.toLowerCase()).includes(normalizeAccents(value).toLowerCase())) {
         lis[i].style.display = "block";
       } else {
         lis[i].style.display = "none";
@@ -131,4 +129,4 @@ export const searchAppliance = (value) => {
       }
     }
   }
-};
+}

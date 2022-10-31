@@ -14,7 +14,6 @@ export const createSearchBar = () => {
   container.append(createInput())
 }
 
-
 /**
  * @description Creates a dropdown with all the ingredients
  */
@@ -51,8 +50,6 @@ export const removeAllselectedDropdowns = () => {
       changePlaceholderApp()
       changePlaceholderIng()
       changePlaceholderUst()
-    }
-    )
+    })
   })
 }
-

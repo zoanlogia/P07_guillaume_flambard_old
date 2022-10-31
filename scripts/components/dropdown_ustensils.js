@@ -1,5 +1,7 @@
 import { getAllUstensils } from "../tools/api.js";
 import { onClickLiUst } from "../tools/research_ustensils.js";
+import { changePlaceholderApp } from "./dropdown_appliances.js";
+import { changePlaceholderIng } from "./dropdown_ingredients.js";
 
 export const dropdownUstensilContainer = () => {
   const div = document.createElement("div");
@@ -52,6 +54,8 @@ export const createInputUst = () => {
     e.stopPropagation();
     filterSelectedUst()
     keepOneSelectedUst()
+    changePlaceholderApp()
+    changePlaceholderIng()
   });
   return input;
 };
@@ -108,3 +112,4 @@ export const filterIconUp = () => {
   });
   return img;
 };
+
