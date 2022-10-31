@@ -150,7 +150,8 @@ table {
         margin: 0.4em;
         display: block;
         border: none;
-        color: white;
+        color: white; }
+      .filter__container .filter.selected ul li::first-letter {
         text-transform: capitalize; }
 
 .filter__dropdown__list {
@@ -288,6 +289,8 @@ table {
     cursor: pointer; }
     .tags__container .tag span {
       padding: 10px; }
+    .tags__container .tag span::first-letter {
+      text-transform: capitalize; }
     .tags__container .tag img {
       padding: 10px; }
   .tags__container .green {

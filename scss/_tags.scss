@@ -12,16 +12,20 @@
     color: white;
     width: fit-content;
     cursor: pointer;
-    // text-transform: capitalize;
 
     span {
       padding: 10px;
+    }
+
+    span::first-letter {
+      text-transform: capitalize;
     }
 
     img {
       padding: 10px;
     }
   }
+
 
   .green {
     background-color: #68d9a4;

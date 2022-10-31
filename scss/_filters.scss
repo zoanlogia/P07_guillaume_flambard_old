@@ -93,6 +93,10 @@
           display: block;
           border: none;
           color: white;
+          
+        }
+        
+        li::first-letter {
           text-transform: capitalize;
         }
       }

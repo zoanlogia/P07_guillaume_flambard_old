@@ -53,12 +53,18 @@ export const updateDropdowns = () => {
 
   if (getIngredientUl().children.length === 0) {
     getIngredientUl().parentNode.style.width = '11em'
+  } else {
+    getIngredientUl().parentNode.style.width = 'min-width:16em'
   }
   if (getApplianceUl().children.length === 0) {
     getApplianceUl().parentNode.style.width = '11em'
+  } else {
+    getApplianceUl().parentNode.style.width = 'min-width:16em'
   }
   if (getUstensilUl().children.length === 0) {
     getUstensilUl().parentNode.style.width = '11em'
+  } else {
+    getUstensilUl().parentNode.style.width = 'min-width:16em'
   }
 
 };
