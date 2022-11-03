@@ -113,10 +113,12 @@
 
 }
 
-::-webkit-scrollbar {
-  border-radius: 20px;
+.filter__dropdown__list::-webkit-scrollbar {
+  border-radius: 10px;
   background-color: #bdbaba;
-  scrollbar-width: thin;
+  width: 10px;
+  height: 10px;
+  max-height: 10px;
 }
 
 
