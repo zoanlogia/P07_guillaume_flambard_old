@@ -1,8 +1,4 @@
 {
-  "dependencies": {
-    "eslint": "^8.18.0",
-    "modern-css-reset": "^1.4.0"
-  },
   "name": "P07_guillaume_flambard",
   "version": "1.0.0",
   "description": "P07 openclassrooms",
@@ -15,6 +11,7 @@
   "author": "zoanlogia <g.flambard@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "eslint": "^8.18.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.25.2",
     "sass": "^1.55.0"
