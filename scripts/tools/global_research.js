@@ -89,12 +89,11 @@ export const globalSearch = () => {
         });
         setRecipesStocked(DATA);
         displayRecipes();
-        removeAllselectedDropdowns();
-        updateDropdowns();
       }
-      }
-
+    }
   })
+  updateDropdowns();
+  removeAllselectedDropdowns();
 }
 
 
