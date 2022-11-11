@@ -1,8 +1,6 @@
 import { card } from "../components/card.js";
 import { displayError } from "../components/errorMessage.js";
 import { getRecipesStocked, setRecipesStocked } from "./storage.js";
-import { normalizeAccents } from "./regex.js";
-import { updateDropdowns } from "./updateDropdowns.js ";
 import { displayRecipes, removeAllselectedDropdowns } from "./ui.js";
 
 // Algo with a forEach
@@ -20,36 +18,55 @@ export const globalSearch = () => {
       container.innerHTML = "";
       recipes.forEach((recipe) => {
         if (recipe.display) {
-          if (
-            recipe.name
-              .toLowerCase()
-              .includes(normalizeAccents(e.target.value.toLowerCase()))
-          ) {
+          const ingredients = recipe.ingredients.map(ingredient => ingredient.ingredient);
+          const ustensils = recipe.ustensils.join(" ");
+          const recipeContent = `${recipe.name} ${recipe.description} ${recipe.appliance} ${ingredients.join(" ")} ${ustensils}`
+          if (recipeContent.toLowerCase().includes(e.target.value.toLowerCase())) {
             container.append(card(recipe));
           }
-          else if (
-            recipe.ingredients.some((ingredient) => {
-              return ingredient.ingredient
-                .toLowerCase()
-                .includes(normalizeAccents(e.target.value.toLowerCase()));
-            })
-          ) {
-            container.append(card(recipe));
-          } else if (
-            normalizeAccents(recipe.description)
-              .toLowerCase()
-              .includes(normalizeAccents(e.target.value.toLowerCase()))
-          ) {
-            container.append(card(recipe));
+
+          // pour chaques ul on vide les li et on en crée de nouveaux avec les recettes qui matchent
+
+          const ulIng = document.querySelector("#filter__ingredients > div > ul");
+          ulIng.innerHTML = "";
+
+          const ulApp = document.querySelector("#filter__appliances > div > ul");
+          ulApp.innerHTML = "";
+
+          const ulUst = document.querySelector("#filter__ustensils > div > ul");
+          ulUst.innerHTML = "";
+
+          const createLi = (ul, value) => {
+            const li = document.createElement("li");
+            li.innerText = value;
+            ul.append(li);
           }
+
+          recipes.forEach((recipe) => {
+            if (recipe.display) {
+              const ingredients = recipe.ingredients.map(ingredient => ingredient.ingredient);
+              const ustensils = recipe.ustensils.join(" ");
+              const recipeContent = `${recipe.name} ${recipe.description} ${recipe.appliance} ${ingredients.join(" ")} ${ustensils}`
+              if (recipeContent.toLowerCase().includes(e.target.value.toLowerCase())) {
+
+                recipe.ingredients.forEach((ingredient) => {
+                  createLi(ulIng, ingredient.ingredient);
+                });
+                
+                createLi(ulApp, recipe.appliance);
+                recipe.ustensils.forEach((ustensil) => {
+                  createLi(ulUst, ustensil);
+                });
+              }
+            }
+          });
         }
       });
       if (container.innerHTML == "") {
         container.append(displayError());
       }
     } else {
-      // updateDropdowns();
-      if(e.target.value.length <= 3){
+      if(e.target.value.length <= 2){
 
         const ingsTags = Array.from(
           document.querySelectorAll(".tag_ingredients > span")
@@ -92,7 +109,6 @@ export const globalSearch = () => {
       }
     }
   })
-  updateDropdowns();
   removeAllselectedDropdowns();
 }
 
