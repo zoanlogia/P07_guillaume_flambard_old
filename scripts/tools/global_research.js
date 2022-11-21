@@ -3,7 +3,7 @@ import { displayError } from "../components/errorMessage.js";
 import { getRecipesStocked, setRecipesStocked } from "./storage.js";
 import { displayRecipes, removeAllselectedDropdowns } from "./ui.js";
 
-// Algo with a forEach
+// algo with for loop
 
 export const globalSearch = () => {
   const searchbar = document.getElementById("searchbar");
@@ -16,57 +16,21 @@ export const globalSearch = () => {
     if (e.target.value.length >= 3) {
       const recipes = getRecipesStocked();
       container.innerHTML = "";
-      recipes.forEach((recipe) => {
-        if (recipe.display) {
-          const ingredients = recipe.ingredients.map(ingredient => ingredient.ingredient);
-          const ustensils = recipe.ustensils.join(" ");
-          const recipeContent = `${recipe.name} ${recipe.description} ${recipe.appliance} ${ingredients.join(" ")} ${ustensils}`
+      for (let i = 0; i < recipes.length; i++) {
+        if (recipes[i].display) {
+          const ingredients = recipes[i].ingredients.map(ingredient => ingredient.ingredient);
+          const ustensils = recipes[i].ustensils.join(" ");
+          const recipeContent = `${recipes[i].name} ${recipes[i].description} ${recipes[i].appliance} ${ingredients.join(" ")} ${ustensils}`
           if (recipeContent.toLowerCase().includes(e.target.value.toLowerCase())) {
-            container.append(card(recipe));
+            container.append(card(recipes[i]));
           }
-
-          // pour chaques ul on vide les li et on en crée de nouveaux avec les recettes qui matchent
-
-          const ulIng = document.querySelector("#filter__ingredients > div > ul");
-          ulIng.innerHTML = "";
-
-          const ulApp = document.querySelector("#filter__appliances > div > ul");
-          ulApp.innerHTML = "";
-
-          const ulUst = document.querySelector("#filter__ustensils > div > ul");
-          ulUst.innerHTML = "";
-
-          const createLi = (ul, value) => {
-            const li = document.createElement("li");
-            li.innerText = value;
-            ul.append(li);
-          }
-
-          recipes.forEach((recipe) => {
-            if (recipe.display) {
-              const ingredients = recipe.ingredients.map(ingredient => ingredient.ingredient);
-              const ustensils = recipe.ustensils.join(" ");
-              const recipeContent = `${recipe.name} ${recipe.description} ${recipe.appliance} ${ingredients.join(" ")} ${ustensils}`
-              if (recipeContent.toLowerCase().includes(e.target.value.toLowerCase())) {
-
-                recipe.ingredients.forEach((ingredient) => {
-                  createLi(ulIng, ingredient.ingredient);
-                });
-                
-                createLi(ulApp, recipe.appliance);
-                recipe.ustensils.forEach((ustensil) => {
-                  createLi(ulUst, ustensil);
-                });
-              }
-            }
-          });
         }
-      });
+      }
       if (container.innerHTML == "") {
         container.append(displayError());
       }
     } else {
-      if(e.target.value.length <= 2){
+      if (e.target.value.length <= 2) {
 
         const ingsTags = Array.from(
           document.querySelectorAll(".tag_ingredients > span")
@@ -77,33 +41,35 @@ export const globalSearch = () => {
         const appsTags = Array.from(
           document.querySelectorAll(".tag_appliances > span")
         ).map((app) => app.innerText.toLowerCase());
-  
+
         const DATA = getRecipesStocked();
-  
-        DATA.forEach((recipe) => {
-          const recipeIngredients = recipe.ingredients.map((ing) =>
+
+        for (let i = 0; i < DATA.length; i++) {
+          const recipeIngredients = DATA[i].ingredients.map((ing) =>
             ing.ingredient.toLowerCase()
           );
-          const recipeUstensils = recipe.ustensils.map((ustensil) =>
+          const recipeUstensils = DATA[i].ustensils.map((ustensil) =>
             ustensil.toLowerCase()
           );
-          const recipeAppliance = recipe.appliance.toLowerCase();
-  
+          const recipeAppliance = DATA[i].appliance.toLowerCase();
+
           const recipeData = [
             ...recipeIngredients,
             recipeAppliance,
             ...recipeUstensils,
           ];
           const tagsData = [...ingsTags, ...appsTags, ...ustsTags];
-  
+
           const allFounded = tagsData.every((el) => recipeData.includes(el.toLowerCase()));
-  
+
           if (allFounded) {
-            recipe.display = true;
-          } else {
-            recipe.display = false;
+            DATA[i].display = true;
           }
-        });
+
+          else {
+            DATA[i].display = false;
+          }
+        }
         setRecipesStocked(DATA);
         displayRecipes();
       }
@@ -111,6 +77,3 @@ export const globalSearch = () => {
   })
   removeAllselectedDropdowns();
 }
-
-
-
