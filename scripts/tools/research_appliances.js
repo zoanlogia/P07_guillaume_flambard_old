@@ -5,6 +5,7 @@ import { setRecipesStocked, getRecipesStocked } from "./storage.js";
 import { updateDropdowns } from "./updateDropdowns.js";
 import { onClickCloseTagUstensils } from "./research_ustensils.js";
 import { onClickCloseTagIngredient } from "./research_ingredients.js";
+import { normalizeAccents } from "./regex.js";
 import { globalSearch } from "./global_research.js";
 
 export const getApplianceInput = () => {
@@ -115,7 +116,7 @@ export const searchAppliance = (value) => {
   const lis = ul.querySelectorAll("li");
   if (value.length >= 3) {
     for (let i = 0; i < lis.length; i++) {
-      if (lis[i].innerText.toLowerCase().includes(value.toLowerCase())) {
+      if (normalizeAccents(lis[i].innerText.toLowerCase()).includes(normalizeAccents(value).toLowerCase())) {
         lis[i].style.display = "block";
       } else {
         lis[i].style.display = "none";

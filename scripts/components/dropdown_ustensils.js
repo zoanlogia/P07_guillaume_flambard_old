@@ -14,7 +14,7 @@ export const dropdownUstensilContainer = () => {
 export const changePlaceholderUst = () => {
   const dropdown = document.querySelector("#filter__ustensils");
   const input = dropdown.querySelector("input");
-  dropdown.classList.contains('selected') ? input.setAttribute('placeholder', 'Rechercher un ustensil') : input.setAttribute('placeholder', 'Ustensils');
+  dropdown.classList.contains('selected') ? input.setAttribute('placeholder', 'Rechercher un ustencil') : input.setAttribute('placeholder', 'ustencils');
 }
 
 export const dropdownUst = () => {
