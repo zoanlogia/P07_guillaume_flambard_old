@@ -1,21 +1,30 @@
-import { changePlaceholderIng, dropdownIngredientContainer } from "../components/dropdown_ingredients.js";
+import {
+  changePlaceholderIngredientsDropdown,
+  dropdownIngredientContainer,
+} from "../components/dropdown_ingredients.js";
 import { card } from "../components/card.js";
 import { getRecipesStocked } from "./storage.js";
-import { changePlaceholderApp, dropdownApplianceContainer } from "../components/dropdown_appliances.js";
-import { changePlaceholderUst, dropdownUstensilContainer } from "../components/dropdown_ustensils.js";
+import {
+  changePlaceholderAppliancesDropdown,
+  dropdownApplianceContainer,
+} from "../components/dropdown_appliances.js";
+import {
+  changePlaceholderUstensilsDropdown,
+  dropdownUstensilContainer,
+} from "../components/dropdown_ustensils.js";
 import { createInput } from "../components/searchbar.js";
 import { displayError } from "../components/errorMessage.js";
 
 /**
- * @description Creates a dropdown menu for the ingredients
+ * Creates the search bar element
  */
 export const createSearchBar = () => {
   const container = document.querySelector(".search__container");
-  container.append(createInput())
-}
+  container.append(createInput());
+};
 
 /**
- * @description Creates a dropdown with all the ingredients
+ * Creates the filter dropdowns for ingredients, appliances, and ustensils
  */
 export const createFilter = () => {
   const container = document.querySelector(".filter__container");
@@ -25,31 +34,36 @@ export const createFilter = () => {
 };
 
 /**
+ * Displays the recipes that should be displayed based on the `display` property
  * @param {Array} recipes - Array of recipes
  */
 export const displayRecipes = () => {
-  const recipes = getRecipesStocked();
+  const recipes = getRecipesStocked().filter((recipe) => recipe.display);
   const container = document.querySelector(".recipes__container");
   container.innerHTML = "";
-  recipes.forEach((recipe) => {
-    if (recipe.display) {
+  if (recipes.length > 0) {
+    recipes.forEach((recipe) => {
       container.append(card(recipe));
-    }
-  });
-  // display an error message if no recipe is found
-  if (container.innerHTML === "") {
+    });
+  } else {
     container.append(displayError());
   }
 };
 
+/**
+ * Removes the "selected" class from all dropdowns and updates the placeholder text
+ */
 export const removeAllselectedDropdowns = () => {
-  window.addEventListener('click', () => {
-    const dropdowns = document.querySelectorAll('.filter')
-    dropdowns.forEach((dropdown) => {
-      dropdown.classList.remove('selected')
-      changePlaceholderApp()
-      changePlaceholderIng()
-      changePlaceholderUst()
-    })
-  })
-}
+  const dropdowns = document.querySelectorAll(".filter");
+  dropdowns.forEach((dropdown) => {
+    dropdown.addEventListener("click", (e) => {
+      e.stopPropagation();
+    });
+    document.addEventListener("click", () => {
+      dropdown.classList.remove("selected");
+      changePlaceholderAppliancesDropdown();
+      changePlaceholderIngredientsDropdown();
+      changePlaceholderUstensilsDropdown();
+    });
+  });
+};

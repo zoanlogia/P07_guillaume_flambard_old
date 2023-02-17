@@ -1,5 +1,3 @@
-// template des cards contenant les recettes
-
 export const card = (recipe) => {
   const div = document.createElement("div");
   div.classList.add("card");
@@ -9,79 +7,47 @@ export const card = (recipe) => {
   return div;
 };
 
+// *Code à décommenter lorsque liens src seront ajoutés  * 
+
+// export const headingCard = (recipe) => {
 export const headingCard = () => {
-  const div = document.createElement("div");
-  div.classList.add("img");
-  return div;
+  const img = document.createElement("img");
+  img.classList.add("img");
+  // img.setAttribute("src", recipe.image);
+  // img.setAttribute("alt", recipe.name);
+  return img;
 };
 
 export const bodyCard = (recipe) => {
   const div = document.createElement("div");
   div.classList.add("row");
-  div.append(colCardName(recipe));
-  div.append(colCardTime(recipe));
-  return div;
-};
-
-export const colCardName = (recipe) => {
-  const div = document.createElement("div");
-  div.classList.add("col");
-  div.innerHTML = recipe.name;
-  return div;
-};
-
-export const colCardTime = (recipe) => {
-  const div = document.createElement("div");
-  div.classList.add("col");
-  div.classList.add("icon");
-  div.innerHTML =
-    `<img class='clock' src='../../assets/img/clock.svg' alt='clock' />` +
-    `<p class='time'>${recipe.time}</p>`;
+  div.innerHTML = `
+    <div class="col">${recipe.name}</div>
+    <div class="col icon">
+      <img class="clock" src="../../assets/img/clock.svg" alt="clock" />
+      <p class="time">${recipe.time}</p>
+    </div>
+  `;
   return div;
 };
 
 export const row = (recipe) => {
   const div = document.createElement("div");
   div.classList.add("row_ingredients");
-  div.append(colIngredients(recipe));
-  div.append(colDesc(recipe));
+  div.innerHTML = `
+    <ul class="ingredients">
+      ${recipe.ingredients
+        .filter((ing) => ing.ingredient)
+        .map((ing) => {
+          const quantity = ing.quantity || "";
+          const unit = ing.unit || "";
+          const formattedQuantity = quantity ? `<span class="small">${quantity}</span>` : "";
+          const formattedUnit = unit ? `<span class="small">${unit}</span>` : "";
+          return `<li class="ingredient"><b>${ing.ingredient}</b> : ${formattedQuantity}${formattedUnit}</li>`;
+        })
+        .join("")}
+    </ul>
+    <p class="desc"><span class="small">${recipe.description}</span></p>
+  `;
   return div;
-};
-
-/**
- * 
- * @param {*} recipe 
- * @returns retourne la description de la recette
- */
-export const colDesc = (recipe) => {
-  const p = document.createElement("p");
-  p.classList.add("desc");
-  p.innerHTML = "<span class='small'>" + recipe.description + "</span>";
-  return p;
-};
-
-export const colIngredients = (recipe) => {
-  const ul = document.createElement("ul");
-  ul.classList.add("ingredients");
-
-  const ingredients = recipe.ingredients.filter((ing) => ing.ingredient);
-  ingredients.forEach((ing) => {
-    const li = document.createElement("li");
-    li.classList.add("ingredient");
-  
-    if (ing.quantity === undefined) {
-      ing.quantity = "";
-    }
-    if (ing.unit === undefined) {
-      ing.unit = "";
-    }
-    if (ing.quantity === "" && ing.unit === "") {
-      li.innerHTML ="<b>" + ing.ingredient + "</b>";
-    } else {
-      li.innerHTML = "<b>" + ing.ingredient + "</b>" + " : " + "<span class='small'>" + ing.quantity + "</span>" + "<span class='small'>" + ing.unit + "</span>";
-    }
-
-    ul.append(li);
-  });
-  return ul;
 };

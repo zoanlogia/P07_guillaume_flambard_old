@@ -5,8 +5,8 @@ import { setRecipesStocked, getRecipesStocked } from "./storage.js";
 import { updateDropdowns } from "./updateDropdowns.js";
 import { onClickCloseTagIngredient } from "./research_ingredients.js";
 import { onClickCloseTagAppliances } from "./research_appliances.js";
-import { normalizeAccents } from "./regex.js";
-import { globalSearch } from "./global_research.js";
+import { normalizeString } from "./regex.js";
+import { globalSearch, updateSelectedTags } from "./global_research.js";
 
 export const getUstensilInput = () => {
   return document.getElementById("filter__dropdown__input__ustensils");
@@ -20,7 +20,6 @@ export const onClickLiUst = (value) => {
   const divTags = document.querySelector(".tags__container");
   const tag = createTagUstensils(value.toLowerCase());
   divTags.innerHTML += tag;
-
 
   removeSelectedUst();
   updateDropdowns();
@@ -53,42 +52,31 @@ export const onClickCloseTagUstensils = () => {
     closeTag.addEventListener("click", () => {
       const tag = closeTag.parentElement;
       tag.remove();
+      updateSelectedTags();
 
-      const ingsTags = Array.from(document.querySelectorAll(".tag_ingredients > span")).map((ing) => ing.innerText.toLowerCase());
-      const ustsTags = Array.from(document.querySelectorAll(".tag_ustensils > span")).map((ust) => ust.innerText.toLowerCase());
-      const appsTags = Array.from(document.querySelectorAll(".tag_appliances > span")).map((app) => app.innerText.toLowerCase());
+      const ingsTags = Array.from(
+        document.querySelectorAll(".tag_ingredients > span")
+      ).map((ing) => ing.innerText.toLowerCase());
+      const ustsTags = Array.from(
+        document.querySelectorAll(".tag_ustensils > span")
+      ).map((ust) => ust.innerText.toLowerCase());
+      const appsTags = Array.from(
+        document.querySelectorAll(".tag_appliances > span")
+      ).map((app) => app.innerText.toLowerCase());
 
-      const DATA = getRecipesStocked();
-
-      DATA.forEach((recipe) => {
-        // on récupére tous les data de la recette
-        const recipeIngredients = recipe.ingredients.map((ing) =>
-          ing.ingredient.toLowerCase()
-        );
-        const recipeUstensils = recipe.ustensils.map((ustensil) =>
-          ustensil.toLowerCase()
-        );
-        const recipeAppliance = recipe.appliance.toLowerCase();
-
-        // on fait des tableau avec tout dedans
+      const selectedTags = [...ingsTags, ...appsTags, ...ustsTags];
+      const recipes = getRecipesStocked();
+      const filteredRecipes = recipes.filter((recipe) => {
         const recipeData = [
-          ...recipeIngredients,
-          recipeAppliance,
-          ...recipeUstensils,
+          ...recipe.ingredients.map((ing) => ing.ingredient.toLowerCase()),
+          recipe.appliance.toLowerCase(),
+          ...recipe.ustensils.map((ust) => ust.toLowerCase()),
         ];
-        const tagsData = [...ingsTags, ...appsTags, ...ustsTags];
-
-        // on compare les deux tableaux
-        const allFounded = tagsData.every((el) => recipeData.includes(el));
-
-        if (allFounded) {
-          recipe.display = true;
-        } else {
-          recipe.display = false;
-        }
+        return selectedTags.every((tag) => recipeData.includes(tag));
       });
-      setRecipesStocked(DATA);
-      globalSearch()
+
+      setRecipesStocked(filteredRecipes);
+      globalSearch();
       updateDropdowns();
       displayRecipes();
     });
@@ -97,52 +85,23 @@ export const onClickCloseTagUstensils = () => {
 
 export const getUstensilInputValue = () => {
   const input = getUstensilInput();
-  // const DATA = getRecipesStocked();
+  const DATA = getRecipesStocked();
   input.addEventListener("input", (e) => {
     searchUstensil(e.target.value);
-    // setRecipesStocked(DATA);
+    setRecipesStocked(DATA);
+    globalSearch();
   });
 };
 /**
  *
  * @returns retourne un tableau contenant les ustensils des recettes affichées
  */
-export const getAllUstensilsFromDiplayedRecipes = () => {
-  const DATA = getRecipesStocked();
-  const displayedRecipes = DATA.filter((recipe) => {
-    return recipe.display;
-  });
-  const AllUstensils = displayedRecipes.map((recipe) => {
-    return recipe.ustensils.map((ustensil) => ustensil);
-  });
-  return [...new Set(AllUstensils.flat())];
+export const getAllUstensilsFromDisplayedRecipes = () => {
+  const recipes = getRecipesStocked();
+  const displayedRecipes = recipes.filter((recipe) => recipe.display);
+  const ustensils = displayedRecipes.map((recipe) => recipe.ustensils).flat();
+  return [...new Set(ustensils)];
 };
-
-// function with for loop
-
-// export const searchUstensil = (value) => {
-//   const ul = getUstensilUl();
-//   const lis = ul.querySelectorAll("li");
-//   if (value.length >= 3) {
-//     for (let i = 0; i < lis.length; i++) {
-//       if (
-//         normalizeAccents(lis[i].innerText.toLowerCase()).includes(normalizeAccents(value).toLowerCase())
-//       ) {
-        
-//         // find Doublons
-//         lis[i].style.display = "block";
-//       } else {
-//         lis[i].style.display = "none";
-//       }
-//     }
-//   } else {
-//     if (value.length === 0) {
-//       for (let i = 0; i < lis.length; i++) {
-//         lis[i].style.display = "block";
-//       }
-//     }
-//   }
-// };
 
 // function with for loop and find and remove doublons
 
@@ -152,7 +111,9 @@ export const searchUstensil = (value) => {
   if (value.length >= 3) {
     for (let i = 0; i < lis.length; i++) {
       if (
-        normalizeAccents(lis[i].innerText.toLowerCase()).includes(normalizeAccents(value).toLowerCase())
+        normalizeString(lis[i].innerText.toLowerCase()).includes(
+          normalizeString(value).toLowerCase()
+        )
       ) {
         lis[i].style.display = "block";
       } else {

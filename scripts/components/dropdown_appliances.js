@@ -1,8 +1,8 @@
 import { getAllAppliances } from "../tools/api.js";
 import { onClickLiApp } from "../tools/research_appliances.js";
 import { removeAllselectedDropdowns } from "../tools/ui.js";
-import { changePlaceholderIng } from "./dropdown_ingredients.js";
-import { changePlaceholderUst } from "./dropdown_ustensils.js";
+import { changePlaceholderIngredientsDropdown } from "./dropdown_ingredients.js";
+import { changePlaceholderUstensilsDropdown as changePlaceholderUstensilsDropdown } from "./dropdown_ustensils.js";
 
 export const dropdownApplianceContainer = () => {
   const div = document.createElement("div");
@@ -22,7 +22,7 @@ export const dropdownApp = () => {
   return div;
 };
 
-export const changePlaceholderApp = () => {
+export const changePlaceholderAppliancesDropdown = () => {
   const dropdown = document.querySelector("#filter__appliances");
   const input = dropdown.querySelector("input");
   dropdown.classList.contains('selected') ? input.setAttribute('placeholder', 'Rechercher un appareil') : input.setAttribute('placeholder', 'Appareils');
@@ -55,8 +55,8 @@ export const createInputApp = () => {
     e.stopPropagation();
     filterSelectedApp()
     keepOneSelectedApp()
-    changePlaceholderIng()
-    changePlaceholderUst()
+    changePlaceholderIngredientsDropdown()
+    changePlaceholderUstensilsDropdown()
   })
   return input;
 };
@@ -69,13 +69,13 @@ export const addSelectedApp = () => {
 export const removeSelectedApp = () => {
   const dropdown = document.querySelector("#filter__appliances");
   dropdown.classList.remove("selected");
-  changePlaceholderApp();
+  changePlaceholderAppliancesDropdown();
   return dropdown;
 };
 export const filterSelectedApp = () => {
   const dropdown = document.querySelector("#filter__appliances");
   dropdown.classList.toggle("selected");
-  changePlaceholderApp();
+  changePlaceholderAppliancesDropdown();
   return dropdown;
 };
 export const keepOneSelectedApp = () => {
